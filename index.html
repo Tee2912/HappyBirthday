@@ -384,6 +384,112 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   background:linear-gradient(135deg,var(--pk),var(--pp));color:#fff;font-size:1rem;font-weight:700;
   cursor:pointer;transition:transform .2s;margin-top:10px;font-family:inherit}
 .quiz-restart:hover{transform:translateY(-2px) scale(1.05)}
+
+/* ═══════ AURORA ═══════ */
+.aurora{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.aurora-band{position:absolute;width:200%;height:180px;left:-50%;opacity:.05;
+  border-radius:50%;filter:blur(80px)}
+.aurora-band:nth-child(1){top:8%;background:var(--pk);animation:aur 8s ease-in-out infinite alternate}
+.aurora-band:nth-child(2){top:20%;background:var(--pp);animation:aur 12s ease-in-out infinite alternate-reverse}
+.aurora-band:nth-child(3){top:14%;background:var(--cy);animation:aur 10s -3s ease-in-out infinite alternate}
+@keyframes aur{0%{transform:translateX(-15%) skewY(-2deg) scaleY(.8)}100%{transform:translateX(15%) skewY(2deg) scaleY(1.2)}}
+
+/* ═══════ SECTION TITLE GLOW LINE ═══════ */
+.s-title::after{content:'';display:block;width:60px;height:3px;margin:14px auto 0;border-radius:3px;
+  background:linear-gradient(90deg,var(--pk),var(--gd),var(--pp));background-size:200% 100%;
+  animation:titleBar 3s ease infinite}
+@keyframes titleBar{0%,100%{width:60px;background-position:0% 50%}50%{width:100px;background-position:100% 50%}}
+
+/* ═══════ SECTION SEPARATOR ═══════ */
+.sec-sep{height:80px;display:flex;align-items:center;justify-content:center;position:relative}
+.sec-sep::before{content:'';position:absolute;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,107,157,.2),rgba(255,215,0,.25),rgba(196,77,255,.2),transparent)}
+.sec-sep span{position:relative;z-index:1;background:#0d001a;padding:0 16px;font-size:.9rem;opacity:.35}
+
+/* ═══════ TIMELINE ═══════ */
+.timeline-section{padding:80px 20px}
+.timeline{position:relative;max-width:680px;margin:0 auto;padding:20px 0}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,transparent,var(--pk) 10%,var(--pp) 50%,var(--gd) 90%,transparent);
+  transform:translateX(-50%)}
+.tl-item{position:relative;display:flex;align-items:center;margin-bottom:48px;
+  opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.4,0,.2,1)}
+.tl-item.visible{opacity:1;transform:translateY(0)}
+.tl-item:nth-child(odd){flex-direction:row-reverse;text-align:right}
+.tl-item:nth-child(odd) .tl-content{margin-right:40px;margin-left:0}
+.tl-dot{position:absolute;left:50%;transform:translateX(-50%);width:18px;height:18px;
+  border-radius:50%;background:var(--pk);border:3px solid #1a0030;z-index:2;
+  box-shadow:0 0 14px var(--pk),0 0 28px rgba(255,107,157,.3);transition:all .3s}
+.tl-item:hover .tl-dot{transform:translateX(-50%) scale(1.5);
+  box-shadow:0 0 24px var(--pk),0 0 48px rgba(255,107,157,.5)}
+.tl-content{flex:1;margin-left:40px;padding:22px 26px;
+  background:rgba(255,255,255,.05);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.1);border-radius:20px;
+  transition:all .4s cubic-bezier(.4,0,.2,1)}
+.tl-item:hover .tl-content{background:rgba(255,107,157,.08);
+  transform:translateY(-6px);box-shadow:0 16px 40px rgba(255,107,157,.15)}
+.tl-emoji{font-size:2.2rem;margin-bottom:8px;display:block}
+.tl-label{font-size:.72rem;color:var(--gd);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.tl-text{color:rgba(255,255,255,.85);font-size:.95rem;line-height:1.65}
+@media(max-width:600px){
+  .timeline::before{left:22px}
+  .tl-dot{left:22px!important}
+  .tl-item,.tl-item:nth-child(odd){flex-direction:row;text-align:left}
+  .tl-item:nth-child(odd) .tl-content{margin-right:0;margin-left:46px}
+  .tl-content{margin-left:46px!important}
+}
+
+/* ═══════ LOVE COUPONS ═══════ */
+.coupon-section{padding:80px 20px;text-align:center;overflow:hidden}
+.coupon-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:20px 40px 30px;max-width:100%;scrollbar-width:none;-ms-overflow-style:none}
+.coupon-track::-webkit-scrollbar{display:none}
+.coupon{flex:0 0 250px;scroll-snap-align:center;padding:28px 20px;border-radius:22px;
+  position:relative;overflow:hidden;cursor:pointer;min-height:200px;
+  background:rgba(255,255,255,.05);backdrop-filter:blur(12px);
+  border:2px dashed rgba(255,255,255,.15);
+  transition:all .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.coupon:hover{transform:translateY(-10px) scale(1.04);
+  box-shadow:0 24px 50px rgba(255,107,157,.25);border-color:rgba(255,107,157,.4)}
+.coupon-icon{font-size:2.8rem;margin-bottom:12px}
+.coupon-title{color:#fff;font-weight:800;font-size:1.05rem;margin-bottom:8px}
+.coupon-desc{color:rgba(255,255,255,.55);font-size:.82rem;line-height:1.5}
+.coupon-badge{position:absolute;top:10px;right:10px;background:var(--gd);color:#1a0030;
+  font-size:.6rem;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+.coupon .tear-l,.coupon .tear-r{position:absolute;top:0;bottom:0;width:12px}
+.coupon .tear-l{left:-6px;background:repeating-radial-gradient(circle at 0 8px,transparent 0,transparent 5px,#0d001a 5px,#0d001a 12px);background-size:12px 16px}
+.coupon .tear-r{right:-6px;background:repeating-radial-gradient(circle at 12px 8px,transparent 0,transparent 5px,#0d001a 5px,#0d001a 12px);background-size:12px 16px}
+.coupon.redeemed{opacity:.5;transform:none!important;box-shadow:none!important;border-color:rgba(107,255,157,.3)}
+.coupon.redeemed::after{content:'✅ REDEEMED';position:absolute;inset:0;z-index:5;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.5);color:#6bff9d;font-weight:900;font-size:1rem;letter-spacing:2px;border-radius:20px}
+.coupon-hint{color:rgba(255,255,255,.3);font-size:.82rem;margin-top:14px;letter-spacing:1px}
+@media(max-width:520px){.coupon{flex:0 0 210px;padding:22px 16px;min-height:180px}}
+
+/* ═══════ LOVE METER ═══════ */
+.meter-section{padding:80px 20px;text-align:center}
+.love-meter{display:inline-flex;flex-direction:column;align-items:center;gap:18px}
+.meter-ring{width:220px;height:220px;position:relative;display:flex;align-items:center;justify-content:center}
+.meter-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.meter-ring circle{fill:none;stroke-linecap:round}
+.meter-ring .ring-bg{stroke:rgba(255,255,255,.06);stroke-width:8}
+.meter-ring .ring-fill{stroke:url(#meterGrad);stroke-width:8;stroke-dasharray:628;
+  stroke-dashoffset:628;transition:stroke-dashoffset 2.5s cubic-bezier(.4,0,.2,1)}
+.meter-ring.active .ring-fill{stroke-dashoffset:0}
+.meter-value{font-size:3rem;font-weight:900;color:var(--gd);text-shadow:0 0 20px rgba(255,215,0,.4);
+  transition:font-size .5s}
+.meter-label{font-size:.85rem;color:rgba(255,255,255,.4);letter-spacing:3px;text-transform:uppercase}
+.meter-text{color:rgba(255,255,255,.65);font-size:1rem;max-width:420px;line-height:1.7;margin-top:4px}
+
+/* ═══════ PARALLAX DECO ═══════ */
+.pdeco{position:absolute;pointer-events:none;z-index:5;opacity:.1;will-change:transform}
+
+/* ═══════ ENHANCED FOOTER ═══════ */
+.final-msg{font-size:clamp(1.2rem,3vw,1.8rem);color:rgba(255,255,255,.75);font-family:'Dancing Script',cursive;
+  margin-bottom:20px;text-shadow:0 0 14px rgba(255,107,157,.3)}
+.infinity-heart{font-size:4rem;display:inline-block;animation:infinityPulse 2s ease-in-out infinite}
+@keyframes infinityPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 8px rgba(255,107,157,.5))}
+  50%{transform:scale(1.15);filter:drop-shadow(0 0 20px rgba(255,107,157,.8))}}
 </style>
 </head>
 <body>
@@ -398,6 +504,7 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 <canvas id="bg-canvas"></canvas>
 <canvas id="fx-canvas"></canvas>
 <div class="gradient-bg"></div>
+<div class="aurora"><div class="aurora-band"></div><div class="aurora-band"></div><div class="aurora-band"></div></div>
 <div id="cursor"></div>
 
 <!-- Scroll progress -->
@@ -509,6 +616,41 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   <p class="pop-score" id="popScore">💥 Popped: 0 / 8</p>
 </section>
 
+<!-- ═══════ OUR STORY TIMELINE ═══════ -->
+<div class="sec-sep"><span>✦</span></div>
+<section class="timeline-section">
+  <h2 class="s-title reveal">📖 Our Story</h2>
+  <p class="s-sub reveal">A journey written in the stars, just for us ✨</p>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content">
+      <span class="tl-emoji">✨</span><span class="tl-label">The Beginning</span>
+      <p class="tl-text">The moment our paths crossed and the universe smiled. My whole world quietly, beautifully changed forever.</p>
+    </div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content">
+      <span class="tl-emoji">😊</span><span class="tl-label">First Smile</span>
+      <p class="tl-text">You smiled at me and suddenly I understood what all the love songs were about. That smile rewrote my story.</p>
+    </div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content">
+      <span class="tl-emoji">🦋</span><span class="tl-label">Butterflies</span>
+      <p class="tl-text">Every message, every call, every moment near you sent butterflies dancing. I couldn't stop thinking about you.</p>
+    </div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content">
+      <span class="tl-emoji">❤️</span><span class="tl-label">Three Words</span>
+      <p class="tl-text">"I love you" — three words that changed everything. I've meant them more with every single day since.</p>
+    </div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content">
+      <span class="tl-emoji">🌱</span><span class="tl-label">Growing Together</span>
+      <p class="tl-text">Through laughter and tears, through sunny days and storms, we grew stronger — together, always together.</p>
+    </div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content">
+      <span class="tl-emoji">🎂</span><span class="tl-label">Today & Forever</span>
+      <p class="tl-text">Today we celebrate YOU — my favourite person, my best friend, my everything. Here's to us, always and forever. 💖</p>
+    </div></div>
+  </div>
+</section>
+
+<div class="sec-sep"><span>✦</span></div>
+
 <!-- ═══════ FLIP CARDS ═══════ -->
 <section class="wishes-section">
   <h2 class="s-title reveal">🌟 Birthday Wishes For You</h2>
@@ -553,6 +695,24 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
     <p class="spin-counter" id="spinCounter">Spins: 0</p>
   </div>
 </section>
+
+<!-- ═══════ LOVE COUPONS ═══════ -->
+<div class="sec-sep"><span>✦</span></div>
+<section class="coupon-section">
+  <h2 class="s-title reveal">💝 Love Coupons</h2>
+  <p class="s-sub reveal">Swipe through your special treats — click to redeem! 🎟️</p>
+  <div class="coupon-track reveal" id="couponTrack">
+    <div class="coupon" onclick="redeemCoupon(this)"><div class="tear-l"></div><div class="tear-r"></div><span class="coupon-badge">FOREVER</span><span class="coupon-icon">🤗</span><p class="coupon-title">One Warm Hug</p><p class="coupon-desc">Redeemable anytime you need comfort, warmth, or just because 💕</p></div>
+    <div class="coupon" onclick="redeemCoupon(this)"><div class="tear-l"></div><div class="tear-r"></div><span class="coupon-badge">FOREVER</span><span class="coupon-icon">🎬</span><p class="coupon-title">Movie Night</p><p class="coupon-desc">Your choice of movie, snacks included. Cuddles are mandatory! 🍿</p></div>
+    <div class="coupon" onclick="redeemCoupon(this)"><div class="tear-l"></div><div class="tear-r"></div><span class="coupon-badge">FOREVER</span><span class="coupon-icon">🌙</span><p class="coupon-title">Stargazing Night</p><p class="coupon-desc">A blanket under the stars, counting constellations together ✨</p></div>
+    <div class="coupon" onclick="redeemCoupon(this)"><div class="tear-l"></div><div class="tear-r"></div><span class="coupon-badge">FOREVER</span><span class="coupon-icon">☕</span><p class="coupon-title">Breakfast in Bed</p><p class="coupon-desc">Wake up to your favourite breakfast, served with love and morning kisses 🥞</p></div>
+    <div class="coupon" onclick="redeemCoupon(this)"><div class="tear-l"></div><div class="tear-r"></div><span class="coupon-badge">UNLIMITED</span><span class="coupon-icon">💋</span><p class="coupon-title">Unlimited Kisses</p><p class="coupon-desc">This one never expires and has no limit. Use as often as you want! 💕</p></div>
+    <div class="coupon" onclick="redeemCoupon(this)"><div class="tear-l"></div><div class="tear-r"></div><span class="coupon-badge">FOREVER</span><span class="coupon-icon">💃</span><p class="coupon-title">Surprise Date</p><p class="coupon-desc">A mystery date planned just for you. All you do is show up and smile 🌹</p></div>
+  </div>
+  <p class="coupon-hint">← Swipe to see more coupons →</p>
+</section>
+
+<div class="sec-sep"><span>✦</span></div>
 
 <!-- ═══════ SCRATCH CARD ═══════ -->
 <section class="scratch-section">
@@ -614,6 +774,31 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   <div class="reason-item"><span class="reason-num">07</span><p class="reason-text">Simply <strong>everything</strong> — every little imperfect, perfect thing about you. You are my world. 🌍💕</p></div>
 </section>
 
+<!-- ═══════ LOVE METER ═══════ -->
+<div class="sec-sep"><span>✦</span></div>
+<section class="meter-section">
+  <h2 class="s-title reveal">💗 Love Meter</h2>
+  <p class="s-sub reveal">Measuring how much I love you...</p>
+  <div class="love-meter reveal">
+    <div class="meter-ring" id="meterRing">
+      <svg viewBox="0 0 220 220">
+        <defs><linearGradient id="meterGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff6b9d"/>
+          <stop offset="50%" stop-color="#c44dff"/>
+          <stop offset="100%" stop-color="#ffd700"/>
+        </linearGradient></defs>
+        <circle class="ring-bg" cx="110" cy="110" r="100"/>
+        <circle class="ring-fill" cx="110" cy="110" r="100"/>
+      </svg>
+      <span class="meter-value" id="meterVal">0%</span>
+    </div>
+    <p class="meter-label">Love Level</p>
+    <p class="meter-text">Oops… it broke the scale! My love for you is unmeasurable, infinite, and eternal. The meter simply can't contain it. 💕♾️</p>
+  </div>
+</section>
+
+<div class="sec-sep"><span>✦</span></div>
+
 <!-- ═══════ CELEBRATE ═══════ -->
 <section class="celebrate-section reveal">
   <p>Ready to party? 🎉</p>
@@ -621,7 +806,8 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 </section>
 
 <footer>
-  <span class="foot-icon">💕</span>
+  <span class="infinity-heart">💕</span>
+  <p class="final-msg">To the moon & back, forever & always</p>
   <p>Made with infinite love for Tan Ying Xin · Happy Birthday, my love 🎂</p>
   <p style="margin-top:6px;font-size:.8rem;opacity:.3">April 9, 2026</p>
 </footer>
@@ -1004,7 +1190,7 @@ function megaCelebrate(){
 const io=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
 },{threshold:.15});
-document.querySelectorAll('.reveal,.reason-item').forEach(el=>io.observe(el));
+document.querySelectorAll('.reveal,.reason-item,.tl-item').forEach(el=>io.observe(el));
 
 // ═══════════════════════════════════════
 //  MUSIC (Web Audio API — Happy Birthday)
@@ -1085,9 +1271,11 @@ function sfx(type){
 (function(){
   const S=[
     ['.hero','Home'],['.cake-section','Cake'],['.gift-section','Gift'],
-    ['.letter-section','Letter'],['.balloon-section','Balloons'],['.wishes-section','Wishes'],
-    ['.spinner-section','Spinner'],['.scratch-section','Scratch'],['.jar-section','Wish Jar'],
-    ['.quiz-section','Quiz'],['.photo-section','Photo'],['.reasons-section','Reasons']
+    ['.letter-section','Letter'],['.balloon-section','Balloons'],['.timeline-section','Story'],
+    ['.wishes-section','Wishes'],['.spinner-section','Spinner'],['.coupon-section','Coupons'],
+    ['.scratch-section','Scratch'],['.jar-section','Wish Jar'],
+    ['.quiz-section','Quiz'],['.photo-section','Photo'],['.reasons-section','Reasons'],
+    ['.meter-section','Love Meter']
   ];
   const nav=document.getElementById('navDots');
   S.forEach(([sel,label])=>{
@@ -1145,6 +1333,76 @@ function sfx(type){
     setTimeout(function(){cur++;render();},1200);
   }
   render();
+})();
+
+// ═══════════════════════════════════════
+//  LOVE COUPONS
+// ═══════════════════════════════════════
+function redeemCoupon(el){
+  if(el.classList.contains('redeemed'))return;
+  el.classList.add('redeemed');sfx('chime');
+  const r=el.getBoundingClientRect();
+  createBurst({clientX:r.left+r.width/2,clientY:r.top+r.height/2},10);
+  confettiBurst(30);
+}
+
+// ═══════════════════════════════════════
+//  LOVE METER ANIMATION
+// ═══════════════════════════════════════
+(function(){
+  const ring=document.getElementById('meterRing');
+  if(!ring)return;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        ring.classList.add('active');
+        const el=document.getElementById('meterVal');
+        let v=0;
+        const anim=()=>{
+          v+=1;if(v>100)v=100;
+          el.textContent=v+'%';
+          if(v>=100){
+            el.textContent='∞';
+            el.style.fontSize='4rem';
+            createBurst({clientX:innerWidth/2,clientY:ring.getBoundingClientRect().top+110},14);
+            firework(fW*.5,fH*.45);
+            sfx('tada');
+            return;
+          }
+          requestAnimationFrame(anim);
+        };
+        setTimeout(anim,500);
+        obs.unobserve(ring);
+      }
+    });
+  },{threshold:.4});
+  obs.observe(ring);
+})();
+
+// ═══════════════════════════════════════
+//  PARALLAX DECORATIONS
+// ═══════════════════════════════════════
+(function(){
+  const items=['🌸','💖','✨','🌟','💕','🦋','🌙','⭐','💫','🌷','🎀','💜'];
+  const pdecos=[];
+  const docH=Math.max(document.body.scrollHeight,3000);
+  for(let i=0;i<14;i++){
+    const el=document.createElement('span');el.className='pdeco';
+    el.textContent=items[i%items.length];
+    el.style.left=(3+Math.random()*94)+'%';
+    el.style.top=(Math.random()*docH)+'px';
+    el.style.fontSize=(Math.random()*.8+.9)+'rem';
+    el.style.opacity=(.06+Math.random()*.08).toFixed(2);
+    el.dataset.speed=(Math.random()*.3+.05).toFixed(2);
+    document.querySelector('.content').appendChild(el);
+    pdecos.push(el);
+  }
+  window.addEventListener('scroll',()=>{
+    pdecos.forEach(p=>{
+      const spd=parseFloat(p.dataset.speed);
+      p.style.transform=`translateY(${-scrollY*spd}px)`;
+    });
+  },{passive:true});
 })();
 
 </script>
