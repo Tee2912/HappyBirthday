@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta property="og:title" content="Happy Birthday Ying Xin 💕">
+<meta property="og:title" content="Happy Birthday Darling 💕">
 <meta property="og:description" content="A special birthday surprise made with love 🎂✨">
 <meta name="theme-color" content="#0d001a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
-<title>Happy Birthday Tan Ying Xin 💕</title>
+<title>Happy Birthday Darling 💕</title>
 <style>
 :root{--pk:#ff6b9d;--pp:#c44dff;--gd:#ffd700;--cy:#6bf5ff;
   --gl:rgba(255,255,255,.07);--gb:rgba(255,255,255,.18)}
@@ -2002,6 +2002,108 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 /* ═══════ FOOTER LOVE COUNTER ═══════ */
 .love-days{margin-top:16px;font-size:1rem;color:rgba(255,255,255,.55);font-style:italic}
 .love-days strong{color:var(--gd);font-size:1.3rem;font-weight:900}
+
+/* ═══════ THE SECRET LOVE STORY — EASTER EGGS ═══════ */
+
+/* ═══════ THE LOCKET — Fragment Tracker ═══════ */
+.locket{position:fixed;bottom:90px;right:24px;z-index:9998;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0;transform:translateY(20px);transition:all .6s;pointer-events:none}
+.locket.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.locket-heart{font-size:1.6rem;filter:drop-shadow(0 0 6px rgba(212,168,83,.4));animation:locketPulse 3s ease-in-out infinite;transition:transform .3s}
+.locket:hover .locket-heart{transform:scale(1.2)}
+.locket-count{font-size:.55rem;color:rgba(212,168,83,.5);font-weight:700;letter-spacing:1px}
+@keyframes locketPulse{0%,100%{filter:drop-shadow(0 0 6px rgba(212,168,83,.3))}50%{filter:drop-shadow(0 0 14px rgba(212,168,83,.6))}}
+
+/* Locket Panel */
+.locket-panel{position:fixed;bottom:140px;right:24px;z-index:9998;width:260px;padding:20px;
+  background:rgba(13,0,26,.92);backdrop-filter:blur(20px);border:1px solid rgba(212,168,83,.25);
+  border-radius:18px;box-shadow:0 16px 50px rgba(0,0,0,.5),0 0 30px rgba(212,168,83,.1);
+  transform:scale(.9) translateY(10px);opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.17,.67,.21,1.37)}
+.locket-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
+.locket-panel-title{font-size:.85rem;color:rgba(212,168,83,.8);font-weight:700;text-align:center;margin-bottom:12px;letter-spacing:1px}
+.locket-hearts{display:flex;justify-content:center;gap:8px;margin-bottom:12px}
+.locket-slot{font-size:1.2rem;opacity:.25;transition:all .5s;filter:grayscale(1)}
+.locket-slot.found{opacity:1;filter:grayscale(0);animation:slotGlow 2s ease-in-out infinite}
+@keyframes slotGlow{0%,100%{filter:drop-shadow(0 0 4px rgba(212,168,83,.3))}50%{filter:drop-shadow(0 0 12px rgba(212,168,83,.7))}}
+.locket-hint{font-size:.7rem;color:rgba(255,255,255,.35);text-align:center;font-style:italic;line-height:1.5;min-height:30px}
+
+/* Fragment Card Overlay */
+.frag-overlay{position:fixed;inset:0;z-index:999998;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:all .4s}
+.frag-overlay.show{opacity:1;pointer-events:auto}
+.frag-card{max-width:420px;width:90%;padding:32px;border-radius:20px;
+  background:linear-gradient(135deg,#FFF8E7,#FFF0D4);border:2px solid rgba(212,168,83,.4);
+  box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 40px rgba(212,168,83,.15);
+  transform:scale(.8);transition:transform .5s cubic-bezier(.17,.67,.21,1.37);text-align:center}
+.frag-overlay.show .frag-card{transform:scale(1)}
+.frag-card-header{font-size:.7rem;color:rgba(212,168,83,.7);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.frag-card-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,rgba(212,168,83,.5),transparent);margin:12px auto}
+.frag-card-text{font-family:'Dancing Script',cursive;font-size:1.15rem;color:#4A3728;line-height:1.8;font-style:italic;padding:8px 0}
+.frag-card-progress{font-size:.75rem;color:rgba(212,168,83,.6);margin-top:8px}
+.frag-card-btn{margin-top:16px;padding:10px 30px;border:none;border-radius:40px;
+  background:linear-gradient(135deg,#D4A853,#F0C75E);color:#4A3728;font-weight:700;font-size:.9rem;
+  cursor:pointer;font-family:inherit;transition:transform .2s;box-shadow:0 4px 16px rgba(212,168,83,.3)}
+.frag-card-btn:hover{transform:scale(1.05)}
+
+/* Grand Reveal */
+.grand-reveal{position:fixed;inset:0;z-index:999999;background:#FFF8E7;overflow-y:auto;
+  opacity:0;pointer-events:none;transition:opacity 1s}
+.grand-reveal.show{opacity:1;pointer-events:auto}
+.grand-letter{max-width:600px;margin:0 auto;padding:60px 30px 80px;text-align:center}
+.grand-letter h2{font-family:'Dancing Script',cursive;font-size:2rem;color:#4A3728;margin-bottom:30px}
+.grand-letter .gl-intro{font-size:1rem;color:#6B5B4B;line-height:1.9;margin-bottom:30px}
+.grand-letter .gl-frag{font-family:'Dancing Script',cursive;font-size:1.1rem;color:#4A3728;
+  line-height:1.8;padding:16px 20px;margin:14px 0;border-left:3px solid rgba(212,168,83,.4);
+  text-align:left;opacity:0;transform:translateY(20px);transition:all .8s ease}
+.grand-letter .gl-frag.visible{opacity:1;transform:translateY(0)}
+.grand-letter .gl-divider{width:40px;height:2px;background:rgba(212,168,83,.4);margin:20px auto}
+.grand-letter .gl-closing{font-size:1rem;color:#6B5B4B;line-height:1.9;margin-top:30px}
+.grand-letter .gl-sig{font-family:'Dancing Script',cursive;font-size:1.3rem;color:#D4A853;margin-top:20px}
+.grand-letter .gl-close{margin-top:30px;padding:14px 40px;border:none;border-radius:50px;
+  background:linear-gradient(135deg,#D4A853,#F0C75E);color:#4A3728;font-size:1rem;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:transform .2s;box-shadow:0 6px 24px rgba(212,168,83,.3)}
+.grand-letter .gl-close:hover{transform:scale(1.05)}
+
+/* Hint: Hero subtle glow */
+.hint-glow{animation:hintGlow 8s ease-in-out infinite}
+@keyframes hintGlow{0%,85%,100%{text-shadow:inherit}90%{text-shadow:0 0 20px rgba(212,168,83,.6),0 0 40px rgba(212,168,83,.3)}}
+/* Hint: Whisper text */
+.hero-whisper{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);font-size:.65rem;
+  color:rgba(212,168,83,0);font-style:italic;transition:color 1s;pointer-events:none;white-space:nowrap}
+.hero-whisper.show{color:rgba(212,168,83,.15)}
+/* Hint: Bow wiggle */
+.hint-bow{animation:bowWiggle 4s ease-in-out infinite!important}
+@keyframes bowWiggle{0%,100%{transform:translateX(-50%) rotate(0)}40%{transform:translateX(-50%) rotate(-4deg)}60%{transform:translateX(-50%) rotate(4deg)}}
+/* Hint: Shimmer word */
+.hint-shimmer{position:relative;display:inline}
+.hint-shimmer::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(212,168,83,.15) 50%,transparent 60%);
+  background-size:250% 100%;animation:shimmerHint 12s linear infinite;pointer-events:none}
+@keyframes shimmerHint{0%,80%,100%{background-position:200% 0}85%{background-position:-200% 0}}
+/* Hint: Footer stars */
+.footer-star{cursor:pointer;display:inline-block;transition:all .3s;margin:0 8px}
+.footer-star:hover{filter:drop-shadow(0 0 8px rgba(212,168,83,.5))}
+.star-blink-1{animation:starBlink 15s ease infinite}
+.star-blink-2{animation:starBlink 15s 1s ease infinite}
+.star-blink-3{animation:starBlink 15s 2s ease infinite}
+@keyframes starBlink{0%,90%,94%,100%{opacity:.4}92%{opacity:1}}
+/* Hint: Bottom patience */
+.hint-patience{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);font-size:.65rem;
+  color:rgba(212,168,83,0);transition:color 2s;pointer-events:none;font-style:italic}
+.hint-patience.show{color:rgba(212,168,83,.15)}
+/* Hint: Compass on photo */
+.hint-compass{position:absolute;top:8px;right:8px;font-size:12px;animation:compassSpin 20s linear infinite;
+  opacity:.4;z-index:2;cursor:help}
+@keyframes compassSpin{to{transform:rotate(360deg)}}
+/* Bonus: iloveyou burst */
+.iloveyou-overlay{position:fixed;inset:0;z-index:99999;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.iloveyou-text{font-family:'Dancing Script',cursive;font-size:clamp(1.5rem,5vw,3rem);color:var(--pk);
+  text-shadow:0 0 20px rgba(255,107,157,.5);opacity:0;animation:ilyFade 5s ease forwards}
+@keyframes ilyFade{0%{opacity:0;transform:scale(.5)}15%{opacity:1;transform:scale(1.1)}25%{transform:scale(1)}85%{opacity:1}100%{opacity:0;transform:scale(1.2)}}
+
+@media(max-width:520px){
+  .locket{bottom:80px;right:12px}
+  .locket-panel{right:12px;left:12px;width:auto;bottom:120px}
+  .frag-card{padding:24px 18px}
+}
 </style>
 </head>
 <body>
@@ -2043,7 +2145,7 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 <section class="hero" id="heroSection">
   <p class="hero-label">✨ A special day for a special girl ✨</p>
   <span class="hero-title">Happy Birthday</span>
-  <span class="hero-name">Tan Ying Xin</span>
+  <span class="hero-name">Darling</span>
   <div class="hearts-row">
     <span>💖</span><span>🌸</span><span>💝</span><span>🌸</span><span>💖</span>
   </div>
@@ -2055,11 +2157,11 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 <!-- ═══════ RIBBON ═══════ -->
 <div class="ribbon">
   <div class="ribbon-track">
-    <span>🎂 Happy Birthday</span><span>💖 Tan Ying Xin</span>
+    <span>🎂 Happy Birthday</span><span>💖 Darling</span>
     <span>🎉 You Are Loved</span><span>✨ Today Is Your Day</span>
     <span>🌸 Shine Bright</span><span>🥂 Cheers To You</span>
     <span>🎈 Make A Wish</span><span>💫 My Love</span>
-    <span>🎂 Happy Birthday</span><span>💖 Tan Ying Xin</span>
+    <span>🎂 Happy Birthday</span><span>💖 Darling</span>
     <span>🎉 You Are Loved</span><span>✨ Today Is Your Day</span>
     <span>🌸 Shine Bright</span><span>🥂 Cheers To You</span>
     <span>🎈 Make A Wish</span><span>💫 My Love</span>
@@ -2080,7 +2182,7 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
     <div class="cake-tiers">
       <div class="cake-t cake-t3">🌸✨🌸</div>
       <div class="cake-t cake-t2">💕 My Love 💕</div>
-      <div class="cake-t cake-t1">🎂 Ying Xin 🎂</div>
+      <div class="cake-t cake-t1">🎂 Darling 🎂</div>
     </div>
     <div class="cake-plate"></div>
   </div>
@@ -2107,7 +2209,7 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   </div>
   <p class="gift-hint" id="giftHint">Click to unwrap! 🎁</p>
   <div class="gift-msg glass" id="giftMsg">
-    You are the most precious gift in MY life, Ying Xin. Every moment with you is a treasure I hold close to my heart. Happy birthday, my love. 💕
+    You are the most precious gift in MY life, Darling. Every moment with you is a treasure I hold close to my heart. Happy birthday, my love. 💕
   </div>
 </section>
 
@@ -2120,7 +2222,7 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
     <p class="env-hint" id="envHint">Click to open ✨</p>
   </div>
   <div class="letter-card glass glass-glow" id="letterCard">
-    <h3>My Dearest Ying Xin,</h3>
+    <h3>My Dearest Darling,</h3>
     <p class="letter-body" id="letterBody"></p>
     <p class="letter-sig" id="letterSig">— With all my love, forever & always 💕</p>
   </div>
@@ -2288,7 +2390,7 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   <div class="scratch-wrap reveal" id="scratchWrap">
     <div class="scratch-msg">
       <span class="sc-emoji">🏆💖</span>
-      <span class="sc-text">You are the best thing that ever happened to me, Ying Xin. I love you to the moon and back! 🌙💕</span>
+      <span class="sc-text">You are the best thing that ever happened to me, Darling. I love you to the moon and back! 🌙💕</span>
     </div>
     <canvas id="scratch-canvas"></canvas>
   </div>
@@ -2392,9 +2494,9 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   <div class="polaroid reveal" onclick="createBurst(event,10)">
     <div class="photo-box">
       <span>🌸</span>
-      <p>Add a photo of Ying Xin here</p>
+      <p>Add a photo of Darling here</p>
     </div>
-    <div class="pol-caption">My Ying Xin 💕</div>
+    <div class="pol-caption">My Darling 💕</div>
   </div>
 </section>
 
@@ -2454,7 +2556,7 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 <footer>
   <span class="infinity-heart">💕</span>
   <p class="final-msg">To the moon & back, forever & always</p>
-  <p>Made with infinite love for Tan Ying Xin · Happy Birthday, my love 🎂</p>
+  <p>Made with infinite love for Darling · Happy Birthday, my love 🎂</p>
   <p style="margin-top:6px;font-size:.8rem;opacity:.3">April 9, 2026</p>
 </footer>
 
@@ -2675,7 +2777,7 @@ setInterval(()=>{
 //  CAKE CANDLES
 // ═══════════════════════════════════════
 const candleEls=[...'0123'].map(i=>document.getElementById('c'+i));
-const cakeMsgs=['1 down… keep going! 💨','2 down… almost! 🌬️','3 down… one more! 💫','🎉 All out! Your wish will come true, Ying Xin! 💕'];
+const cakeMsgs=['1 down… keep going! 💨','2 down… almost! 🌬️','3 down… one more! 💫','🎉 All out! Your wish will come true, Darling! 💕'];
 let candlesLeft=4;
 function blowCandle(){
   if(!candlesLeft){candlesLeft=4;candleEls.forEach(c=>c.classList.remove('out'));
@@ -2719,7 +2821,7 @@ I still remember the way my heart skipped a beat the first time I saw you. That 
 
 Thank you for being exactly who you are — wonderfully, perfectly, beautifully you. You make me want to be a better person, just to deserve someone as amazing as you.
 
-Happy Birthday, Ying Xin. May this year bring you everything your heart desires, and may you always know how deeply, madly, completely you are loved. 🌸💕`;
+Happy Birthday, Darling. May this year bring you everything your heart desires, and may you always know how deeply, madly, completely you are loved. 🌸💕`;
 
 let letterOpened=false;
 function openLetter(){
@@ -2981,10 +3083,10 @@ function sfx(type){
 // ═══════════════════════════════════════
 (function(){
   const QS=[
-    {q:'What special day is April 9th? 🗓️',o:['National Pizza Day 🍕','Ying Xin\'s Birthday! 🎂','World Sleep Day 😴','International Dance Day 💃'],a:1},
+    {q:'What special day is April 9th? 🗓️',o:['National Pizza Day 🍕','Darling\'s Birthday! 🎂','World Sleep Day 😴','International Dance Day 💃'],a:1},
     {q:'What\'s the sweetest birthday wish? 💫',o:['More homework 📚','Infinite love & happiness 💕','A pet dinosaur 🦕','Time travel powers ⏰'],a:1},
-    {q:'How amazing is Ying Xin on a scale? 🌟',o:['Pretty amazing','Super amazing','Beyond amazing','All of the above × infinity 💖'],a:3},
-    {q:'What does Ying Xin deserve? 🎁',o:['The whole world 🌍','All the stars ⭐','Endless happiness 😊','All of the above & more! 💝'],a:3},
+    {q:'How amazing is Darling on a scale? 🌟',o:['Pretty amazing','Super amazing','Beyond amazing','All of the above × infinity 💖'],a:3},
+    {q:'What does Darling deserve? 🎁',o:['The whole world 🌍','All the stars ⭐','Endless happiness 😊','All of the above & more! 💝'],a:3},
     {q:'How many times a day do I think of you? 💭',o:['Once a day','Every hour','Every minute','Every single second 💕'],a:3}
   ];
   let cur=0,sc=0;
@@ -2997,7 +3099,7 @@ function sfx(type){
       box.innerHTML='<div style="padding:20px;text-align:center">'+
         '<span style="font-size:4rem;display:block;margin-bottom:16px">'+em+'</span>'+
         '<p style="font-size:1.4rem;color:var(--gd);font-weight:900;margin-bottom:8px">'+sc+'/'+QS.length+' — '+tx+'</p>'+
-        '<p style="color:rgba(255,255,255,.6);margin-bottom:20px">Thanks for playing, Ying Xin! 💕</p>'+
+        '<p style="color:rgba(255,255,255,.6);margin-bottom:20px">Thanks for playing, Darling! 💕</p>'+
         '<button class="quiz-restart" onclick="location.reload()">🔄 Play Again</button></div>';
       confettiBurst(80);firework(fW*.5,fH*.4);sfx('tada');return;
     }
@@ -3957,7 +4059,7 @@ function toggleAchievePanel(){
     try{sfx('tada');}catch(e){}
     fwCount++;
     const counter=document.getElementById('fwCounter');if(counter)counter.textContent='Fireworks: '+fwCount;
-    if(fwCount===10){const msg=document.getElementById('fwMsg');if(msg){msg.classList.add('show');msg.textContent='✨ You light up my sky, Ying Xin! 🌠';}}
+    if(fwCount===10){const msg=document.getElementById('fwMsg');if(msg){msg.classList.add('show');msg.textContent='✨ You light up my sky, Darling! 🌠';}}
     if(typeof unlockAchievement==='function'&&fwCount>=5)unlockAchievement('fw-master');
   }
   function loop(){
@@ -4146,7 +4248,7 @@ function toggleAchievePanel(){
     ctx.fillText(score>=50?'🏆 Amazing!':'🎉 Great job!',200,120);
     ctx.font='bold 48px Poppins';ctx.fillStyle='#ffd700';ctx.fillText(score,200,200);
     ctx.font='16px Poppins';ctx.fillStyle='rgba(255,255,255,.6)';
-    ctx.fillText('points caught for Ying Xin! 💕',200,240);
+    ctx.fillText('points caught for Darling! 💕',200,240);
     ctx.fillText('Tap to play again',200,340);
     if(score>=50&&typeof unlockAchievement==='function')unlockAchievement('heart-catcher');
     try{sfx('tada');confettiBurst(80);}catch(e){}
@@ -4232,7 +4334,7 @@ function toggleAchievePanel(){
         confettiBurst(300);
         for(let i=0;i<5;i++)setTimeout(()=>firework(fW*(0.15+i*0.175),fH*0.25),i*300);
         const t=document.createElement('div');t.className='milestone-toast';
-        t.innerHTML='<span class="milestone-toast-emoji">🎂</span><span class="milestone-toast-text">It\'s Your Special Day!</span><span class="milestone-toast-sub">Happy Birthday, Ying Xin! 🎉💖</span>';
+        t.innerHTML='<span class="milestone-toast-emoji">🎂</span><span class="milestone-toast-text">It\'s Your Special Day!</span><span class="milestone-toast-sub">Happy Birthday, Darling! 🎉💖</span>';
         document.body.appendChild(t);setTimeout(()=>t.remove(),5000);
       },3000);
     }
@@ -4252,6 +4354,266 @@ function toggleAchievePanel(){
     d.onclick=()=>el.scrollIntoView({behavior:'smooth',block:'start'});d.dataset.sel=sel;nav.appendChild(d);
   });
 })();
+
+// ═══════════════════════════════════════
+//  THE SECRET LOVE STORY
+// ═══════════════════════════════════════
+
+// ═══════════════════════════════════════
+//  THE SECRET LOVE STORY — EASTER EGG SYSTEM
+// ═══════════════════════════════════════
+(function(){
+const FRAGS=[
+  "I wasn't looking for anything the day I found you. I think that's how the best stories begin — by accident, by fate, by some beautiful collision I'll never stop being grateful for.",
+  "I remember the exact moment I knew. You laughed at something small and silly, and the sound rearranged every plan I'd ever made. Suddenly, every future I imagined had you in it.",
+  "I started collecting the little things — the way you hum when you're thinking, how you always hold your cup with both hands, the way your eyes find mine across any room. My heart became a museum of you.",
+  "There were quiet nights I wanted to tell you everything — that you make ordinary days feel like miracles, that your voice is my favourite sound in any language, that I fall in love with you again every single morning.",
+  "You taught me that love isn't just the fireworks. It's the 2 AM conversations. The comfortable silence. The way you reach for my hand without thinking. The small, sacred ordinary.",
+  "If I could go back and whisper one thing to the person I was before you — I'd say: 'Hold on. Someone is coming who will make every broken road make sense.'",
+  "So here is my secret, hidden where only the most curious heart would find it: You are my favourite story. My longest dream. My best surprise. Happy Birthday, Darling. Every version of my life chooses you. 💛"
+];
+const HINTS=[
+  "There are secrets woven into this page...",
+  "You found one! Six more hide in the details...",
+  "Curiosity suits you. Keep exploring...",
+  "Halfway there. Try something unexpected...",
+  "The story is taking shape...",
+  "So close. Have you tried everything?",
+  "One more. The best one. Complete your journey...",
+  "✨ The story is complete. Open your letter. ✨"
+];
+
+// State
+let eeState;
+try{eeState=JSON.parse(localStorage.getItem('darling_love_notes'))||{};}catch(e){eeState={};}
+if(!eeState.found)eeState.found=[];
+function saveEE(){try{localStorage.setItem('darling_love_notes',JSON.stringify(eeState));}catch(e){}}
+
+// ── LOCKET UI ──
+const locket=document.querySelector('.locket');
+const locketPanel=document.querySelector('.locket-panel');
+let locketOpen=false;
+
+function updateLocket(){
+  const n=eeState.found.length;
+  const count=document.querySelector('.locket-count');
+  if(count)count.textContent=n+'/7';
+  document.querySelectorAll('.locket-slot').forEach((s,i)=>{
+    s.classList.toggle('found',eeState.found.includes(i+1));
+  });
+  const hint=document.querySelector('.locket-hint');
+  if(hint)hint.textContent=HINTS[Math.min(n,7)];
+  // Show locket after first find or after 2 min
+  if(n>0&&locket)locket.classList.add('show');
+}
+
+if(locket){
+  locket.onclick=()=>{locketOpen=!locketOpen;locketPanel.classList.toggle('open',locketOpen);};
+  // Auto-show after 2 minutes
+  setTimeout(()=>{if(locket)locket.classList.add('show');},120000);
+  updateLocket();
+}
+
+function foundFragment(num){
+  if(eeState.found.includes(num))return;
+  eeState.found.push(num);saveEE();updateLocket();
+  // Show card
+  showFragCard(num);
+  if(typeof sfx==='function')sfx('chime');
+  if(typeof createBurst==='function')createBurst({clientX:innerWidth/2,clientY:innerHeight/2},15);
+  // Check completion
+  if(eeState.found.length>=7)setTimeout(showGrandReveal,1500);
+}
+
+function showFragCard(num){
+  const overlay=document.getElementById('fragOverlay');
+  document.getElementById('fragNum').textContent=num;
+  document.getElementById('fragText').textContent=FRAGS[num-1];
+  document.getElementById('fragProgress').textContent=eeState.found.length+' of 7 collected';
+  overlay.classList.add('show');
+}
+window.closeFragCard=function(){document.getElementById('fragOverlay').classList.remove('show');};
+
+// ── GRAND REVEAL ──
+function showGrandReveal(){
+  const gr=document.getElementById('grandReveal');if(!gr)return;
+  gr.classList.add('show');
+  if(typeof confettiBurst==='function')confettiBurst(200);
+  // Stagger fragments
+  gr.querySelectorAll('.gl-frag').forEach((f,i)=>{
+    setTimeout(()=>f.classList.add('visible'),1500+i*2000);
+  });
+}
+window.closeGrandReveal=function(){
+  document.getElementById('grandReveal').classList.remove('show');
+  if(typeof confettiBurst==='function')confettiBurst(100);
+};
+window.openGrandReveal=function(){if(eeState.found.length>=7)showGrandReveal();};
+
+// ═══════ FRAGMENT TRIGGERS ═══════
+
+// Fragment 1: Triple-click hero title
+(function(){
+  const hero=document.querySelector('.hero-title');if(!hero)return;
+  let clicks=0,timer;
+  hero.addEventListener('click',()=>{
+    clicks++;clearTimeout(timer);timer=setTimeout(()=>clicks=0,600);
+    if(clicks>=3){clicks=0;foundFragment(1);}
+  });
+  // Hint: whisper text
+  const whisper=document.createElement('span');whisper.className='hero-whisper';
+  whisper.textContent='psst... try clicking me three times';
+  hero.closest('.hero')?.appendChild(whisper);
+  setInterval(()=>{whisper.classList.add('show');setTimeout(()=>whisper.classList.remove('show'),3000);},90000);
+  setTimeout(()=>{whisper.classList.add('show');setTimeout(()=>whisper.classList.remove('show'),3000);},60000);
+})();
+
+// Fragment 2: Long-press gift bow (3 seconds)
+(function(){
+  const bow=document.getElementById('giftBow');if(!bow)return;
+  bow.classList.add('hint-bow');
+  let timer,holding=false;
+  function start(e){e.preventDefault();holding=true;timer=setTimeout(()=>{if(holding)foundFragment(2);},3000);}
+  function end(){holding=false;clearTimeout(timer);}
+  bow.addEventListener('pointerdown',start);bow.addEventListener('pointerup',end);
+  bow.addEventListener('pointerleave',end);
+})();
+
+// Fragment 3: Type "love" on keyboard
+(function(){
+  let buf='';
+  document.addEventListener('keydown',e=>{
+    buf+=e.key.toLowerCase();if(buf.length>10)buf=buf.slice(-10);
+    if(buf.includes('love'))  {buf='';foundFragment(3);}
+  });
+  // Hint: add shimmer to the word "love" in the gift message
+  const gm=document.querySelector('.gift-msg');
+  if(gm)gm.innerHTML=gm.innerHTML.replace(/(love)/i,'<span class="hint-shimmer">$1</span>');
+})();
+
+// Fragment 4: Click footer stars in pattern L-R-L
+(function(){
+  const footer=document.querySelector('footer');if(!footer)return;
+  // Add stars
+  const starRow=document.createElement('div');starRow.style.cssText='margin-top:12px';
+  starRow.innerHTML='<span class="footer-star star-blink-1" data-pos="L">⭐</span><span class="footer-star star-blink-2" data-pos="R">⭐</span><span class="footer-star star-blink-3" data-pos="L">⭐</span>';
+  footer.appendChild(starRow);
+  let seq=[],timer;
+  starRow.querySelectorAll('.footer-star').forEach(s=>{
+    s.addEventListener('click',()=>{
+      seq.push(s.dataset.pos);clearTimeout(timer);timer=setTimeout(()=>seq=[],5000);
+      s.style.transform='scale(1.3)';setTimeout(()=>s.style.transform='',300);
+      if(seq.length>=3){
+        const last3=seq.slice(-3).join('');
+        if(last3==='LRL'){seq=[];foundFragment(4);}
+      }
+    });
+  });
+})();
+
+// Fragment 5: Scroll to bottom + wait 10 seconds
+(function(){
+  let timer,patience=document.createElement('div');
+  patience.className='hint-patience';patience.textContent='patience reveals secrets...';
+  document.body.appendChild(patience);
+  function check(){
+    const atBottom=scrollY+innerHeight>=document.documentElement.scrollHeight-30;
+    if(atBottom&&!timer){
+      patience.classList.add('show');
+      timer=setTimeout(()=>{foundFragment(5);patience.classList.remove('show');},10000);
+    } else if(!atBottom&&timer){clearTimeout(timer);timer=null;patience.classList.remove('show');}
+  }
+  window.addEventListener('scroll',check);
+})();
+
+// Fragment 6: Press R key while photo section visible, or rotate phone
+(function(){
+  const photo=document.querySelector('.photo-section');if(!photo)return;
+  // Add compass hint
+  const compass=document.createElement('span');compass.className='hint-compass';compass.textContent='🧭';
+  compass.title='try a new perspective (R)';
+  photo.querySelector('.polaroid')?.style.setProperty('position','relative');
+  photo.querySelector('.polaroid')?.appendChild(compass);
+  // Desktop: R key
+  let photoVisible=false;
+  const obs=new IntersectionObserver(e=>{photoVisible=e[0]?.isIntersecting;},{threshold:.5});
+  obs.observe(photo);
+  document.addEventListener('keydown',e=>{if((e.key==='r'||e.key==='R')&&photoVisible)foundFragment(6);});
+  // Mobile: orientation change
+  window.addEventListener('orientationchange',()=>{if(photoVisible)foundFragment(6);});
+})();
+
+// Fragment 7: All 6 others found (auto-trigger)
+// Handled in foundFragment() — when length reaches 7, it includes this
+
+// ═══════ BONUS EASTER EGGS ═══════
+
+// Type "iloveyou"
+(function(){
+  let buf='',cooldown=false;
+  document.addEventListener('keydown',e=>{
+    buf+=e.key.toLowerCase();if(buf.length>15)buf=buf.slice(-15);
+    if(buf.includes('iloveyou')&&!cooldown){
+      buf='';cooldown=true;setTimeout(()=>cooldown=false,60000);
+      // Love explosion
+      const ov=document.createElement('div');ov.className='iloveyou-overlay';
+      const txt=document.createElement('div');txt.className='iloveyou-text';
+      txt.textContent='I love you too, Darling 💕';ov.appendChild(txt);
+      document.body.appendChild(ov);
+      // Hearts rising
+      const HEARTS=['💖','💕','💝','💗','❤️','🩷','💘'];
+      for(let i=0;i<40;i++){
+        setTimeout(()=>{
+          const h=document.createElement('span');h.className='float-item';
+          h.textContent=HEARTS[Math.floor(Math.random()*HEARTS.length)];
+          h.style.left=Math.random()*100+'vw';h.style.bottom='-30px';
+          h.style.setProperty('--sz',(Math.random()*1.5+1)+'rem');
+          h.style.setProperty('--dur',(Math.random()*2+2)+'s');
+          document.body.appendChild(h);setTimeout(()=>h.remove(),4500);
+        },i*100);
+      }
+      setTimeout(()=>ov.remove(),5500);
+      if(typeof sfx==='function')sfx('sparkle');
+    }
+  });
+})();
+
+// Click moon 5 times in timeline → shooting star shower
+(function(){
+  const moonEmoji=document.querySelector('.tl-emoji'); // Find a moon
+  document.querySelectorAll('.tl-emoji').forEach(em=>{
+    if(em.textContent.includes('🌙')||em.textContent.includes('🌱')){
+      let clicks=0,timer;
+      em.style.cursor='pointer';
+      em.addEventListener('click',e=>{
+        e.stopPropagation();clicks++;clearTimeout(timer);timer=setTimeout(()=>clicks=0,10000);
+        if(clicks>=5){
+          clicks=0;
+          // Shooting star shower
+          for(let i=0;i<15;i++){
+            setTimeout(()=>{if(typeof addShootingStar==='function')addShootingStar();},i*200);
+          }
+          const msg=document.createElement('div');msg.className='milestone-toast';
+          msg.innerHTML='<span class="milestone-toast-emoji">🌠</span><span class="milestone-toast-text">Make a wish!</span>';
+          document.body.appendChild(msg);setTimeout(()=>msg.remove(),4500);
+          if(typeof sfx==='function')sfx('sparkle');
+        }
+      });
+    }
+  });
+})();
+
+// Auto-trigger Fragment 7 when 6 others found
+function checkAutoFragment7(){
+  if(eeState.found.length===6&&!eeState.found.includes(7)){
+    setTimeout(()=>foundFragment(7),3000);
+  }
+}
+// Check on each fragment find
+const origFoundFragment=foundFragment;
+// (already handled inside foundFragment with the length>=7 check)
+
+})();
 </script>
 
 <!-- ═══════ MINI-GAME OVERLAY ═══════ -->
@@ -4259,6 +4621,59 @@ function toggleAchievePanel(){
   <div class="game-hud"><span>🎮 Catch the Hearts!</span></div>
   <canvas id="game-canvas"></canvas>
   <button class="game-btn" onclick="hideGame()" style="margin-top:16px">✕ Close Game</button>
+</div>
+
+<!-- what's the magic word? type it anywhere... -->
+
+<!-- ═══════ THE LOCKET — Fragment Tracker ═══════ -->
+<div class="locket" id="locket">
+  <span class="locket-heart">💛</span>
+  <span class="locket-count">0/7</span>
+</div>
+<div class="locket-panel" id="locketPanel">
+  <div class="locket-panel-title">🔮 Secret Love Notes</div>
+  <div class="locket-hearts">
+    <span class="locket-slot" data-n="1">🩶</span>
+    <span class="locket-slot" data-n="2">🩶</span>
+    <span class="locket-slot" data-n="3">🩶</span>
+    <span class="locket-slot" data-n="4">🩶</span>
+    <span class="locket-slot" data-n="5">🩶</span>
+    <span class="locket-slot" data-n="6">🩶</span>
+    <span class="locket-slot" data-n="7">🩶</span>
+  </div>
+  <p class="locket-hint">There are secrets woven into this page...</p>
+</div>
+
+<!-- Fragment Card Overlay -->
+<div class="frag-overlay" id="fragOverlay" onclick="closeFragCard()">
+  <div class="frag-card" onclick="event.stopPropagation()">
+    <div class="frag-card-header">✦ Secret Love Note — Fragment <span id="fragNum">1</span>/7 ✦</div>
+    <div class="frag-card-divider"></div>
+    <p class="frag-card-text" id="fragText"></p>
+    <div class="frag-card-divider"></div>
+    <p class="frag-card-progress" id="fragProgress">1 of 7 collected</p>
+    <button class="frag-card-btn" onclick="closeFragCard()">💛 Keep Exploring</button>
+  </div>
+</div>
+
+<!-- Grand Reveal -->
+<div class="grand-reveal" id="grandReveal">
+  <div class="grand-letter">
+    <h2>A Letter For You</h2>
+    <p class="gl-intro">My Darling,<br><br>You found all seven pieces. Of course you did — you've always been the kind of person who notices the little things. That's one of a thousand reasons I love you.<br><br>Here, collected together, is the story I hid across this page. Our story:</p>
+    <div class="gl-divider"></div>
+    <p class="gl-frag">"I wasn't looking for anything the day I found you. I think that's how the best stories begin — by accident, by fate, by some beautiful collision I'll never stop being grateful for."</p>
+    <p class="gl-frag">"I remember the exact moment I knew. You laughed at something small and silly, and the sound rearranged every plan I'd ever made. Suddenly, every future I imagined had you in it."</p>
+    <p class="gl-frag">"I started collecting the little things — the way you hum when you're thinking, how you always hold your cup with both hands, the way your eyes find mine across any room. My heart became a museum of you."</p>
+    <p class="gl-frag">"There were quiet nights I wanted to tell you everything — that you make ordinary days feel like miracles, that your voice is my favourite sound in any language, that I fall in love with you again every single morning."</p>
+    <p class="gl-frag">"You taught me that love isn't just the fireworks. It's the 2 AM conversations. The comfortable silence. The way you reach for my hand without thinking. The small, sacred ordinary."</p>
+    <p class="gl-frag">"If I could go back and whisper one thing to the person I was before you — I'd say: 'Hold on. Someone is coming who will make every broken road make sense.'"</p>
+    <p class="gl-frag">"So here is my secret, hidden where only the most curious heart would find it: You are my favourite story. My longest dream. My best surprise. Happy Birthday, Darling. Every version of my life chooses you. 💛"</p>
+    <div class="gl-divider"></div>
+    <p class="gl-closing">Every word is true. Every hidden piece was placed with love. Just like every day with you.<br><br>Happy Birthday, my love. 💛</p>
+    <p class="gl-sig">Forever and always yours</p>
+    <button class="gl-close" onclick="closeGrandReveal()">💛 Close With Love</button>
+  </div>
 </div>
 </body>
 </html>
