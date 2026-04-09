@@ -1852,6 +1852,156 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 .achieve-name{color:#fff;font-weight:700;font-size:.82rem;display:block}
 .achieve-desc{color:rgba(255,255,255,.35);font-size:.68rem;display:block}
 
+
+/* ═══════ MEGA UPGRADE CSS ═══════ */
+
+/* ═══════ 3D HERO TILT ═══════ */
+.hero{perspective:1200px}
+.hero-inner{transform-style:preserve-3d;transition:transform .15s ease-out;will-change:transform}
+.hero-title{transform:translateZ(60px)}
+.hero-name{transform:translateZ(40px)}
+.hearts-row{transform:translateZ(80px)}
+.date-pill{transform:translateZ(30px)}
+.countdown{transform:translateZ(20px)}
+
+/* ═══════ CINEMATIC ENTRANCES ═══════ */
+.reveal-zoom{opacity:0;transform:scale(.3);filter:blur(12px);transition:opacity .8s,transform .8s cubic-bezier(.17,.67,.21,1.37),filter .8s}
+.reveal-zoom.visible{opacity:1;transform:scale(1);filter:blur(0)}
+.reveal-slide-left{opacity:0;transform:translateX(-80px) rotate(-5deg);transition:opacity .8s,transform .8s cubic-bezier(.17,.67,.21,1.37)}
+.reveal-slide-left.visible{opacity:1;transform:translateX(0) rotate(0)}
+.reveal-slide-right{opacity:0;transform:translateX(80px) rotate(5deg);transition:opacity .8s,transform .8s cubic-bezier(.17,.67,.21,1.37)}
+.reveal-slide-right.visible{opacity:1;transform:translateX(0) rotate(0)}
+.reveal-expand{opacity:0;clip-path:circle(0% at 50% 50%);transition:opacity .9s,clip-path .9s cubic-bezier(.4,0,.2,1)}
+.reveal-expand.visible{opacity:1;clip-path:circle(100% at 50% 50%)}
+.reveal-drop{opacity:0;transform:translateY(-60px) rotate(3deg);transition:opacity .7s,transform .7s cubic-bezier(.17,.67,.21,1.37)}
+.reveal-drop.visible{opacity:1;transform:translateY(0) rotate(0)}
+
+/* ═══════ PRISMATIC GLASS SWEEP ═══════ */
+.glass{position:relative;overflow:hidden}
+.glass::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,219,112,.08) 45%,rgba(255,107,157,.06) 50%,rgba(107,245,255,.08) 55%,transparent 60%);
+  background-size:250% 100%;background-position:200% 0;transition:background-position .8s ease;border-radius:inherit}
+.glass:hover::before{background-position:-200% 0}
+
+/* ═══════ MAGNETIC BUTTONS ═══════ */
+.magnetic-btn{position:relative;overflow:hidden;transition:transform .2s cubic-bezier(.17,.67,.21,1.37),box-shadow .2s}
+.magnetic-btn::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.12),transparent 60%);opacity:0;transition:opacity .3s}
+.magnetic-btn:hover::after{opacity:1}
+
+/* ═══════ AURORA GRADIENT TITLES ═══════ */
+.s-title{background:linear-gradient(90deg,var(--pk),var(--gd),var(--cy),var(--pp),var(--pk));
+  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;animation:shimmer 4s linear infinite,titleGlow 3s ease-in-out infinite}
+
+/* ═══════ SCROLL-SNAP ═══════ */
+@media(min-width:521px){
+  html{scroll-snap-type:y proximity;scroll-padding-top:20px}
+  .hero,.cake-section,.gift-section,.letter-section,.timeline-section,.celebrate-section{scroll-snap-align:start}
+}
+
+/* ═══════ ENHANCED MOBILE ═══════ */
+@media(max-width:768px){
+  .wish-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-title{font-size:clamp(2.5rem,8vw,5rem)!important}
+  .hero-name{font-size:clamp(1.8rem,6vw,3.5rem)!important}
+  .tl-item:nth-child(odd) .tl-content{margin-right:0;margin-left:46px}
+}
+@media(max-width:520px){
+  .coupon-track{display:grid!important;grid-template-columns:repeat(2,1fr);gap:12px;overflow-x:visible;padding:16px;scroll-snap-type:none}
+  .coupon{flex:unset!important;min-height:160px}
+  .nav-dots{display:none!important}
+  .fab-group{bottom:16px;right:50%;transform:translateX(50%);flex-direction:row}
+  .reason-item{padding:14px 16px}.reason-num{font-size:1.5rem;min-width:36px}
+  .blob{transform:scale(.5)!important}
+  .mem-grid{gap:6px!important;max-width:320px}
+}
+@media(max-width:380px){
+  .wish-grid{grid-template-columns:1fr!important}
+  .countdown{gap:8px}.cd-box{min-width:60px;padding:8px 12px}
+}
+
+/* ═══════ FIREWORKS LAUNCHER ═══════ */
+.fw-section{padding:80px 20px;text-align:center}
+.fw-canvas-wrap{position:relative;display:inline-block;width:100%;max-width:800px;border-radius:22px;overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);margin-top:20px}
+#fw-canvas{width:100%;height:55vh;min-height:300px;display:block;
+  background:linear-gradient(180deg,#060018 0%,#0d001a 40%,#1a0035 100%);cursor:crosshair;border-radius:22px}
+.fw-counter{margin-top:14px;color:rgba(255,255,255,.4);font-size:.88rem}
+.fw-msg{margin-top:12px;color:var(--gd);font-weight:700;font-size:1.1rem;opacity:0;transition:opacity .6s}
+.fw-msg.show{opacity:1}
+
+/* ═══════ DOODLE CANVAS ═══════ */
+.doodle-section{padding:80px 20px;text-align:center}
+.doodle-wrap{display:inline-block;border-radius:22px;overflow:hidden;margin-top:20px}
+#doodle-canvas{display:block;border-radius:22px;touch-action:none;
+  background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.doodle-controls{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.doodle-btn{padding:8px 20px;border:1px solid rgba(255,255,255,.2);border-radius:30px;
+  background:rgba(255,255,255,.08);color:#fff;font-size:.85rem;font-weight:700;cursor:pointer;
+  transition:all .3s;font-family:inherit}
+.doodle-btn:hover,.doodle-btn.active{background:rgba(255,107,157,.2);border-color:var(--pk)}
+.doodle-msg{margin-top:14px;color:var(--gd);font-weight:700;font-size:1rem;opacity:0;transition:opacity .6s}
+.doodle-msg.show{opacity:1}
+
+/* ═══════ MESSAGE BOTTLES ═══════ */
+.bottles-section{padding:80px 20px 0;text-align:center;position:relative;overflow:hidden;min-height:500px}
+.bottles-ocean{position:relative;height:200px;margin-top:30px;overflow:hidden}
+.ocean-wave{position:absolute;bottom:0;left:-50%;width:200%;height:60px;border-radius:50%;opacity:.15;
+  animation:oceanWave 6s ease-in-out infinite}
+.ocean-wave:nth-child(1){background:var(--pp);animation-duration:6s;bottom:0}
+.ocean-wave:nth-child(2){background:var(--pk);animation-duration:8s;bottom:10px;animation-delay:-2s}
+.ocean-wave:nth-child(3){background:var(--cy);animation-duration:7s;bottom:20px;animation-delay:-4s;opacity:.08}
+@keyframes oceanWave{0%,100%{transform:translateX(-5%) scaleY(.8)}50%{transform:translateX(5%) scaleY(1.2)}}
+.bottle{position:absolute;font-size:2.4rem;cursor:pointer;transition:all .5s;
+  animation:bottleBob 3s ease-in-out infinite,bottleDrift 18s linear infinite;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4))}
+.bottle:hover{transform:scale(1.2)!important;filter:drop-shadow(0 4px 20px rgba(255,107,157,.5))}
+@keyframes bottleBob{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-15px) rotate(5deg)}}
+@keyframes bottleDrift{from{left:110%}to{left:-15%}}
+.bottle-msg-overlay{position:fixed;inset:0;z-index:99997;background:rgba(13,0,26,.85);backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:all .4s}
+.bottle-msg-overlay.show{opacity:1;pointer-events:auto}
+.bottle-msg-card{max-width:400px;padding:30px;border-radius:22px;background:rgba(255,255,255,.08);border:1px solid var(--gb);
+  backdrop-filter:blur(20px);text-align:center;transform:scale(.8) translateY(40px);transition:all .5s cubic-bezier(.17,.67,.21,1.37)}
+.bottle-msg-overlay.show .bottle-msg-card{transform:scale(1) translateY(0)}
+.bottle-msg-emoji{font-size:3rem;display:block;margin-bottom:12px}
+.bottle-msg-text{color:rgba(255,255,255,.85);font-size:1.05rem;line-height:1.7;margin-bottom:16px}
+.bottle-close{padding:10px 30px;border:none;border-radius:40px;background:linear-gradient(135deg,var(--pk),var(--pp));
+  color:#fff;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .2s}
+.bottle-close:hover{transform:scale(1.05)}
+.bottles-counter{margin-top:16px;color:rgba(255,255,255,.4);font-size:.88rem}
+
+/* ═══════ MINI-GAME: CATCH HEARTS ═══════ */
+.game-overlay{position:fixed;inset:0;z-index:999997;background:rgba(13,0,26,.92);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:all .4s}
+.game-overlay.show{opacity:1;pointer-events:auto}
+#game-canvas{border-radius:16px;max-width:95vw;touch-action:none}
+.game-hud{display:flex;gap:20px;margin-bottom:12px;color:#fff;font-weight:700;font-size:1rem}
+.game-hud span{background:rgba(255,255,255,.1);padding:6px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.15)}
+.game-start,.game-end{text-align:center;padding:40px}
+.game-end-score{font-size:3rem;font-weight:900;color:var(--gd);margin:10px 0}
+.game-end-msg{color:rgba(255,255,255,.7);font-size:1.1rem;margin-bottom:20px;line-height:1.6}
+.game-btn{padding:14px 40px;border:none;border-radius:50px;background:linear-gradient(135deg,var(--pk),var(--pp));
+  color:#fff;font-size:1.1rem;font-weight:800;cursor:pointer;font-family:inherit;transition:transform .2s;margin:6px}
+.game-btn:hover{transform:scale(1.05)}
+.game-btn.gold{background:linear-gradient(135deg,var(--gd),#ffaa00);color:#1a0030}
+
+/* ═══════ PHOTO LIGHTBOX ═══════ */
+.lightbox{position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,.9);display:flex;align-items:center;
+  justify-content:center;opacity:0;pointer-events:none;transition:all .4s;cursor:pointer}
+.lightbox.show{opacity:1;pointer-events:auto}
+.lightbox-inner{max-width:90vw;max-height:85vh;transform:scale(.7);transition:transform .5s cubic-bezier(.17,.67,.21,1.37);
+  animation:lightboxFloat 4s ease-in-out infinite;border-radius:12px;overflow:hidden;
+  box-shadow:0 0 60px rgba(255,107,157,.4),0 0 120px rgba(196,77,255,.2)}
+.lightbox.show .lightbox-inner{transform:scale(1)}
+@keyframes lightboxFloat{0%,100%{transform:scale(1) rotate(-1deg)}50%{transform:scale(1.02) rotate(1deg)}}
+.lightbox-close{position:fixed;top:20px;right:20px;font-size:2rem;color:#fff;background:none;border:none;
+  cursor:pointer;z-index:99999;opacity:.6;transition:opacity .3s}
+.lightbox-close:hover{opacity:1}
+
+/* ═══════ FOOTER LOVE COUNTER ═══════ */
+.love-days{margin-top:16px;font-size:1rem;color:rgba(255,255,255,.55);font-style:italic}
+.love-days strong{color:var(--gd);font-size:1.3rem;font-weight:900}
 </style>
 </head>
 <body>
@@ -2185,6 +2335,56 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   <div class="quiz-box glass glass-glow reveal" id="quizBox"></div>
 </section>
 
+<!-- ═══════ FIREWORKS LAUNCHER ═══════ -->
+<div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 C300,100 600,10 900,60 C1100,90 1300,30 1440,55 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.07)"/><path d="M0,80 C400,50 800,100 1200,65 L1440,75 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.05)"/></svg></div>
+<section class="fw-section">
+  <h2 class="s-title reveal">🎆 Fireworks Show</h2>
+  <p class="s-sub reveal">Click anywhere on the sky to launch fireworks! 🌠</p>
+  <div class="fw-canvas-wrap reveal">
+    <canvas id="fw-canvas"></canvas>
+  </div>
+  <p class="fw-counter" id="fwCounter">Fireworks: 0</p>
+  <p class="fw-msg" id="fwMsg"></p>
+</section>
+
+<!-- ═══════ DOODLE CANVAS ═══════ -->
+<section class="doodle-section">
+  <h2 class="s-title reveal">🎨 Draw Your Birthday Wish</h2>
+  <p class="s-sub reveal">Doodle something special — the brush paints in rainbow! 🌈</p>
+  <div class="doodle-wrap reveal">
+    <canvas id="doodle-canvas"></canvas>
+  </div>
+  <div class="doodle-controls reveal">
+    <button class="doodle-btn doodle-sz" data-sz="3" onclick="doodleSize(3)">S</button>
+    <button class="doodle-btn doodle-sz active" data-sz="6" onclick="doodleSize(6)">M</button>
+    <button class="doodle-btn doodle-sz" data-sz="14" onclick="doodleSize(14)">L</button>
+    <button class="doodle-btn" onclick="doodleSparkle(this)">✨ Sparkle</button>
+    <button class="doodle-btn" onclick="doodleEraser(this)">🧹 Eraser</button>
+    <button class="doodle-btn" onclick="doodleClear()">🗑️ Clear</button>
+    <button class="doodle-btn" onclick="doodleSave()">💾 Save</button>
+  </div>
+  <p class="doodle-msg" id="doodleMsg">Whatever you drew, it's beautiful — just like you 💕</p>
+</section>
+
+<!-- ═══════ MESSAGE BOTTLES ═══════ -->
+<div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C200,90 500,20 800,70 C1000,100 1300,40 1440,60 L1440,120 L0,120 Z" fill="rgba(107,245,255,0.06)"/><path d="M0,75 C360,40 720,100 1080,55 L1440,80 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.04)"/></svg></div>
+<section class="bottles-section">
+  <h2 class="s-title reveal">🌊 Message in a Bottle</h2>
+  <p class="s-sub reveal">Click the bottles floating in the ocean to find love notes 💕</p>
+  <p class="bottles-counter" id="bottlesCount">Bottles Found: 0/10</p>
+  <div class="bottles-ocean" id="bottlesOcean">
+    <div class="ocean-wave"></div>
+    <div class="ocean-wave"></div>
+    <div class="ocean-wave"></div>
+  </div>
+</section>
+<div class="bottle-msg-overlay" id="bottleMsgOverlay" onclick="closeBottle()">
+  <div class="bottle-msg-card" onclick="event.stopPropagation()">
+    <span class="bottle-msg-emoji">💌</span>
+    <p class="bottle-msg-text" id="bottleMsgText"></p>
+    <button class="bottle-close" onclick="closeBottle()">Close 💕</button>
+  </div>
+</div>
 <!-- ═══════ PHOTO ═══════ -->
 <section class="photo-section">
   <h2 class="s-title reveal">📸 My Favourite Person</h2>
@@ -3572,6 +3772,493 @@ function toggleAchievePanel(){
   }
 })();
 
+
+// ═══════════════════════════════════════
+//  MEGA UPGRADE FEATURES
+// ═══════════════════════════════════════
+
+// ═══════════════════════════════════════
+//  3D HERO TILT (Mouse + Gyroscope)
+// ═══════════════════════════════════════
+(function(){
+  const hero=document.querySelector('.hero');if(!hero)return;
+  // Wrap hero children in .hero-inner
+  const inner=document.createElement('div');inner.className='hero-inner';
+  while(hero.firstChild)inner.appendChild(hero.firstChild);
+  hero.appendChild(inner);
+  let tx=0,ty=0,cx=0,cy=0;
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  if(window.matchMedia('(pointer:fine)').matches){
+    hero.addEventListener('mousemove',e=>{
+      const r=hero.getBoundingClientRect();
+      tx=((e.clientX-r.left)/r.width-.5)*2;
+      ty=((e.clientY-r.top)/r.height-.5)*2;
+    });
+    hero.addEventListener('mouseleave',()=>{tx=0;ty=0;});
+  } else {
+    window.addEventListener('deviceorientation',e=>{
+      if(e.gamma!==null){tx=Math.max(-1,Math.min(1,e.gamma/30));ty=Math.max(-1,Math.min(1,(e.beta-45)/30));}
+    });
+  }
+  function animate(){
+    cx=lerp(cx,tx,.08);cy=lerp(cy,ty,.08);
+    inner.style.transform=`rotateY(${cx*8}deg) rotateX(${cy*-5}deg)`;
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ═══════════════════════════════════════
+//  CINEMATIC SECTION ENTRANCES
+// ═══════════════════════════════════════
+(function(){
+  const map={
+    '.cake-section .s-title':'reveal-zoom','.cake-section .s-sub':'reveal-zoom',
+    '.gift-section .s-title':'reveal-slide-left','.gift-section .s-sub':'reveal-slide-left',
+    '.letter-section .s-title':'reveal-slide-right','.letter-section .s-sub':'reveal-slide-right',
+    '.balloon-section .s-title':'reveal-expand','.balloon-section .s-sub':'reveal-expand',
+    '.memory-section .s-title':'reveal-drop','.memory-section .s-sub':'reveal-drop',
+    '.wishes-section .s-title':'reveal-slide-left','.wishes-section .s-sub':'reveal-slide-left',
+    '.spinner-section .s-title':'reveal-zoom','.spinner-section .s-sub':'reveal-zoom',
+    '.fortune-section .s-title':'reveal-expand','.fortune-section .s-sub':'reveal-expand',
+    '.photo-section .s-title':'reveal-drop','.photo-section .s-sub':'reveal-drop',
+    '.meter-section .s-title':'reveal-zoom','.meter-section .s-sub':'reveal-zoom'
+  };
+  Object.entries(map).forEach(([sel,cls])=>{
+    const el=document.querySelector(sel);
+    if(el){el.classList.remove('reveal');el.classList.add(cls);io.observe(el);}
+  });
+})();
+
+// ═══════════════════════════════════════
+//  MAGNETIC BUTTON MICRO-INTERACTIONS
+// ═══════════════════════════════════════
+(function(){
+  if(!window.matchMedia('(pointer:fine)').matches)return;
+  const btns=document.querySelectorAll('.blow-btn,.spin-btn,.jar-btn,.mega-btn,.fortune-btn,.mem-restart-btn,.game-btn');
+  btns.forEach(b=>b.classList.add('magnetic-btn'));
+  let mx=0,my=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  function tick(){
+    document.querySelectorAll('.magnetic-btn').forEach(btn=>{
+      const r=btn.getBoundingClientRect();
+      const bx=r.left+r.width/2,by=r.top+r.height/2;
+      const dx=mx-bx,dy=my-by,dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<100){
+        const f=(1-dist/100)*.35;
+        btn.style.transform=`translate(${dx*f}px,${dy*f}px)`;
+        const px=((mx-r.left)/r.width*100),py=((my-r.top)/r.height*100);
+        btn.style.setProperty('--mx',px+'%');btn.style.setProperty('--my',py+'%');
+      } else {
+        btn.style.transform='';
+      }
+    });
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// ═══════════════════════════════════════
+//  CONSTELLATION NETWORK (enhance starfield)
+// ═══════════════════════════════════════
+(function(){
+  if(!window.matchMedia('(pointer:fine)').matches)return;
+  let cmx=-999,cmy=-999;
+  document.addEventListener('mousemove',e=>{cmx=e.clientX;cmy=e.clientY;});
+  // Override drawBg to add constellation effect
+  const origStarsDraw=window.drawBg; // won't work since drawBg uses rAF internally
+  // Instead, hook into the bg canvas animation loop by adding a post-draw step
+  const bgCanvas=document.getElementById('bg-canvas');
+  if(!bgCanvas)return;
+  const ctx=bgCanvas.getContext('2d');
+  // Create overlay canvas for constellations
+  const cCanvas=document.createElement('canvas');
+  cCanvas.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none';
+  bgCanvas.parentNode.insertBefore(cCanvas,bgCanvas.nextSibling);
+  function resizeC(){cCanvas.width=innerWidth;cCanvas.height=innerHeight;}
+  resizeC();addEventListener('resize',resizeC);
+  const cCtx=cCanvas.getContext('2d');
+  function drawConstellation(){
+    cCtx.clearRect(0,0,cCanvas.width,cCanvas.height);
+    if(cmx<0)return requestAnimationFrame(drawConstellation);
+    const active=[];
+    STARS.forEach(s=>{
+      const sx=s.x*cCanvas.width,sy=s.y*cCanvas.height;
+      const d=Math.sqrt((cmx-sx)**2+(cmy-sy)**2);
+      if(d<200){
+        active.push({x:sx,y:sy,d});
+        // Brighten star
+        const a=1-d/200;
+        cCtx.globalAlpha=a*.6;
+        cCtx.fillStyle='#fff';
+        cCtx.shadowBlur=8;cCtx.shadowColor='var(--pk)';
+        cCtx.beginPath();cCtx.arc(sx,sy,s.r*2,0,Math.PI*2);cCtx.fill();
+        cCtx.shadowBlur=0;
+      }
+    });
+    // Draw connections
+    for(let i=0;i<active.length;i++){
+      for(let j=i+1;j<active.length;j++){
+        const dd=Math.sqrt((active[i].x-active[j].x)**2+(active[i].y-active[j].y)**2);
+        if(dd<150){
+          cCtx.globalAlpha=(1-dd/150)*.25;
+          cCtx.strokeStyle='#ff6b9d';cCtx.lineWidth=1;
+          cCtx.shadowBlur=4;cCtx.shadowColor='#ff6b9d';
+          cCtx.beginPath();cCtx.moveTo(active[i].x,active[i].y);
+          cCtx.lineTo(active[j].x,active[j].y);cCtx.stroke();
+          cCtx.shadowBlur=0;
+        }
+      }
+    }
+    // Cursor glow
+    cCtx.globalAlpha=.06;
+    const grd=cCtx.createRadialGradient(cmx,cmy,0,cmx,cmy,150);
+    grd.addColorStop(0,'#ff6b9d');grd.addColorStop(1,'transparent');
+    cCtx.fillStyle=grd;cCtx.fillRect(cmx-150,cmy-150,300,300);
+    cCtx.globalAlpha=1;
+    requestAnimationFrame(drawConstellation);
+  }
+  drawConstellation();
+})();
+
+// ═══════════════════════════════════════
+//  FIREWORKS LAUNCHER
+// ═══════════════════════════════════════
+(function(){
+  const canvas=document.getElementById('fw-canvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let W,H;function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  resize();addEventListener('resize',resize);
+  const rockets=[],particles=[];let fwCount=0;
+  const FW_COLORS=['#ff6b9d','#ffd700','#c44dff','#7affdb','#ff9a3c','#6bf5ff','#fff','#f06292'];
+  class Rocket{
+    constructor(tx,ty){this.x=tx;this.y=H;this.tx=tx;this.ty=ty;
+      this.speed=12+Math.random()*4;this.trail=[];this.alive=true;
+      const dx=tx-this.x,dy=ty-this.y,d=Math.sqrt(dx*dx+dy*dy);
+      this.vx=dx/d*this.speed;this.vy=dy/d*this.speed;}
+    update(){
+      this.trail.push({x:this.x,y:this.y,a:1});if(this.trail.length>20)this.trail.shift();
+      this.trail.forEach(t=>t.a*=.9);
+      this.x+=this.vx;this.y+=this.vy;
+      if(Math.abs(this.x-this.tx)<15&&Math.abs(this.y-this.ty)<15){this.alive=false;explode(this.tx,this.ty);}
+    }
+    draw(){
+      this.trail.forEach(t=>{ctx.globalAlpha=t.a*.6;ctx.fillStyle='#ffd700';ctx.beginPath();ctx.arc(t.x,t.y,2,0,Math.PI*2);ctx.fill();});
+      ctx.globalAlpha=1;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(this.x,this.y,3,0,Math.PI*2);ctx.fill();
+    }
+  }
+  function explode(x,y){
+    const n=70+Math.floor(Math.random()*40);
+    const c=FW_COLORS[Math.floor(Math.random()*FW_COLORS.length)];
+    for(let i=0;i<n;i++){
+      const ang=i/n*Math.PI*2,spd=2+Math.random()*5;
+      particles.push({x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,a:1,c,r:Math.random()*2.5+1,g:.06,fr:.97});
+    }
+    try{sfx('tada');}catch(e){}
+    fwCount++;
+    const counter=document.getElementById('fwCounter');if(counter)counter.textContent='Fireworks: '+fwCount;
+    if(fwCount===10){const msg=document.getElementById('fwMsg');if(msg){msg.classList.add('show');msg.textContent='✨ You light up my sky, Ying Xin! 🌠';}}
+    if(typeof unlockAchievement==='function'&&fwCount>=5)unlockAchievement('fw-master');
+  }
+  function loop(){
+    ctx.fillStyle='rgba(6,0,24,.2)';ctx.fillRect(0,0,W,H);
+    for(let i=rockets.length-1;i>=0;i--){rockets[i].update();rockets[i].draw();if(!rockets[i].alive)rockets.splice(i,1);}
+    for(let i=particles.length-1;i>=0;i--){
+      const p=particles[i];p.vx*=p.fr;p.vy*=p.fr;p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.a-=.015;
+      ctx.globalAlpha=Math.max(0,p.a);ctx.fillStyle=p.c;ctx.shadowBlur=4;ctx.shadowColor=p.c;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+      if(p.a<=0)particles.splice(i,1);
+    }
+    ctx.globalAlpha=1;
+    requestAnimationFrame(loop);
+  }
+  loop();
+  canvas.addEventListener('click',e=>{
+    const r=canvas.getBoundingClientRect();
+    rockets.push(new Rocket(e.clientX-r.left,e.clientY-r.top));
+    try{
+      const c=new(AudioContext||webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();
+      o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.setValueAtTime(200,c.currentTime);
+      o.frequency.exponentialRampToValueAtTime(800,c.currentTime+.4);
+      g.gain.setValueAtTime(.04,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);
+      o.start();o.stop(c.currentTime+.45);setTimeout(()=>c.close(),1000);
+    }catch(e){}
+  });
+})();
+
+// ═══════════════════════════════════════
+//  BIRTHDAY DOODLE CANVAS
+// ═══════════════════════════════════════
+(function(){
+  const canvas=document.getElementById('doodle-canvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  canvas.width=320;canvas.height=280;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,320,280);
+  let drawing=false,hue=0,brushSize=6,sparkle=false,eraser=false,strokePts=0;
+  ctx.lineJoin='round';ctx.lineCap='round';
+  function getPos(e){const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;
+    return{x:(t.clientX-r.left)*(canvas.width/r.width),y:(t.clientY-r.top)*(canvas.height/r.height)};}
+  function startDraw(e){e.preventDefault();drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);}
+  function draw(e){
+    e.preventDefault();if(!drawing)return;const p=getPos(e);
+    hue=(hue+2)%360;
+    ctx.strokeStyle=eraser?'#fff':`hsl(${hue},85%,60%)`;
+    ctx.lineWidth=eraser?brushSize*3:brushSize;
+    ctx.lineTo(p.x,p.y);ctx.stroke();ctx.beginPath();ctx.moveTo(p.x,p.y);
+    strokePts++;
+    if(sparkle&&!eraser&&Math.random()<.3){
+      const sp=document.createElement('span');sp.className='burst-item';sp.textContent='✨';
+      const r=canvas.getBoundingClientRect();
+      sp.style.left=(r.left+p.x*(r.width/canvas.width))+'px';
+      sp.style.top=(r.top+p.y*(r.height/canvas.height))+'px';
+      sp.style.setProperty('--tx',(Math.random()*40-20)+'px');sp.style.setProperty('--ty',(-20-Math.random()*30)+'px');
+      document.body.appendChild(sp);setTimeout(()=>sp.remove(),860);
+    }
+    if(strokePts===50){const msg=document.getElementById('doodleMsg');if(msg)msg.classList.add('show');}
+  }
+  function stopDraw(){drawing=false;}
+  canvas.addEventListener('mousedown',startDraw);canvas.addEventListener('mousemove',draw);
+  canvas.addEventListener('mouseup',stopDraw);canvas.addEventListener('mouseleave',stopDraw);
+  canvas.addEventListener('touchstart',startDraw,{passive:false});
+  canvas.addEventListener('touchmove',draw,{passive:false});
+  canvas.addEventListener('touchend',stopDraw);
+  // Controls
+  window.doodleSize=function(s){brushSize=s;document.querySelectorAll('.doodle-sz').forEach(b=>b.classList.remove('active'));
+    document.querySelector(`.doodle-sz[data-sz="${s}"]`)?.classList.add('active');};
+  window.doodleSparkle=function(btn){sparkle=!sparkle;btn.classList.toggle('active',sparkle);};
+  window.doodleEraser=function(btn){eraser=!eraser;btn.classList.toggle('active',eraser);};
+  window.doodleClear=function(){ctx.fillStyle='#fff';ctx.fillRect(0,0,320,280);strokePts=0;};
+  window.doodleSave=function(){const a=document.createElement('a');a.download='birthday-doodle.png';a.href=canvas.toDataURL();a.click();};
+})();
+
+// ═══════════════════════════════════════
+//  FLOATING MESSAGE BOTTLES
+// ═══════════════════════════════════════
+(function(){
+  const ocean=document.getElementById('bottlesOcean');if(!ocean)return;
+  const MSGS=['Every sunset reminds me of you 🌅','You owe me a hug! Redeem immediately 🤗',
+    'You are my home, my peace, my everything 🏡💕','I love the way you laugh at my silly jokes 😊',
+    'Meeting you was the best plot twist ever 📖✨','You make ordinary moments extraordinary 💫',
+    'I still get butterflies when I see you 🦋','Your happiness is my number one priority 💖',
+    'I\'d choose you in every lifetime 🌙','You are the best part of my story 🌹'];
+  let bottleCount=0,bottleIdx=0;
+  function spawnBottle(){
+    const b=document.createElement('span');b.className='bottle';b.textContent='🍾';
+    b.style.top=(30+Math.random()*100)+'px';
+    b.style.animationDuration=(15+Math.random()*10)+'s';
+    b.style.animationDelay=(Math.random()*-15)+'s';
+    b.onclick=function(){openBottle(b);};
+    ocean.appendChild(b);
+  }
+  for(let i=0;i<4;i++)spawnBottle();
+  setInterval(()=>{if(ocean.querySelectorAll('.bottle').length<4)spawnBottle();},5000);
+  function openBottle(b){
+    b.remove();bottleCount++;
+    const overlay=document.getElementById('bottleMsgOverlay');
+    const text=document.getElementById('bottleMsgText');
+    text.textContent=MSGS[bottleIdx%MSGS.length];bottleIdx++;
+    overlay.classList.add('show');
+    try{sfx('pop');}catch(e){}
+    const counter=document.getElementById('bottlesCount');
+    if(counter)counter.textContent='Bottles Found: '+bottleCount+'/10';
+    if(bottleCount>=10){if(typeof unlockAchievement==='function')unlockAchievement('bottle-master');}
+  }
+  window.closeBottle=function(){document.getElementById('bottleMsgOverlay').classList.remove('show');};
+})();
+
+// ═══════════════════════════════════════
+//  MINI-GAME: CATCH FALLING HEARTS
+// ═══════════════════════════════════════
+(function(){
+  let waveClicks=0,waveTimer;
+  document.addEventListener('click',e=>{
+    if(e.target.closest('.wave-sep')){
+      waveClicks++;clearTimeout(waveTimer);
+      waveTimer=setTimeout(()=>waveClicks=0,10000);
+      if(waveClicks>=5){waveClicks=0;showGame();}
+    }
+  });
+  window.showGame=function(){document.getElementById('gameOverlay').classList.add('show');showGameStart();};
+  window.hideGame=function(){document.getElementById('gameOverlay').classList.remove('show');};
+  const canvas=document.getElementById('game-canvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  canvas.width=400;canvas.height=500;
+  let gameActive=false,score=0,timeLeft=30,basket={x:200,w:60},items=[],spawnRate=500,lastSpawn=0;
+  const ITEMS=[{e:'💖',pts:1,w:.6},{e:'⭐',pts:2,w:.2},{e:'💛',pts:5,w:.1},{e:'💣',pts:-3,w:.1}];
+  function showGameStart(){
+    ctx.clearRect(0,0,400,500);ctx.fillStyle='rgba(13,0,26,.95)';ctx.fillRect(0,0,400,500);
+    ctx.textAlign='center';ctx.fillStyle='#fff';ctx.font='bold 24px Poppins';
+    ctx.fillText('🎮 Catch the Hearts!',200,150);ctx.font='16px Poppins';ctx.fillStyle='rgba(255,255,255,.6)';
+    ctx.fillText('Move basket ← → to catch hearts',200,200);ctx.fillText('💖=1pt  ⭐=2pt  💛=5pt  💣=-3pt',200,240);
+    ctx.fillText('Tap/Click to Start!',200,320);
+    canvas.onclick=startGame;
+  }
+  function startGame(){
+    canvas.onclick=null;gameActive=true;score=0;timeLeft=30;items=[];basket.x=200;spawnRate=500;
+    lastSpawn=performance.now();
+    const timer=setInterval(()=>{timeLeft--;if(timeLeft<=0){clearInterval(timer);endGame();}},1000);
+    function spawnItem(){
+      const r=Math.random();let cum=0;let type=ITEMS[0];
+      for(const it of ITEMS){cum+=it.w;if(r<cum){type=it;break;}}
+      items.push({x:Math.random()*(400-30)+15,y:-20,speed:2+Math.random()*2+(30-timeLeft)*.08,emoji:type.e,pts:type.pts,size:28});
+    }
+    function loop(){
+      if(!gameActive)return;
+      ctx.fillStyle='rgba(13,0,26,.95)';ctx.fillRect(0,0,400,500);
+      // HUD
+      ctx.textAlign='left';ctx.font='bold 16px Poppins';ctx.fillStyle='#ffd700';
+      ctx.fillText('Score: '+score,15,30);ctx.textAlign='right';ctx.fillStyle='#ff6b9d';
+      ctx.fillText('Time: '+timeLeft+'s',385,30);
+      // Basket
+      ctx.font='36px serif';ctx.textAlign='center';ctx.fillText('🧺',basket.x,480);
+      // Items
+      const now=performance.now();
+      if(now-lastSpawn>spawnRate){spawnItem();lastSpawn=now;spawnRate=Math.max(200,spawnRate-5);}
+      for(let i=items.length-1;i>=0;i--){
+        const it=items[i];it.y+=it.speed;
+        ctx.font=it.size+'px serif';ctx.fillText(it.emoji,it.x,it.y);
+        // Collision
+        if(it.y>455&&it.y<490&&Math.abs(it.x-basket.x)<40){
+          score+=it.pts;if(score<0)score=0;items.splice(i,1);
+          try{it.pts>0?sfx('chime'):sfx('pop');}catch(e){}continue;
+        }
+        if(it.y>520)items.splice(i,1);
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+  // Controls
+  document.addEventListener('keydown',e=>{
+    if(!gameActive)return;
+    if(e.key==='ArrowLeft')basket.x=Math.max(30,basket.x-18);
+    if(e.key==='ArrowRight')basket.x=Math.min(370,basket.x+18);
+  });
+  canvas.addEventListener('touchmove',e=>{
+    if(!gameActive)return;e.preventDefault();
+    const r=canvas.getBoundingClientRect();
+    basket.x=Math.max(30,Math.min(370,(e.touches[0].clientX-r.left)*(canvas.width/r.width)));
+  },{passive:false});
+  function endGame(){
+    gameActive=false;
+    ctx.fillStyle='rgba(13,0,26,.95)';ctx.fillRect(0,0,400,500);
+    ctx.textAlign='center';ctx.font='bold 20px Poppins';ctx.fillStyle='#fff';
+    ctx.fillText(score>=50?'🏆 Amazing!':'🎉 Great job!',200,120);
+    ctx.font='bold 48px Poppins';ctx.fillStyle='#ffd700';ctx.fillText(score,200,200);
+    ctx.font='16px Poppins';ctx.fillStyle='rgba(255,255,255,.6)';
+    ctx.fillText('points caught for Ying Xin! 💕',200,240);
+    ctx.fillText('Tap to play again',200,340);
+    if(score>=50&&typeof unlockAchievement==='function')unlockAchievement('heart-catcher');
+    try{sfx('tada');confettiBurst(80);}catch(e){}
+    canvas.onclick=()=>{showGameStart();};
+  }
+})();
+
+// ═══════════════════════════════════════
+//  PHOTO LIGHTBOX
+// ═══════════════════════════════════════
+(function(){
+  const polaroid=document.querySelector('.polaroid');if(!polaroid)return;
+  const lightbox=document.createElement('div');lightbox.className='lightbox';lightbox.id='lightbox';
+  lightbox.innerHTML='<button class="lightbox-close" onclick="closeLightbox()">✕</button><div class="lightbox-inner">'+polaroid.querySelector('.photo-box').outerHTML+'</div>';
+  document.body.appendChild(lightbox);
+  polaroid.addEventListener('click',e=>{e.stopPropagation();lightbox.classList.add('show');});
+  window.closeLightbox=function(){lightbox.classList.remove('show');};
+  lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();});
+})();
+
+// ═══════════════════════════════════════
+//  FOOTER LOVE COUNTER
+// ═══════════════════════════════════════
+(function(){
+  const footer=document.querySelector('footer');if(!footer)return;
+  const startDate=new Date('2024-01-01');// Adjust to actual start date
+  const days=Math.floor((new Date()-startDate)/(1000*60*60*24));
+  const p=document.createElement('p');p.className='love-days';
+  p.innerHTML='We\'ve shared <strong id="loveDaysCount">0</strong> beautiful days together 💕';
+  footer.insertBefore(p,footer.lastElementChild);
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{
+    if(e.isIntersecting){
+      let c=0;const el=document.getElementById('loveDaysCount');
+      const step=Math.max(1,Math.floor(days/60));
+      const anim=()=>{c=Math.min(c+step,days);el.textContent=c;if(c<days)requestAnimationFrame(anim);};
+      anim();obs.unobserve(p);
+    }});},{threshold:.5});
+  obs.observe(p);
+})();
+
+// ═══════════════════════════════════════
+//  AMBIENT SOUNDSCAPE (enhance music)
+// ═══════════════════════════════════════
+(function(){
+  const origStart=window.startMusic;
+  window.startMusic=function(){
+    origStart();if(!audioCtx)return;
+    // Ambient pad: C3+E3+G3 chord
+    [130.81,164.81,196].forEach(f=>{
+      const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      o.type='sine';o.frequency.value=f;g.gain.value=.015;
+      const lfo=audioCtx.createOscillator(),lfoG=audioCtx.createGain();
+      lfo.type='sine';lfo.frequency.value=.15;lfoG.gain.value=.008;
+      lfo.connect(lfoG);lfoG.connect(g.gain);lfo.start();
+      const filt=audioCtx.createBiquadFilter();filt.type='lowpass';filt.frequency.value=600;
+      o.connect(filt);filt.connect(g);g.connect(audioCtx.destination);o.start();
+    });
+    // Random sparkle sounds
+    function sparkleLoop(){
+      if(!musicPlaying)return;
+      const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      const pan=audioCtx.createStereoPanner?audioCtx.createStereoPanner():audioCtx.createGain();
+      if(pan.pan)pan.pan.value=Math.random()*2-1;
+      o.type='sine';o.frequency.value=1200+Math.random()*1200;
+      g.gain.setValueAtTime(.03,audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.3);
+      o.connect(g);g.connect(pan);pan.connect(audioCtx.destination);
+      o.start();o.stop(audioCtx.currentTime+.35);
+      setTimeout(sparkleLoop,3000+Math.random()*5000);
+    }
+    setTimeout(sparkleLoop,2000);
+  };
+})();
+
+// ═══════════════════════════════════════
+//  BIRTHDAY COUNTDOWN CONFETTI
+// ═══════════════════════════════════════
+(function(){
+  function checkBirthday(){
+    const now=new Date();
+    if(now.getMonth()===3&&now.getDate()===9){// April 9
+      setTimeout(()=>{
+        confettiBurst(300);
+        for(let i=0;i<5;i++)setTimeout(()=>firework(fW*(0.15+i*0.175),fH*0.25),i*300);
+        const t=document.createElement('div');t.className='milestone-toast';
+        t.innerHTML='<span class="milestone-toast-emoji">🎂</span><span class="milestone-toast-text">It\'s Your Special Day!</span><span class="milestone-toast-sub">Happy Birthday, Ying Xin! 🎉💖</span>';
+        document.body.appendChild(t);setTimeout(()=>t.remove(),5000);
+      },3000);
+    }
+  }
+  checkBirthday();
+})();
+
+// ═══════════════════════════════════════
+//  NAV DOTS FOR ALL NEW SECTIONS
+// ═══════════════════════════════════════
+(function(){
+  const nav=document.getElementById('navDots');if(!nav)return;
+  const extra=[['.fw-section','Fireworks'],['.doodle-section','Doodle'],['.bottles-section','Bottles']];
+  extra.forEach(([sel,label])=>{
+    const el=document.querySelector(sel);if(!el)return;
+    const d=document.createElement('div');d.className='nav-dot';d.dataset.label=label;
+    d.onclick=()=>el.scrollIntoView({behavior:'smooth',block:'start'});d.dataset.sel=sel;nav.appendChild(d);
+  });
+})();
 </script>
+
+<!-- ═══════ MINI-GAME OVERLAY ═══════ -->
+<div class="game-overlay" id="gameOverlay">
+  <div class="game-hud"><span>🎮 Catch the Hearts!</span></div>
+  <canvas id="game-canvas"></canvas>
+  <button class="game-btn" onclick="hideGame()" style="margin-top:16px">✕ Close Game</button>
+</div>
 </body>
 </html>
