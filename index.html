@@ -490,6 +490,1368 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 .infinity-heart{font-size:4rem;display:inline-block;animation:infinityPulse 2s ease-in-out infinite}
 @keyframes infinityPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 8px rgba(255,107,157,.5))}
   50%{transform:scale(1.15);filter:drop-shadow(0 0 20px rgba(255,107,157,.8))}}
+
+/* ═══════════════════════════════════════
+   NEW FEATURES CSS
+   ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   1. MORPHING LIQUID BLOBS
+   ═══════════════════════════════════════════════════ */
+.blob-container {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  filter: blur(80px);
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  will-change: transform, border-radius;
+}
+
+.blob-1 {
+  width: 420px;
+  height: 420px;
+  background: var(--pk);
+  top: 10%;
+  left: 15%;
+  animation: blobMorph1 18s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 380px;
+  height: 380px;
+  background: var(--pp);
+  top: 50%;
+  right: 10%;
+  animation: blobMorph2 22s ease-in-out infinite;
+}
+
+.blob-3 {
+  width: 340px;
+  height: 340px;
+  background: var(--gd);
+  bottom: 15%;
+  left: 30%;
+  animation: blobMorph3 20s ease-in-out infinite;
+}
+
+.blob-4 {
+  width: 300px;
+  height: 300px;
+  background: var(--cy);
+  top: 30%;
+  left: 55%;
+  animation: blobMorph4 25s ease-in-out infinite;
+}
+
+@keyframes blobMorph1 {
+  0%, 100% {
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%;
+    transform: translate(40px, -30px) scale(1.08);
+  }
+  50% {
+    border-radius: 50% 60% 30% 70% / 60% 40% 70% 30%;
+    transform: translate(-20px, 50px) scale(0.95);
+  }
+  75% {
+    border-radius: 30% 70% 60% 40% / 50% 30% 50% 70%;
+    transform: translate(30px, 20px) scale(1.05);
+  }
+}
+
+@keyframes blobMorph2 {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: translate(-50px, 30px) scale(1.1);
+  }
+  50% {
+    border-radius: 50% 50% 40% 60% / 40% 70% 50% 30%;
+    transform: translate(30px, -40px) scale(0.92);
+  }
+  75% {
+    border-radius: 70% 30% 60% 40% / 30% 50% 70% 50%;
+    transform: translate(-20px, -20px) scale(1.06);
+  }
+}
+
+@keyframes blobMorph3 {
+  0%, 100% {
+    border-radius: 50% 50% 60% 40% / 70% 30% 50% 50%;
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    border-radius: 40% 60% 30% 70% / 50% 50% 60% 40%;
+    transform: translate(60px, -20px) scale(1.12);
+  }
+  66% {
+    border-radius: 70% 30% 50% 50% / 30% 70% 40% 60%;
+    transform: translate(-40px, 30px) scale(0.9);
+  }
+}
+
+@keyframes blobMorph4 {
+  0%, 100% {
+    border-radius: 30% 70% 40% 60% / 60% 40% 70% 30%;
+    transform: translate(0, 0) scale(1);
+  }
+  20% {
+    border-radius: 60% 40% 70% 30% / 40% 60% 30% 70%;
+    transform: translate(-30px, 40px) scale(1.07);
+  }
+  40% {
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+    transform: translate(50px, -10px) scale(0.93);
+  }
+  60% {
+    border-radius: 40% 60% 30% 70% / 70% 30% 60% 40%;
+    transform: translate(20px, 30px) scale(1.1);
+  }
+  80% {
+    border-radius: 70% 30% 60% 40% / 30% 70% 40% 60%;
+    transform: translate(-40px, -30px) scale(0.96);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   2. SVG WAVE SEPARATORS
+   ═══════════════════════════════════════════════════ */
+.wave-sep {
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+}
+
+.wave-sep svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  animation: waveShift 8s linear infinite;
+}
+
+.wave-sep svg:nth-child(2) {
+  animation: waveShift 12s linear infinite reverse;
+  opacity: 0.7;
+}
+
+.wave-sep svg:nth-child(3) {
+  animation: waveShift 10s -3s linear infinite;
+  opacity: 0.5;
+}
+
+.wave-sep .wave-pink {
+  fill: rgba(255, 107, 157, 0.15);
+}
+
+.wave-sep .wave-purple {
+  fill: rgba(196, 77, 255, 0.12);
+}
+
+.wave-sep .wave-gold {
+  fill: rgba(255, 215, 0, 0.10);
+}
+
+@keyframes waveShift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   3. STAGGERED GRID REVEAL
+   ═══════════════════════════════════════════════════ */
+.stagger-item {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.7s cubic-bezier(.17, .67, .21, 1.37),
+              transform 0.7s cubic-bezier(.17, .67, .21, 1.37);
+}
+
+.stagger-item:nth-child(1) { transition-delay: 0s; }
+.stagger-item:nth-child(2) { transition-delay: 0.08s; }
+.stagger-item:nth-child(3) { transition-delay: 0.16s; }
+.stagger-item:nth-child(4) { transition-delay: 0.24s; }
+.stagger-item:nth-child(5) { transition-delay: 0.32s; }
+.stagger-item:nth-child(6) { transition-delay: 0.40s; }
+.stagger-item:nth-child(7) { transition-delay: 0.48s; }
+.stagger-item:nth-child(8) { transition-delay: 0.56s; }
+.stagger-item:nth-child(9) { transition-delay: 0.64s; }
+.stagger-item:nth-child(10) { transition-delay: 0.72s; }
+.stagger-item:nth-child(11) { transition-delay: 0.80s; }
+.stagger-item:nth-child(12) { transition-delay: 0.88s; }
+
+.stagger-item.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/* ═══════════════════════════════════════════════════
+   4. ANIMATED GRADIENT BORDERS (.glass-glow)
+   ═══════════════════════════════════════════════════ */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glass-glow {
+  position: relative;
+  border-radius: 24px;
+  isolation: isolate;
+}
+
+.glass-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: conic-gradient(
+    from var(--angle),
+    var(--pk),
+    var(--pp),
+    var(--gd),
+    var(--cy),
+    var(--pk)
+  );
+  animation: glowRotate 4s linear infinite;
+  z-index: -2;
+}
+
+.glass-glow::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 22px;
+  background: rgba(13, 0, 26, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: -1;
+}
+
+@keyframes glowRotate {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   5. NEON GLOW SECTION TITLES (enhanced .s-title)
+   ═══════════════════════════════════════════════════ */
+.s-title {
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(255, 107, 157, 0.6),
+      0 0 24px rgba(255, 107, 157, 0.4),
+      0 0 48px rgba(255, 107, 157, 0.2),
+      0 0 80px rgba(255, 107, 157, 0.1);
+  }
+  50% {
+    text-shadow:
+      0 0 12px rgba(196, 77, 255, 0.7),
+      0 0 30px rgba(196, 77, 255, 0.5),
+      0 0 60px rgba(196, 77, 255, 0.3),
+      0 0 100px rgba(196, 77, 255, 0.15);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   6. REASON ITEM UNDERLINES
+   ═══════════════════════════════════════════════════ */
+.reason-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.reason-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--pk), var(--gd), var(--pp));
+  background-size: 200% 100%;
+  transition: width 0.5s cubic-bezier(.17, .67, .21, 1.37);
+  animation: underlineShimmer 3s linear infinite;
+}
+
+.reason-item:hover::after {
+  width: 100%;
+}
+
+.reason-item.visible::after {
+  animation: underlineDraw 0.8s 0.4s cubic-bezier(.17, .67, .21, 1.37) forwards;
+}
+
+@keyframes underlineDraw {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 60%;
+  }
+}
+
+@keyframes underlineShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   7. FORTUNE COOKIE SECTION
+   ═══════════════════════════════════════════════════ */
+.fortune-section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.cookie-scene {
+  perspective: 800px;
+  display: inline-block;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.cookie {
+  position: relative;
+  width: 200px;
+  height: 120px;
+  margin: 0 auto;
+  transition: transform 0.3s;
+}
+
+.cookie:hover {
+  transform: scale(1.05);
+}
+
+.cookie-left,
+.cookie-right {
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 120px;
+  transition: transform 0.8s cubic-bezier(.4, 0, .2, 1),
+              opacity 0.6s;
+}
+
+.cookie-left {
+  left: 0;
+  background: linear-gradient(135deg, #d4a44c, #e8c97a, #c49240);
+  clip-path: polygon(0 50%, 20% 10%, 50% 0%, 100% 30%, 100% 70%, 50% 100%, 20% 90%);
+  border-radius: 8px;
+  transform-origin: right center;
+  box-shadow: inset -4px 0 12px rgba(0, 0, 0, 0.2),
+              inset 2px 2px 8px rgba(255, 255, 255, 0.3);
+}
+
+.cookie-right {
+  right: 0;
+  background: linear-gradient(225deg, #d4a44c, #e8c97a, #c49240);
+  clip-path: polygon(0 30%, 50% 0%, 80% 10%, 100% 50%, 80% 90%, 50% 100%, 0 70%);
+  border-radius: 8px;
+  transform-origin: left center;
+  box-shadow: inset 4px 0 12px rgba(0, 0, 0, 0.2),
+              inset -2px 2px 8px rgba(255, 255, 255, 0.3);
+}
+
+.cookie-left::after,
+.cookie-right::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 8px,
+    rgba(139, 90, 43, 0.12) 8px,
+    rgba(139, 90, 43, 0.12) 10px
+  );
+  border-radius: inherit;
+}
+
+.cookie-crack {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 0;
+  background: linear-gradient(180deg, transparent, rgba(139, 90, 43, 0.6), transparent);
+  transition: height 0.3s;
+}
+
+.cookie:hover .cookie-crack {
+  height: 40px;
+}
+
+.cookie.cracked .cookie-left {
+  transform: rotateY(-55deg) translateX(-20px);
+  opacity: 0.85;
+}
+
+.cookie.cracked .cookie-right {
+  transform: rotateY(55deg) translateX(20px);
+  opacity: 0.85;
+}
+
+.fortune-slip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 220px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #fffef2, #fff8dc, #faf0d7);
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: #5a3060;
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.6;
+  text-align: center;
+  font-weight: 600;
+  z-index: 5;
+  opacity: 0;
+  transition: none;
+}
+
+.fortune-slip::before {
+  content: '🥠';
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+  font-style: normal;
+}
+
+.fortune-slip::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgba(196, 77, 255, 0.2);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.fortune-slip.show {
+  animation: fortuneReveal 0.7s 0.3s cubic-bezier(.17, .67, .21, 1.37) forwards;
+}
+
+@keyframes fortuneReveal {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotateZ(-10deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotateZ(0deg);
+    opacity: 1;
+  }
+}
+
+.fortune-numbers {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(196, 77, 255, 0.25);
+  font-size: 0.75rem;
+  font-style: normal;
+  color: var(--pp);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.fortune-hint {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+  margin-top: 16px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   8. MEMORY GAME SECTION
+   ═══════════════════════════════════════════════════ */
+.memory-section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.mem-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.mem-card {
+  aspect-ratio: 1;
+  perspective: 600px;
+  cursor: pointer;
+}
+
+.mem-inner {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(.4, 0, .2, 1);
+  position: relative;
+}
+
+.mem-card.flipped .mem-inner {
+  transform: rotateY(180deg);
+}
+
+.mem-front,
+.mem-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.mem-front {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(196, 77, 255, 0.2));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--gb);
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 900;
+  font-size: 1.8rem;
+}
+
+.mem-front::after {
+  content: '?';
+  text-shadow: 0 0 10px rgba(255, 107, 157, 0.4);
+}
+
+.mem-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.15), rgba(196, 77, 255, 0.15));
+  border: 1px solid rgba(255, 107, 157, 0.35);
+  font-size: 2.2rem;
+}
+
+.mem-card.matched .mem-inner {
+  animation: memGlow 1.2s ease-in-out;
+}
+
+.mem-card.matched .mem-back {
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3),
+              0 0 40px rgba(255, 215, 0, 0.15);
+}
+
+@keyframes memGlow {
+  0% {
+    filter: brightness(1);
+  }
+  30% {
+    filter: brightness(1.6) drop-shadow(0 0 12px var(--gd));
+  }
+  60% {
+    filter: brightness(1.3) drop-shadow(0 0 8px var(--pk));
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+.mem-card.locked {
+  pointer-events: none;
+}
+
+.mem-results {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 0, 26, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px;
+  z-index: 10;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s, transform 0.5s;
+  pointer-events: none;
+}
+
+.mem-results.show {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.mem-results-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+}
+
+.mem-results-text {
+  color: var(--gd);
+  font-weight: 900;
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+.mem-results-sub {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.mem-results-btn {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--pk), var(--pp));
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+  font-family: inherit;
+}
+
+.mem-results-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.mem-moves {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+  margin-top: 14px;
+}
+
+.mem-grid-wrap {
+  position: relative;
+  display: inline-block;
+  max-width: 400px;
+  width: 100%;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   9. ACHIEVEMENT SYSTEM
+   ═══════════════════════════════════════════════════ */
+.achieve-ring {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--gb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+}
+
+.achieve-ring:hover {
+  transform: scale(1.15);
+  background: rgba(255, 215, 0, 0.15);
+  box-shadow: 0 4px 30px rgba(255, 215, 0, 0.3);
+}
+
+.achieve-ring .ring-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--pk);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.5);
+}
+
+.achieve-ring.has-new {
+  animation: achievePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes achievePulse {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(255, 215, 0, 0.4);
+  }
+}
+
+/* Achievement toast notification */
+.achieve-toast {
+  position: fixed;
+  top: 80px;
+  right: -400px;
+  z-index: 99999;
+  min-width: 280px;
+  max-width: 360px;
+  padding: 16px 22px;
+  background: rgba(13, 0, 26, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5),
+              0 0 30px rgba(255, 215, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: toastSlideIn 0.5s cubic-bezier(.17, .67, .21, 1.37) forwards,
+             toastSlideOut 0.4s 3.5s ease-in forwards;
+}
+
+.achieve-toast-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.achieve-toast-text {
+  flex: 1;
+}
+
+.achieve-toast-label {
+  font-size: 0.65rem;
+  color: var(--gd);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.achieve-toast-title {
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+@keyframes toastSlideIn {
+  0% {
+    right: -400px;
+    opacity: 0;
+  }
+  100% {
+    right: 24px;
+    opacity: 1;
+  }
+}
+
+@keyframes toastSlideOut {
+  0% {
+    right: 24px;
+    opacity: 1;
+  }
+  100% {
+    right: -400px;
+    opacity: 0;
+  }
+}
+
+/* Achievement panel */
+.achieve-panel {
+  position: fixed;
+  bottom: 90px;
+  left: 24px;
+  z-index: 9999;
+  width: 300px;
+  max-height: 420px;
+  overflow-y: auto;
+  background: rgba(13, 0, 26, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--gb);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(.17, .67, .21, 1.37),
+              opacity 0.3s;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.achieve-panel.open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.achieve-panel-title {
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--gd);
+  margin-bottom: 14px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.achieve-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.achieve-badge.unlocked {
+  background: rgba(255, 215, 0, 0.06);
+  border-color: rgba(255, 215, 0, 0.2);
+}
+
+.achieve-badge.locked {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
+
+.achieve-badge-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.achieve-badge.unlocked .achieve-badge-icon {
+  background: rgba(255, 215, 0, 0.12);
+}
+
+.achieve-badge-info {
+  flex: 1;
+}
+
+.achieve-badge-name {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.achieve-badge-desc {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.72rem;
+  margin-top: 2px;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   10. KONAMI / EASTER EGG
+   ═══════════════════════════════════════════════════ */
+.konami-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 999998;
+  pointer-events: none;
+  opacity: 0;
+  animation: konamiFlash 2s ease-out forwards;
+}
+
+.konami-flash::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    #ff0000, #ff7700, #ffff00, #00ff00,
+    #0099ff, #6633ff, #ff00ff, #ff0000
+  );
+  background-size: 400% 400%;
+  animation: konamiRainbow 1s linear infinite;
+}
+
+@keyframes konamiFlash {
+  0% { opacity: 0; }
+  15% { opacity: 0.6; }
+  40% { opacity: 0.3; }
+  60% { opacity: 0.5; }
+  80% { opacity: 0.2; }
+  100% { opacity: 0; }
+}
+
+@keyframes konamiRainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.konami-text {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  font-size: clamp(3rem, 12vw, 8rem);
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  text-shadow:
+    0 0 20px var(--pk),
+    0 0 40px var(--pp),
+    0 0 80px var(--gd);
+  animation: konamiScaleIn 2s cubic-bezier(.17, .67, .21, 1.37) forwards;
+}
+
+@keyframes konamiScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-15deg);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.2) rotate(3deg);
+  }
+  50% {
+    transform: scale(1) rotate(0deg);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   11. SCROLL SURPRISE
+   ═══════════════════════════════════════════════════ */
+.scroll-banner {
+  position: fixed;
+  top: 50%;
+  right: -400px;
+  transform: translateY(-50%);
+  z-index: 99990;
+  padding: 18px 28px;
+  background: rgba(13, 0, 26, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  border-radius: 20px 0 0 20px;
+  box-shadow: -8px 0 40px rgba(255, 107, 157, 0.2);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  animation: bannerSlideIn 0.6s cubic-bezier(.17, .67, .21, 1.37) forwards,
+             bannerSlideOut 0.5s 4s ease-in forwards;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scroll-banner-emoji {
+  font-size: 1.6rem;
+}
+
+@keyframes bannerSlideIn {
+  0% {
+    right: -400px;
+  }
+  100% {
+    right: 0;
+  }
+}
+
+@keyframes bannerSlideOut {
+  0% {
+    right: 0;
+    opacity: 1;
+  }
+  100% {
+    right: -400px;
+    opacity: 0;
+  }
+}
+
+/* Heart rain */
+.heart-rain-item {
+  position: fixed;
+  top: -40px;
+  z-index: 99980;
+  pointer-events: none;
+  font-size: var(--rain-sz, 1.4rem);
+  opacity: 0.8;
+  animation: heartRainFall var(--rain-dur, 3s) linear forwards;
+}
+
+@keyframes heartRainFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0.8;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(calc(100vh + 60px)) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Milestone toast */
+.milestone-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 99995;
+  padding: 24px 40px;
+  background: rgba(13, 0, 26, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 22px;
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.5),
+              0 0 40px rgba(255, 215, 0, 0.15);
+  text-align: center;
+  animation: milestoneIn 0.6s cubic-bezier(.17, .67, .21, 1.37) forwards,
+             milestoneOut 0.5s 3.5s ease-in forwards;
+  pointer-events: none;
+}
+
+.milestone-toast-emoji {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.milestone-toast-text {
+  color: var(--gd);
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+.milestone-toast-sub {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+@keyframes milestoneIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes milestoneOut {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   12. SECRET MESSAGE
+   ═══════════════════════════════════════════════════ */
+.secret-reveal {
+  position: relative;
+  color: transparent;
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.08));
+  background-clip: text;
+  -webkit-background-clip: text;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 1.2s ease,
+              text-shadow 1.2s ease,
+              background 1.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  padding: 0 4px;
+  display: inline;
+}
+
+.secret-reveal::before {
+  content: '🔒';
+  font-size: 0.8em;
+  margin-right: 4px;
+  transition: opacity 0.5s;
+}
+
+.secret-reveal.revealed {
+  color: var(--gd);
+  text-shadow:
+    0 0 8px rgba(255, 215, 0, 0.5),
+    0 0 20px rgba(255, 215, 0, 0.3),
+    0 0 40px rgba(255, 215, 0, 0.15);
+  background: transparent;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+}
+
+.secret-reveal.revealed::before {
+  content: '🔓';
+  opacity: 0.6;
+}
+
+.secret-ps {
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 1.2s ease 0.3s,
+              transform 1.2s ease 0.3s;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.88rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.secret-ps.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.secret-ps .secret-glow {
+  color: var(--pk);
+  text-shadow: 0 0 12px rgba(255, 107, 157, 0.4);
+  font-weight: 700;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   13. DOUBLE-TAP HEART
+   ═══════════════════════════════════════════════════ */
+.mega-heart {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+  font-size: 6rem;
+  line-height: 1;
+  transform: translate(-50%, -50%) scale(0);
+  animation: megaHeartPop 1.2s cubic-bezier(.17, .67, .21, 1.37) forwards;
+  filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.8))
+          drop-shadow(0 0 40px rgba(196, 77, 255, 0.4));
+}
+
+@keyframes megaHeartPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  15% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  45% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 0;
+  }
+}
+
+.mega-heart-ring {
+  position: fixed;
+  z-index: 99998;
+  pointer-events: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 3px solid var(--pk);
+  transform: translate(-50%, -50%) scale(0);
+  animation: heartRingExpand 0.8s ease-out forwards;
+}
+
+@keyframes heartRingExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(25);
+    opacity: 0;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE ADDITIONS
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 520px) {
+  .blob { transform: scale(0.6); }
+
+  .mem-grid { gap: 8px; }
+
+  .achieve-panel {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    bottom: 84px;
+  }
+
+  .achieve-ring {
+    width: 48px;
+    height: 48px;
+    bottom: 18px;
+    left: 18px;
+    font-size: 1.2rem;
+  }
+
+  .achieve-toast {
+    right: 12px;
+    left: 12px;
+    min-width: auto;
+    max-width: none;
+  }
+
+  @keyframes toastSlideIn {
+    0% { right: 12px; top: -120px; opacity: 0; }
+    100% { right: 12px; top: 80px; opacity: 1; }
+  }
+  @keyframes toastSlideOut {
+    0% { top: 80px; opacity: 1; }
+    100% { top: -120px; opacity: 0; }
+  }
+
+  .cookie { width: 160px; height: 96px; }
+  .cookie-left, .cookie-right { width: 80px; height: 96px; }
+  .fortune-slip { width: 180px; padding: 12px 14px; font-size: 0.82rem; }
+
+  .scroll-banner {
+    font-size: 0.85rem;
+    padding: 14px 20px;
+  }
+
+  .konami-text {
+    font-size: clamp(2rem, 10vw, 5rem);
+  }
+
+  .milestone-toast {
+    padding: 18px 24px;
+    left: 20px;
+    right: 20px;
+    transform: translate(0, -50%) scale(0);
+  }
+
+  @keyframes milestoneIn {
+    0% { transform: translate(0, -50%) scale(0); opacity: 0; }
+    100% { transform: translate(0, -50%) scale(1); opacity: 1; }
+  }
+  @keyframes milestoneOut {
+    0% { transform: translate(0, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(0, -50%) scale(0.8); opacity: 0; }
+  }
+}
+
+/* Fortune button */
+.fortune-btn{margin-top:24px;padding:14px 44px;border:none;border-radius:50px;
+  background:linear-gradient(135deg,#d4a44c,#e8c97a);color:#5a3060;font-size:1.1rem;font-weight:800;
+  box-shadow:0 6px 28px rgba(212,164,76,.5);transition:transform .2s,box-shadow .2s;letter-spacing:1px;font-family:inherit;cursor:pointer}
+.fortune-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 12px 36px rgba(212,164,76,.7)}
+.fortune-result{margin-top:0;min-height:20px}
+.fortune-lucky{display:none;margin-top:16px;color:rgba(255,255,255,.5);font-size:.88rem}
+.lucky-label{color:var(--gd);font-weight:700;margin-right:8px}
+.lucky-nums{letter-spacing:3px}
+
+/* Memory game stats and result */
+.mem-stats{display:flex;gap:24px;justify-content:center;margin-top:18px;color:rgba(255,255,255,.5);font-size:.9rem}
+.mem-stat strong{color:var(--gd)}
+.mem-result{display:none;position:fixed;inset:0;z-index:99997;background:rgba(13,0,26,.88);backdrop-filter:blur(16px);
+  align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:40px}
+.mem-result.show{display:flex}
+.mem-result-inner{max-width:380px}
+.mem-result-emoji{font-size:3.5rem;display:block;margin-bottom:16px}
+.mem-result-title{color:var(--gd);font-weight:900;font-size:1.5rem;margin-bottom:10px}
+.mem-result-text{color:rgba(255,255,255,.7);font-size:1.05rem;line-height:1.8;margin-bottom:20px}
+.mem-restart-btn{padding:12px 36px;border:none;border-radius:50px;background:linear-gradient(135deg,var(--pk),var(--pp));
+  color:#fff;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .2s;font-family:inherit}
+.mem-restart-btn:hover{transform:translateY(-2px) scale(1.05)}
+
+/* Achievement ring extra */
+.achieve-ring .achieve-svg{position:absolute;inset:0}
+.achieve-ring .achieve-count{font-size:.55rem;font-weight:900;color:rgba(255,255,255,.6);z-index:1;letter-spacing:.5px}
+.achieve-panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.achieve-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:1.2rem;cursor:pointer;padding:4px 8px}
+.achieve-close:hover{color:#fff}
+.achieve-panel-list{display:flex;flex-direction:column;gap:6px}
+.achieve-emoji{font-size:1.4rem;flex-shrink:0}
+.achieve-name{color:#fff;font-weight:700;font-size:.82rem;display:block}
+.achieve-desc{color:rgba(255,255,255,.35);font-size:.68rem;display:block}
+
 </style>
 </head>
 <body>
@@ -505,6 +1867,12 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 <canvas id="fx-canvas"></canvas>
 <div class="gradient-bg"></div>
 <div class="aurora"><div class="aurora-band"></div><div class="aurora-band"></div><div class="aurora-band"></div></div>
+<div class="blob-container">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
 <div id="cursor"></div>
 
 <!-- Scroll progress -->
@@ -601,7 +1969,7 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
     <span class="env-icon" id="envIcon">💌</span>
     <p class="env-hint" id="envHint">Click to open ✨</p>
   </div>
-  <div class="letter-card glass" id="letterCard">
+  <div class="letter-card glass glass-glow" id="letterCard">
     <h3>My Dearest Ying Xin,</h3>
     <p class="letter-body" id="letterBody"></p>
     <p class="letter-sig" id="letterSig">— With all my love, forever & always 💕</p>
@@ -616,8 +1984,42 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   <p class="pop-score" id="popScore">💥 Popped: 0 / 8</p>
 </section>
 
+<!-- ═══════ MEMORY MATCH GAME ═══════ -->
+<section class="memory-section">
+  <h2 class="s-title reveal">🃏 Match the Love</h2>
+  <p class="s-sub reveal">Flip cards and find matching pairs — test your memory! 💕</p>
+  <div class="mem-grid-wrap reveal">
+    <div class="mem-grid" id="memGrid">
+      <div class="mem-card" data-pair="0"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="1"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="2"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="3"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="4"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="5"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="6"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="7"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="0"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="1"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="2"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="3"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="4"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="5"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="6"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+      <div class="mem-card" data-pair="7"><div class="mem-inner"><div class="mem-front"></div><div class="mem-back"></div></div></div>
+    </div>
+  </div>
+  <div class="mem-stats"><span class="mem-stat">🔄 Moves: <strong id="memMoves">0</strong></span><span class="mem-stat">💖 Matches: <strong id="memMatches">0</strong> / 8</span></div>
+  <div class="mem-result" id="memResult"><div class="mem-result-inner"><span class="mem-result-emoji">🎉💖</span><p class="mem-result-title">You Matched All the Love!</p><p class="mem-result-text" id="memResultText"></p><button class="mem-restart-btn" onclick="resetMemoryGame()">🔄 Play Again</button></div></div>
+</section>
+
 <!-- ═══════ OUR STORY TIMELINE ═══════ -->
-<div class="sec-sep"><span>✦</span></div>
+<div class="wave-sep">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.08)"/>
+    <path d="M0,80 C360,20 720,100 1080,40 C1260,10 1380,50 1440,80 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.06)"/>
+    <path d="M0,95 C180,70 540,110 900,85 C1100,75 1320,100 1440,90 L1440,120 L0,120 Z" fill="rgba(255,215,0,0.04)"/>
+  </svg>
+</div>
 <section class="timeline-section">
   <h2 class="s-title reveal">📖 Our Story</h2>
   <p class="s-sub reveal">A journey written in the stars, just for us ✨</p>
@@ -649,7 +2051,12 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   </div>
 </section>
 
-<div class="sec-sep"><span>✦</span></div>
+<div class="wave-sep">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C180,100 420,10 720,70 C1020,130 1260,30 1440,50 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.08)"/>
+    <path d="M0,70 C300,30 600,110 900,50 C1080,20 1320,90 1440,65 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.06)"/>
+  </svg>
+</div>
 
 <!-- ═══════ FLIP CARDS ═══════ -->
 <section class="wishes-section">
@@ -697,7 +2104,12 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 </section>
 
 <!-- ═══════ LOVE COUPONS ═══════ -->
-<div class="sec-sep"><span>✦</span></div>
+<div class="wave-sep">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,50 C360,0 720,100 1080,30 C1200,10 1380,70 1440,55 L1440,120 L0,120 Z" fill="rgba(255,215,0,0.07)"/>
+    <path d="M0,75 C240,110 600,30 960,80 C1140,100 1320,45 1440,70 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.05)"/>
+  </svg>
+</div>
 <section class="coupon-section">
   <h2 class="s-title reveal">💝 Love Coupons</h2>
   <p class="s-sub reveal">Swipe through your special treats — click to redeem! 🎟️</p>
@@ -712,7 +2124,12 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   <p class="coupon-hint">← Swipe to see more coupons →</p>
 </section>
 
-<div class="sec-sep"><span>✦</span></div>
+<div class="wave-sep">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C480,100 960,10 1440,60 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.07)"/>
+    <path d="M0,60 C240,100 720,20 1200,80 C1360,95 1420,60 1440,55 L1440,120 L0,120 Z" fill="rgba(255,215,0,0.06)"/>
+  </svg>
+</div>
 
 <!-- ═══════ SCRATCH CARD ═══════ -->
 <section class="scratch-section">
@@ -742,11 +2159,30 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   </div>
 </section>
 
+<!-- ═══════ FORTUNE COOKIE ═══════ -->
+<section class="fortune-section">
+  <h2 class="s-title reveal">🥠 Birthday Fortune</h2>
+  <p class="s-sub reveal">Crack open the cookie to reveal your birthday fortune ✨</p>
+  <div class="cookie-scene reveal">
+    <div class="cookie" id="fortuneCookie" onclick="crackFortune()">
+      <div class="cookie-left"></div>
+      <div class="cookie-right"></div>
+      <div class="cookie-crack"></div>
+      <div class="fortune-slip" id="fortuneSlip"></div>
+    </div>
+  </div>
+  <button class="fortune-btn" onclick="crackFortune()">🥠 Crack the Cookie!</button>
+  <div class="fortune-lucky" id="fortuneLucky">
+    <span class="lucky-label">🍀 Lucky Numbers:</span>
+    <span class="lucky-nums" id="luckyNums"></span>
+  </div>
+</section>
+
 <!-- ═══════ QUIZ ═══════ -->
 <section class="quiz-section">
   <h2 class="s-title reveal">🧠 Birthday Quiz!</h2>
   <p class="s-sub reveal">How well do you know the answers? Let's find out! 💕</p>
-  <div class="quiz-box glass reveal" id="quizBox"></div>
+  <div class="quiz-box glass glass-glow reveal" id="quizBox"></div>
 </section>
 
 <!-- ═══════ PHOTO ═══════ -->
@@ -775,7 +2211,12 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 </section>
 
 <!-- ═══════ LOVE METER ═══════ -->
-<div class="sec-sep"><span>✦</span></div>
+<div class="wave-sep">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,55 C200,10 500,100 800,45 C1000,10 1300,90 1440,50 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.09)"/>
+    <path d="M0,80 C360,50 720,100 1080,60 C1260,45 1380,80 1440,75 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.06)"/>
+  </svg>
+</div>
 <section class="meter-section">
   <h2 class="s-title reveal">💗 Love Meter</h2>
   <p class="s-sub reveal">Measuring how much I love you...</p>
@@ -797,7 +2238,12 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
   </div>
 </section>
 
-<div class="sec-sep"><span>✦</span></div>
+<div class="wave-sep">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,45 C300,100 700,0 1100,70 C1300,100 1400,40 1440,55 L1440,120 L0,120 Z" fill="rgba(255,215,0,0.08)"/>
+    <path d="M0,85 C240,60 720,108 1200,75 C1380,65 1440,90 1440,85 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.05)"/>
+  </svg>
+</div>
 
 <!-- ═══════ CELEBRATE ═══════ -->
 <section class="celebrate-section reveal">
@@ -813,6 +2259,42 @@ footer p{color:rgba(255,255,255,.45);font-size:.88rem;margin-top:10px}
 </footer>
 
 </div><!-- .content -->
+
+<!-- ═══════ ACHIEVEMENT SYSTEM ═══════ -->
+<div class="achieve-ring" id="achieveRing" onclick="toggleAchievePanel()">
+  <svg class="achieve-svg" viewBox="0 0 48 48" width="48" height="48">
+    <circle cx="24" cy="24" r="20" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="3"/>
+    <circle id="achieveRingFill" cx="24" cy="24" r="20" fill="none"
+      stroke="url(#achieveGrad)" stroke-width="3" stroke-linecap="round"
+      stroke-dasharray="125.66" stroke-dashoffset="125.66"
+      transform="rotate(-90 24 24)"/>
+    <defs><linearGradient id="achieveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff6b9d"/><stop offset="100%" stop-color="#ffd700"/>
+    </linearGradient></defs>
+  </svg>
+  <span class="achieve-count" id="achieveCount">0/15</span>
+</div>
+<div class="achieve-toast" id="achieveToast"></div>
+<div class="achieve-panel" id="achievePanel">
+  <div class="achieve-panel-header"><h3 class="achieve-panel-title">🏆 Achievements</h3><button class="achieve-close" onclick="toggleAchievePanel()">✕</button></div>
+  <div class="achieve-panel-list">
+    <div class="achieve-badge locked" data-achieve="blow-candle"><span class="achieve-emoji">🕯️</span><div><span class="achieve-name">Wish Maker</span><span class="achieve-desc">Blow out all candles</span></div></div>
+    <div class="achieve-badge locked" data-achieve="open-gift"><span class="achieve-emoji">🎁</span><div><span class="achieve-name">Gift Unwrapper</span><span class="achieve-desc">Open the gift box</span></div></div>
+    <div class="achieve-badge locked" data-achieve="read-letter"><span class="achieve-emoji">💌</span><div><span class="achieve-name">Love Letter</span><span class="achieve-desc">Read the full letter</span></div></div>
+    <div class="achieve-badge locked" data-achieve="pop-all"><span class="achieve-emoji">🎈</span><div><span class="achieve-name">Balloon Buster</span><span class="achieve-desc">Pop all 8 balloons</span></div></div>
+    <div class="achieve-badge locked" data-achieve="flip-all"><span class="achieve-emoji">🌟</span><div><span class="achieve-name">Wish Collector</span><span class="achieve-desc">Flip all wish cards</span></div></div>
+    <div class="achieve-badge locked" data-achieve="spin-5"><span class="achieve-emoji">🎰</span><div><span class="achieve-name">Compliment King</span><span class="achieve-desc">Spin 5 compliments</span></div></div>
+    <div class="achieve-badge locked" data-achieve="scratch-reveal"><span class="achieve-emoji">🎟️</span><div><span class="achieve-name">Scratch Master</span><span class="achieve-desc">Reveal the scratch card</span></div></div>
+    <div class="achieve-badge locked" data-achieve="pull-5-wishes"><span class="achieve-emoji">🎨</span><div><span class="achieve-name">Wishing Well</span><span class="achieve-desc">Pull 5 wishes from jar</span></div></div>
+    <div class="achieve-badge locked" data-achieve="quiz-perfect"><span class="achieve-emoji">🧠</span><div><span class="achieve-name">Quiz Whiz</span><span class="achieve-desc">Perfect quiz score</span></div></div>
+    <div class="achieve-badge locked" data-achieve="redeem-coupon"><span class="achieve-emoji">💝</span><div><span class="achieve-name">Coupon Clipper</span><span class="achieve-desc">Redeem a love coupon</span></div></div>
+    <div class="achieve-badge locked" data-achieve="memory-clear"><span class="achieve-emoji">🃏</span><div><span class="achieve-name">Memory Master</span><span class="achieve-desc">Complete the memory game</span></div></div>
+    <div class="achieve-badge locked" data-achieve="fortune-crack"><span class="achieve-emoji">🥠</span><div><span class="achieve-name">Fortune Finder</span><span class="achieve-desc">Crack the fortune cookie</span></div></div>
+    <div class="achieve-badge locked" data-achieve="love-meter"><span class="achieve-emoji">💗</span><div><span class="achieve-name">Love Overload</span><span class="achieve-desc">Break the love meter</span></div></div>
+    <div class="achieve-badge locked" data-achieve="mega-celebrate"><span class="achieve-emoji">🎊</span><div><span class="achieve-name">Party Animal</span><span class="achieve-desc">Hit the celebrate button</span></div></div>
+    <div class="achieve-badge locked" data-achieve="scroll-bottom"><span class="achieve-emoji">🏁</span><div><span class="achieve-name">The Whole Journey</span><span class="achieve-desc">Scroll to the very bottom</span></div></div>
+  </div>
+</div>
 
 <script>
 // ═══════════════════════════════════════
@@ -1311,6 +2793,7 @@ function sfx(type){
     if(cur>=QS.length){
       const em=sc===QS.length?'🏆💖':sc>=3?'🌟😊':'💕🎉';
       const tx=sc===QS.length?'Perfect! You know me so well!':sc>=3?'Amazing! You really care!':'Sweet try! Love you anyway!';
+      if(sc===QS.length && typeof unlockAchievement==='function') unlockAchievement('quiz-perfect');
       box.innerHTML='<div style="padding:20px;text-align:center">'+
         '<span style="font-size:4rem;display:block;margin-bottom:16px">'+em+'</span>'+
         '<p style="font-size:1.4rem;color:var(--gd);font-weight:900;margin-bottom:8px">'+sc+'/'+QS.length+' — '+tx+'</p>'+
@@ -1367,6 +2850,7 @@ function redeemCoupon(el){
             createBurst({clientX:innerWidth/2,clientY:ring.getBoundingClientRect().top+110},14);
             firework(fW*.5,fH*.45);
             sfx('tada');
+            if(typeof unlockAchievement==='function') unlockAchievement('love-meter');
             return;
           }
           requestAnimationFrame(anim);
@@ -1403,6 +2887,689 @@ function redeemCoupon(el){
       p.style.transform=`translateY(${-scrollY*spd}px)`;
     });
   },{passive:true});
+})();
+
+
+// ═══════════════════════════════════════
+//  NEW FEATURES
+// ═══════════════════════════════════════
+
+// ═══════════════════════════════════════
+//  SPLIT-LETTER HERO ANIMATION
+// ═══════════════════════════════════════
+(function(){
+  function splitLetters(el, baseDelay){
+    const text = el.textContent;
+    el.textContent = '';
+    el.style.opacity = '1';
+    [...text].forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.textContent = ch === ' ' ? '\u00A0' : ch;
+      span.style.cssText = `display:inline-block;opacity:0;transform:translateY(60px) rotate(8deg);
+        filter:blur(4px);animation:charIn .6s cubic-bezier(.17,.67,.21,1.37) forwards;
+        animation-delay:${(baseDelay + i * 0.045).toFixed(3)}s`;
+      el.appendChild(span);
+    });
+  }
+  const heroTitle = document.querySelector('.hero-title');
+  const heroName = document.querySelector('.hero-name');
+  if(heroTitle) splitLetters(heroTitle, 0.4);
+  if(heroName) splitLetters(heroName, 0.6 + (heroTitle ? heroTitle.children.length * 0.045 : 0));
+  const charStyle = document.createElement('style');
+  charStyle.textContent = '@keyframes charIn{0%{opacity:0;transform:translateY(60px) rotate(8deg);filter:blur(4px)}100%{opacity:1;transform:translateY(0) rotate(0deg);filter:blur(0)}}';
+  document.head.appendChild(charStyle);
+})();
+
+// ═══════════════════════════════════════
+//  STAGGERED GRID REVEAL
+// ═══════════════════════════════════════
+(function(){
+  const grids = document.querySelectorAll('.wish-grid, .balloon-grid, .coupon-track, .mem-grid');
+  grids.forEach(grid => {
+    const children = grid.children;
+    [...children].forEach(ch => ch.classList.add('stagger-item'));
+  });
+  const sio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        [...e.target.children].forEach((ch, i) => {
+          setTimeout(() => ch.classList.add('visible'), i * 80);
+        });
+        sio.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.15});
+  grids.forEach(g => sio.observe(g));
+})();
+
+// ═══════════════════════════════════════
+//  FORTUNE COOKIE
+// ═══════════════════════════════════════
+const FORTUNES = [
+  'A year of extraordinary adventures awaits you ✨',
+  'The person reading this is more beautiful than a sunset 🌅',
+  'Love will surprise you in the most magical ways 💫',
+  'Your smile today will start a chain reaction of happiness 😊',
+  'The universe has been writing your love story since the stars were born 🌟',
+  'Something wonderful is about to happen — keep your heart open 💕',
+  'You are someone\'s reason to smile every single day 🌸',
+  'The best chapter of your life is being written right now 📖',
+  'A wish made today will come true in the most unexpected way 🌈',
+  'You radiate a light that makes the world brighter ☀️',
+  'Someone thinks of you every time they see something beautiful 🦋',
+  'Your heart is a garden where only the most beautiful things grow 🌷',
+  'The stars rearranged themselves the day you were born ⭐',
+  'Love, laughter, and magic follow you wherever you go 💖',
+  'Today is the beginning of something absolutely wonderful 🎂'
+];
+let fortuneCracked = false;
+function crackFortune(){
+  const cookie = document.getElementById('fortuneCookie');
+  const slip = document.getElementById('fortuneSlip');
+  if(fortuneCracked){
+    cookie.classList.remove('cracked');
+    slip.classList.remove('show');
+    slip.textContent = '';
+    document.getElementById('fortuneLucky').style.display = 'none';
+    fortuneCracked = false;
+    return;
+  }
+  fortuneCracked = true;
+  cookie.classList.add('cracked');
+  sfx('pop');
+  const r = cookie.getBoundingClientRect();
+  createBurst({clientX: r.left + r.width/2, clientY: r.top + r.height/2}, 12);
+  setTimeout(() => {
+    const fortune = FORTUNES[Math.floor(Math.random() * FORTUNES.length)];
+    slip.textContent = fortune;
+    slip.classList.add('show');
+    sfx('chime');
+    // Lucky numbers
+    const nums = Array.from({length:6}, () => Math.floor(Math.random()*42)+1)
+      .sort((a,b) => a-b).join(' · ');
+    document.getElementById('luckyNums').textContent = nums;
+    document.getElementById('fortuneLucky').style.display = 'block';
+    firework(fW*.5, fH*.4);
+    unlockAchievement('fortune-crack');
+  }, 400);
+}
+
+// ═══════════════════════════════════════
+//  MEMORY MATCHING GAME
+// ═══════════════════════════════════════
+const MEM_EMOJIS = ['💖','🌸','💎','🎂','🦋','🌙','💕','🌹'];
+const MEM_MSGS = [
+  'A perfect match, just like us! 💕',
+  'Two hearts that belong together! 💖',
+  'Made for each other! ✨',
+  'Love always finds its pair! 🌸',
+  'Together is the best place to be! 🌟',
+  'You + Me = Perfect Match! 💝',
+  'Connected by love! 🦋',
+  'Hearts aligned! 🌹'
+];
+let memState = 'idle', memFirst = null, memMoves = 0, memMatches = 0;
+let memCards = [];
+
+function initMemoryGame(){
+  const grid = document.getElementById('memGrid');
+  if(!grid) return;
+  memCards = [...grid.querySelectorAll('.mem-card')];
+  // Shuffle cards
+  const pairs = [...MEM_EMOJIS, ...MEM_EMOJIS];
+  for(let i = pairs.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+  }
+  memCards.forEach((card, i) => {
+    card.dataset.emoji = pairs[i];
+    card.querySelector('.mem-back').textContent = pairs[i];
+    card.classList.remove('flipped','matched','locked');
+    card.onclick = () => flipMemCard(card);
+  });
+  memMoves = 0; memMatches = 0; memState = 'idle'; memFirst = null;
+  document.getElementById('memMoves').textContent = '0';
+  document.getElementById('memMatches').textContent = '0';
+  const result = document.getElementById('memResult');
+  if(result) result.style.display = 'none';
+}
+
+function flipMemCard(card){
+  if(memState === 'checking') return;
+  if(card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  card.classList.add('flipped');
+  sfx('chime');
+  if(memState === 'idle'){
+    memFirst = card;
+    memState = 'firstPick';
+  } else if(memState === 'firstPick'){
+    memState = 'checking';
+    memMoves++;
+    document.getElementById('memMoves').textContent = memMoves;
+    if(card.dataset.emoji === memFirst.dataset.emoji){
+      // Match!
+      setTimeout(() => {
+        card.classList.add('matched');
+        memFirst.classList.add('matched');
+        memMatches++;
+        document.getElementById('memMatches').textContent = memMatches;
+        const r = card.getBoundingClientRect();
+        createBurst({clientX: r.left+r.width/2, clientY: r.top+r.height/2}, 6);
+        sfx('sparkle');
+        memState = 'idle';
+        memFirst = null;
+        if(memMatches === 8) memWin();
+      }, 300);
+    } else {
+      // No match
+      setTimeout(() => {
+        card.classList.remove('flipped');
+        memFirst.classList.remove('flipped');
+        sfx('pop');
+        memState = 'idle';
+        memFirst = null;
+      }, 800);
+    }
+  }
+}
+
+function memWin(){
+  const stars = memMoves <= 12 ? '⭐⭐⭐' : memMoves <= 18 ? '⭐⭐' : '⭐';
+  const result = document.getElementById('memResult');
+  document.getElementById('memResultText').innerHTML =
+    `${stars}<br>Completed in ${memMoves} moves!<br>A perfect match, just like us! 💕`;
+  result.style.display = 'flex';
+  confettiBurst(160);
+  firework(fW*.3, fH*.3);
+  firework(fW*.7, fH*.3);
+  sfx('tada');
+  unlockAchievement('memory-clear');
+}
+
+function resetMemoryGame(){
+  initMemoryGame();
+}
+initMemoryGame();
+
+// ═══════════════════════════════════════
+//  ACHIEVEMENT BADGE SYSTEM
+// ═══════════════════════════════════════
+const ACHIEVE_DEFS = {
+  'blow-candle': {icon:'🕯️', title:'Wish Maker'},
+  'open-gift': {icon:'🎁', title:'Gift Unwrapper'},
+  'read-letter': {icon:'💌', title:'Love Letter'},
+  'pop-all': {icon:'🎈', title:'Balloon Buster'},
+  'flip-all': {icon:'🌟', title:'Wish Collector'},
+  'spin-5': {icon:'🎰', title:'Compliment King'},
+  'scratch-reveal': {icon:'🎟️', title:'Scratch Master'},
+  'pull-5-wishes': {icon:'🏺', title:'Wishing Well'},
+  'quiz-perfect': {icon:'🧠', title:'Quiz Whiz'},
+  'redeem-coupon': {icon:'💝', title:'Coupon Clipper'},
+  'memory-clear': {icon:'🃏', title:'Memory Master'},
+  'fortune-crack': {icon:'🥠', title:'Fortune Finder'},
+  'love-meter': {icon:'💗', title:'Love Overload'},
+  'mega-celebrate': {icon:'🎊', title:'Party Animal'},
+  'scroll-bottom': {icon:'🏁', title:'The Whole Journey'}
+};
+let achievements = {};
+try { achievements = JSON.parse(localStorage.getItem('bday_achievements') || '{}'); } catch(e){}
+
+function unlockAchievement(key){
+  if(achievements[key]) return;
+  achievements[key] = Date.now();
+  try { localStorage.setItem('bday_achievements', JSON.stringify(achievements)); } catch(e){}
+  const def = ACHIEVE_DEFS[key];
+  if(!def) return;
+  // Show toast
+  const toast = document.getElementById('achieveToast');
+  if(toast){
+    toast.innerHTML = `<span class="achieve-toast-icon">${def.icon}</span>
+      <div class="achieve-toast-text"><span class="achieve-toast-label">✨ Achievement Unlocked!</span>
+      <span class="achieve-toast-title">${def.title}</span></div>`;
+    toast.style.animation = 'none';
+    toast.offsetHeight; // reflow
+    toast.style.animation = 'toastSlideIn 0.5s cubic-bezier(.17,.67,.21,1.37) forwards, toastSlideOut 0.4s 3.5s ease-in forwards';
+  }
+  sfx('tada');
+  // Update ring
+  updateAchieveRing();
+  // Update panel
+  const badge = document.querySelector(`.achieve-badge[data-achieve="${key}"]`);
+  if(badge) { badge.classList.remove('locked'); badge.classList.add('unlocked'); }
+  // Check grand finale
+  const total = Object.keys(ACHIEVE_DEFS).length;
+  const unlocked = Object.keys(achievements).length;
+  if(unlocked >= total){
+    setTimeout(() => {
+      megaCelebrate();
+      setTimeout(megaCelebrate, 1500);
+    }, 2000);
+  }
+}
+
+function updateAchieveRing(){
+  const total = Object.keys(ACHIEVE_DEFS).length;
+  const unlocked = Object.keys(achievements).length;
+  const count = document.getElementById('achieveCount');
+  if(count) count.textContent = unlocked + '/' + total;
+  const fill = document.getElementById('achieveRingFill');
+  if(fill){
+    const circ = 2 * Math.PI * 20; // r=20
+    fill.style.strokeDashoffset = circ - (circ * unlocked / total);
+  }
+}
+
+let achievePanelOpen = false;
+function toggleAchievePanel(){
+  achievePanelOpen = !achievePanelOpen;
+  const panel = document.getElementById('achievePanel');
+  if(panel) panel.classList.toggle('open', achievePanelOpen);
+}
+
+// Init achievements from saved state
+(function(){
+  updateAchieveRing();
+  Object.keys(achievements).forEach(key => {
+    const badge = document.querySelector(`.achieve-badge[data-achieve="${key}"]`);
+    if(badge) { badge.classList.remove('locked'); badge.classList.add('unlocked'); }
+  });
+})();
+
+// ═══════════════════════════════════════
+//  HOOK ACHIEVEMENTS INTO EXISTING CODE
+// ═══════════════════════════════════════
+(function(){
+  // Candles - already hooked, add achievement
+  const origBlow = window.blowCandle;
+  window.blowCandle = function(){
+    origBlow();
+    if(candlesLeft === 0) unlockAchievement('blow-candle');
+  };
+  // Gift
+  const origGift = window.openGift;
+  window.openGift = function(){
+    origGift();
+    if(giftOpened) unlockAchievement('open-gift');
+  };
+  // Letter - hook into signature show
+  const origLetter = window.openLetter;
+  window.openLetter = function(){
+    origLetter();
+    setTimeout(() => unlockAchievement('read-letter'), 8000);
+  };
+  // Balloons
+  const origPop = window.popBalloon;
+  window.popBalloon = function(el, i){
+    origPop(el, i);
+    if(popCount === 8) unlockAchievement('pop-all');
+  };
+  // Flip cards
+  let flippedCards = new Set();
+  const origFlip = window.flipCard;
+  window.flipCard = function(card){
+    origFlip(card);
+    flippedCards.add(card);
+    if(flippedCards.size >= 6) unlockAchievement('flip-all');
+  };
+  // Spinner
+  const origSpin = window.spinCompliment;
+  window.spinCompliment = function(){
+    origSpin();
+    if(spinCount >= 5) unlockAchievement('spin-5');
+  };
+  // Wish jar
+  const origPull = window.pullWish;
+  window.pullWish = function(){
+    origPull();
+    if(wishPulled >= 5) unlockAchievement('pull-5-wishes');
+  };
+  // Coupons
+  const origRedeem = window.redeemCoupon;
+  window.redeemCoupon = function(el){
+    origRedeem(el);
+    unlockAchievement('redeem-coupon');
+  };
+  // Celebrate
+  const origMega = window.megaCelebrate;
+  window.megaCelebrate = function(){
+    origMega();
+    unlockAchievement('mega-celebrate');
+  };
+})();
+
+// ═══════════════════════════════════════
+//  KONAMI CODE EASTER EGG
+// ═══════════════════════════════════════
+(function(){
+  const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let kIdx = 0, kTimer;
+  document.addEventListener('keydown', e => {
+    clearTimeout(kTimer);
+    if(e.key === KONAMI[kIdx]) { kIdx++; } else { kIdx = 0; }
+    kTimer = setTimeout(() => kIdx = 0, 2000);
+    if(kIdx === KONAMI.length){ kIdx = 0; triggerKonami(); }
+  });
+  // Mobile: tap footer heart 10 times
+  let heartTaps = [], heartEl = document.querySelector('.infinity-heart');
+  if(heartEl) heartEl.addEventListener('click', () => {
+    heartTaps.push(Date.now());
+    heartTaps = heartTaps.filter(t => Date.now() - t < 4000);
+    if(heartTaps.length >= 10){ heartTaps = []; triggerKonami(); }
+  });
+  function triggerKonami(){
+    // Flash
+    const flash = document.createElement('div');
+    flash.className = 'konami-flash';
+    document.body.appendChild(flash);
+    setTimeout(() => flash.remove(), 2500);
+    // Text
+    const txt = document.createElement('div');
+    txt.className = 'konami-text';
+    txt.textContent = '🎮 SECRET UNLOCKED! 💖';
+    document.body.appendChild(txt);
+    setTimeout(() => txt.remove(), 2500);
+    // Effects
+    confettiBurst(500);
+    for(let i = 0; i < 12; i++) setTimeout(() => firework(fW*(.1+Math.random()*.8), fH*(.1+Math.random()*.45)), i*150);
+    // 8-bit chime
+    try{
+      const c = new(AudioContext||webkitAudioContext)();
+      [523.25,659.25,783.99,1046.5,1318.5].forEach((f,i) => {
+        const o=c.createOscillator(), g=c.createGain();
+        o.connect(g); g.connect(c.destination);
+        o.type='square'; o.frequency.value=f;
+        g.gain.setValueAtTime(.06, c.currentTime+i*.08);
+        g.gain.exponentialRampToValueAtTime(.001, c.currentTime+i*.08+.2);
+        o.start(c.currentTime+i*.08); o.stop(c.currentTime+i*.08+.25);
+      });
+      setTimeout(() => c.close(), 2000);
+    }catch(e){}
+    unlockAchievement('konami');
+  }
+})();
+
+// ═══════════════════════════════════════
+//  SHAKE-TO-CONFETTI (Mobile)
+// ═══════════════════════════════════════
+(function(){
+  let lastAccel = {x:0,y:0,z:0}, lastShake = 0;
+  window.addEventListener('devicemotion', e => {
+    if(!e.accelerationIncludingGravity) return;
+    const a = e.accelerationIncludingGravity;
+    const d = Math.abs(a.x-lastAccel.x) + Math.abs(a.y-lastAccel.y) + Math.abs(a.z-lastAccel.z);
+    lastAccel = {x:a.x, y:a.y, z:a.z};
+    if(d > 25 && Date.now() - lastShake > 3000){
+      lastShake = Date.now();
+      confettiBurst(150);
+      sfx('tada');
+      // Floating message
+      const msg = document.createElement('div');
+      msg.className = 'milestone-toast';
+      msg.innerHTML = '<span class="milestone-toast-emoji">✨</span><span class="milestone-toast-text">Shook with love!</span>';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 4500);
+    }
+  });
+})();
+
+// ═══════════════════════════════════════
+//  DOUBLE-TAP HEART BURST
+// ═══════════════════════════════════════
+(function(){
+  let lastTap = 0, lastTapX = 0, lastTapY = 0;
+  document.addEventListener('touchend', e => {
+    if(e.target.closest('.flip-card,.mega-btn,.blow-btn,.cake-wrapper,.gift-scene,.balloon-wrap,.spin-btn,.jar-btn,.jar-icon,.envelope-box,.fab,.mem-card,.cookie,.fortune-btn,.achieve-ring,.achieve-panel,.quiz-opt')) return;
+    const t = e.changedTouches[0];
+    const now = Date.now();
+    if(now - lastTap < 300 && Math.abs(t.clientX - lastTapX) < 30 && Math.abs(t.clientY - lastTapY) < 30){
+      // Double tap!
+      const x = t.clientX, y = t.clientY;
+      // Giant heart
+      const heart = document.createElement('span');
+      heart.className = 'mega-heart';
+      heart.textContent = '💖';
+      heart.style.left = x + 'px';
+      heart.style.top = y + 'px';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1300);
+      // Ring
+      const ring = document.createElement('span');
+      ring.className = 'mega-heart-ring';
+      ring.style.left = x + 'px';
+      ring.style.top = y + 'px';
+      document.body.appendChild(ring);
+      setTimeout(() => ring.remove(), 900);
+      // Heart burst
+      const HEARTS = ['💖','💕','💝','💗','❤️','🩷'];
+      for(let i = 0; i < 20; i++){
+        const el = document.createElement('span');
+        el.className = 'burst-item';
+        el.textContent = HEARTS[Math.floor(Math.random()*HEARTS.length)];
+        const ang = (i/20)*Math.PI*2, d = 60+Math.random()*80;
+        el.style.left = x+'px'; el.style.top = y+'px';
+        el.style.fontSize = (Math.random()*10+12)+'px';
+        el.style.setProperty('--tx', Math.cos(ang)*d+'px');
+        el.style.setProperty('--ty', (Math.sin(ang)*d-30)+'px');
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 860);
+      }
+      sfx('sparkle');
+      lastTap = 0;
+    } else {
+      lastTap = now;
+      lastTapX = t.clientX;
+      lastTapY = t.clientY;
+    }
+  });
+})();
+
+// ═══════════════════════════════════════
+//  SCROLL-TRIGGERED SURPRISES
+// ═══════════════════════════════════════
+(function(){
+  const triggered = new Set();
+  window.addEventListener('scroll', () => {
+    const pct = scrollY / (document.documentElement.scrollHeight - innerHeight) * 100;
+    if(pct >= 25 && !triggered.has(25)){
+      triggered.add(25);
+      const b = document.createElement('div');
+      b.className = 'scroll-banner';
+      b.innerHTML = '<span class="scroll-banner-emoji">🌟</span><span>Keep going! So much more love ahead...</span>';
+      document.body.appendChild(b);
+      setTimeout(() => b.remove(), 5000);
+    }
+    if(pct >= 50 && !triggered.has(50)){
+      triggered.add(50);
+      const t = document.createElement('div');
+      t.className = 'milestone-toast';
+      t.innerHTML = '<span class="milestone-toast-emoji">🎯</span><span class="milestone-toast-text">Halfway through!</span><span class="milestone-toast-sub">You\'re my favourite explorer 💖</span>';
+      document.body.appendChild(t);
+      firework(fW*.3, fH*.3);
+      firework(fW*.7, fH*.3);
+      sfx('chime');
+      setTimeout(() => t.remove(), 4500);
+    }
+    if(pct >= 75 && !triggered.has(75)){
+      triggered.add(75);
+      const RAIN = ['💖','💕','💝','💗','❤️','🩷','🌸','✨'];
+      for(let i = 0; i < 30; i++){
+        setTimeout(() => {
+          const h = document.createElement('span');
+          h.className = 'heart-rain-item';
+          h.textContent = RAIN[Math.floor(Math.random()*RAIN.length)];
+          h.style.left = Math.random()*100 + 'vw';
+          h.style.setProperty('--rain-sz', (Math.random()*1.2+.8)+'rem');
+          h.style.setProperty('--rain-dur', (Math.random()*2+2)+'s');
+          document.body.appendChild(h);
+          setTimeout(() => h.remove(), 5000);
+        }, i * 80);
+      }
+      sfx('sparkle');
+    }
+    if(pct >= 98 && !triggered.has(100)){
+      triggered.add(100);
+      unlockAchievement('scroll-bottom');
+      for(let i = 0; i < 5; i++) setTimeout(() => firework(fW*(0.15+i*0.175), fH*0.25), i*300);
+      confettiBurst(100);
+    }
+  });
+})();
+
+// ═══════════════════════════════════════
+//  HIDDEN SECRET MESSAGES
+// ═══════════════════════════════════════
+(function(){
+  // 1. Long-press hero name → golden message
+  let pressTimer;
+  const heroName = document.querySelector('.hero-name');
+  if(heroName){
+    const origHTML = heroName.innerHTML;
+    heroName.addEventListener('pointerdown', () => {
+      pressTimer = setTimeout(() => {
+        heroName.style.transition = 'all 0.8s ease';
+        heroName.style.color = 'var(--gd)';
+        heroName.style.textShadow = '0 0 20px rgba(255,215,0,.6), 0 0 40px rgba(255,215,0,.4)';
+        // Replace with message
+        heroName.innerHTML = '';
+        heroName.style.webkitTextFillColor = 'var(--gd)';
+        heroName.textContent = '✨ My whole universe ✨';
+        createBurst({clientX: innerWidth/2, clientY: heroName.getBoundingClientRect().top + 30}, 15);
+        sfx('sparkle');
+        setTimeout(() => {
+          heroName.innerHTML = origHTML;
+          heroName.style.color = '';
+          heroName.style.textShadow = '';
+          heroName.style.webkitTextFillColor = '';
+        }, 3000);
+      }, 2000);
+    });
+    ['pointerup','pointerleave'].forEach(ev =>
+      heroName.addEventListener(ev, () => clearTimeout(pressTimer))
+    );
+  }
+
+  // 2. Click date pill 4 times → morphed text
+  let datePillClicks = 0, datePillTimer;
+  const datePill = document.querySelector('.date-pill');
+  if(datePill){
+    const origText = datePill.textContent;
+    datePill.style.cursor = 'pointer';
+    datePill.addEventListener('click', () => {
+      datePillClicks++;
+      clearTimeout(datePillTimer);
+      datePillTimer = setTimeout(() => datePillClicks = 0, 3000);
+      if(datePillClicks >= 4){
+        datePillClicks = 0;
+        datePill.style.transition = 'all 0.5s ease';
+        datePill.textContent = '🌸 The day the world became more beautiful 🌸';
+        datePill.style.borderColor = 'rgba(255,215,0,.5)';
+        datePill.style.color = 'var(--gd)';
+        sfx('chime');
+        createBurst({clientX: innerWidth/2, clientY: datePill.getBoundingClientRect().top + 20}, 8);
+        setTimeout(() => {
+          datePill.textContent = origText;
+          datePill.style.borderColor = '';
+          datePill.style.color = '';
+        }, 4000);
+      }
+    });
+  }
+
+  // 3. Idle at footer 5s → PS message
+  let footerTimer;
+  const footer = document.querySelector('footer');
+  if(footer){
+    const ps = document.createElement('p');
+    ps.className = 'secret-ps';
+    ps.innerHTML = 'P.S. — You scrolled all the way down. That makes me <span class="secret-glow">love you even more</span>. 💕';
+    footer.appendChild(ps);
+    const fio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          footerTimer = setTimeout(() => {
+            ps.classList.add('show');
+            sfx('sparkle');
+          }, 5000);
+        } else {
+          clearTimeout(footerTimer);
+        }
+      });
+    }, {threshold: 0.5});
+    fio.observe(footer);
+  }
+})();
+
+// ═══════════════════════════════════════
+//  TYPEWRITER CLICK SOUNDS FOR LETTER
+// ═══════════════════════════════════════
+(function(){
+  let typeAudioCtx = null;
+  const origOpenLetter = window.openLetter;
+  // We need to intercept the actual typing loop - we'll add sounds via MutationObserver
+  if(document.getElementById('letterBody')){
+    const letterBody = document.getElementById('letterBody');
+    let lastLen = 0;
+    const obs = new MutationObserver(() => {
+      const curLen = letterBody.textContent.length;
+      if(curLen > lastLen){
+        lastLen = curLen;
+        // Play click
+        try {
+          if(!typeAudioCtx) typeAudioCtx = new(AudioContext||webkitAudioContext)();
+          const c = typeAudioCtx;
+          const o = c.createOscillator(), g = c.createGain();
+          o.connect(g); g.connect(c.destination);
+          const isSpace = letterBody.textContent.endsWith(' ') || letterBody.textContent.endsWith('\n');
+          if(isSpace){
+            o.type = 'sine'; o.frequency.value = 600 + Math.random()*400;
+            g.gain.setValueAtTime(0.015, c.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.06);
+            o.start(); o.stop(c.currentTime + 0.08);
+          } else {
+            o.type = 'square'; o.frequency.value = 3000 + Math.random()*2000;
+            g.gain.setValueAtTime(0.018, c.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.025);
+            o.start(); o.stop(c.currentTime + 0.04);
+          }
+        } catch(e){}
+      }
+    });
+    obs.observe(letterBody, {childList: true, subtree: true, characterData: true});
+  }
+})();
+
+// ═══════════════════════════════════════
+//  UPDATE NAV DOTS FOR NEW SECTIONS
+// ═══════════════════════════════════════
+(function(){
+  const nav = document.getElementById('navDots');
+  if(!nav) return;
+  const newSections = [
+    ['.memory-section', 'Memory'],
+    ['.fortune-section', 'Fortune']
+  ];
+  // Find insertion point (after balloons for memory, after wish jar for fortune)
+  newSections.forEach(([sel, label]) => {
+    const el = document.querySelector(sel);
+    if(!el) return;
+    const d = document.createElement('div');
+    d.className = 'nav-dot';
+    d.dataset.label = label;
+    d.onclick = () => el.scrollIntoView({behavior:'smooth', block:'start'});
+    d.dataset.sel = sel;
+    nav.appendChild(d);
+  });
+})();
+
+// Hook scratch card achievement
+(function(){
+  const origHint = document.getElementById('scratchHint');
+  if(origHint){
+    const obs = new MutationObserver(() => {
+      if(origHint.classList.contains('done')) unlockAchievement('scratch-reveal');
+    });
+    obs.observe(origHint, {attributes: true, attributeFilter: ['class']});
+  }
 })();
 
 </script>
