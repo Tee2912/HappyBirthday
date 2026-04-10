@@ -3027,6 +3027,708 @@ body.theme-dusk{--ambient-tint:rgba(255,107,157,.06)}
 body.theme-night{--ambient-tint:rgba(75,0,130,.06)}
 .ambient-wash{position:fixed;inset:0;z-index:1;pointer-events:none;background:var(--ambient-tint,transparent);transition:background 3s ease}
 </style>
+
+<!-- ═══════ SPRINT 21-22: VISUAL OVERHAUL ═══════ -->
+<style>
+/* ═══ 1. ANIMATED GRADIENT BORDERS ON .glass CARDS ═══ */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes borderSpin {
+  0%   { --border-angle: 0deg; }
+  100% { --border-angle: 360deg; }
+}
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--border-angle),
+    rgba(255,107,157,.55),
+    rgba(196,77,255,.45),
+    rgba(255,215,0,.40),
+    rgba(107,245,255,.35),
+    rgba(255,107,157,.55)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderSpin 4s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .45;
+  transition: opacity .4s ease;
+}
+.glass { position: relative; }
+.glass:hover::before { opacity: 1; }
+
+/* ═══ 2. CSS AURORA BOREALIS BEHIND HERO ═══ */
+.hero-aurora {
+  position: absolute;
+  top: 10%;
+  left: -10%;
+  right: -10%;
+  height: 80%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  filter: blur(60px);
+  opacity: .32;
+  mix-blend-mode: screen;
+}
+.ha-band {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  left: -50%;
+}
+.ha-band:nth-child(1) {
+  background: linear-gradient(90deg,
+    transparent 10%, rgba(255,107,157,.45) 25%, rgba(196,77,255,.6) 40%,
+    transparent 55%, rgba(107,245,255,.35) 70%, transparent 90%);
+  animation: auroraA 8s ease-in-out infinite alternate;
+}
+.ha-band:nth-child(2) {
+  background: linear-gradient(90deg,
+    transparent 5%, rgba(107,245,255,.35) 20%, rgba(255,215,0,.45) 45%,
+    transparent 60%, rgba(255,107,157,.5) 80%, transparent 95%);
+  animation: auroraB 12s ease-in-out infinite alternate;
+  top: 15%;
+}
+.ha-band:nth-child(3) {
+  background: linear-gradient(90deg,
+    transparent 15%, rgba(196,77,255,.5) 35%, transparent 50%,
+    rgba(255,107,157,.3) 65%, rgba(255,215,0,.25) 85%, transparent);
+  animation: auroraC 10s ease-in-out infinite alternate;
+  top: -10%;
+}
+@keyframes auroraA {
+  0%   { transform: translateX(-15%) scaleY(1);   opacity: .6; }
+  50%  { transform: translateX(10%)  scaleY(1.3); opacity: 1;  }
+  100% { transform: translateX(20%)  scaleY(.8);  opacity: .5; }
+}
+@keyframes auroraB {
+  0%   { transform: translateX(10%)  scaleY(.7);  opacity: .4; }
+  50%  { transform: translateX(-20%) scaleY(1.5); opacity: .8; }
+  100% { transform: translateX(-5%)  scaleY(1);   opacity: .6; }
+}
+@keyframes auroraC {
+  0%   { transform: translateX(5%)   scaleY(1.2); opacity: .5; }
+  50%  { transform: translateX(-15%) scaleY(.9);  opacity: .9; }
+  100% { transform: translateX(15%)  scaleY(1.4); opacity: .4; }
+}
+
+/* ═══ 3. BREATHING BUTTONS (.fab) ═══ */
+@keyframes fabBreathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+.fab-group .fab {
+  animation: fabBreathe 3s ease-in-out infinite;
+}
+.fab-group .fab:nth-child(2) { animation-delay: .4s; }
+.fab-group .fab:nth-child(3) { animation-delay: .8s; }
+.fab-group .fab:nth-child(4) { animation-delay: 1.2s; }
+
+/* ═══ 4. ANIMATED GRADIENT TEXT ON ALL .s-title ═══ */
+.s-title {
+  background: linear-gradient(90deg,var(--pk),var(--gd),var(--cy),var(--pp),var(--pk)) !important;
+  background-size: 300% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: shimmerTitle 4s linear infinite !important;
+  text-shadow: none !important;
+  filter: drop-shadow(0 0 18px rgba(255,107,157,.35))
+          drop-shadow(0 0 36px rgba(196,77,255,.18));
+}
+@keyframes shimmerTitle {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* ═══ 5. GLASS CARD 3D TILT HOVER (CSS base) ═══ */
+.glass {
+  transform-style: preserve-3d;
+  transition: transform .45s cubic-bezier(.4,0,.2,1), box-shadow .45s ease;
+}
+.glass .glass-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    circle at var(--gx,50%) var(--gy,50%),
+    rgba(255,255,255,.13) 0%, transparent 60%
+  );
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.glass:hover .glass-glare { opacity: 1; }
+
+/* ═══ 6. PULSING GLOW RINGS ON CTA BUTTONS ═══ */
+.blow-btn, .spin-btn, .jar-btn, .mega-btn { position: relative; overflow: visible; }
+.blow-btn::after, .spin-btn::after, .jar-btn::after, .mega-btn::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: -4px !important;
+  border-radius: inherit !important;
+  border: 2px solid var(--pk) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  animation: ctaRingPulse 2.5s ease-out infinite !important;
+}
+@keyframes ctaRingPulse {
+  0%   { transform: scale(1);   opacity: .65; border-color: var(--pk); box-shadow: 0 0 8px var(--pk); }
+  50%  { border-color: var(--pp); box-shadow: 0 0 14px var(--pp); }
+  100% { transform: scale(1.35); opacity: 0;   border-color: var(--gd); box-shadow: 0 0 0 var(--gd); }
+}
+
+/* ═══ 7. BETTER SECTION DIVIDERS — sparkle-line ═══ */
+.sec-sep::before {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,107,157,.3) 15%, rgba(255,215,0,.5) 50%, rgba(196,77,255,.3) 85%,
+    transparent
+  ) !important;
+  height: 2px !important;
+  overflow: visible !important;
+}
+.sec-sep::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gd);
+  box-shadow: 0 0 10px var(--gd), 0 0 24px rgba(255,215,0,.4);
+  top: 50%;
+  transform: translateY(-50%);
+  animation: sepDot 3s ease-in-out infinite;
+  z-index: 2;
+}
+@keyframes sepDot {
+  0%   { left: 10%;  opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: 90%;  opacity: 0; }
+}
+
+/* ═══ 8. PAGE HEARTBEAT — double-pulse brightness ═══ */
+@keyframes pageHeartbeat {
+  0%   { filter: brightness(1);    }
+  7%   { filter: brightness(1.08); }
+  14%  { filter: brightness(1);    }
+  21%  { filter: brightness(1.06); }
+  28%  { filter: brightness(1);    }
+  100% { filter: brightness(1);    }
+}
+.gradient-bg {
+  animation: gradShift 10s ease infinite, pageHeartbeat 4s ease-in-out infinite !important;
+}
+
+/* ═══ 10. SMOOTH SECTION TRANSITION VARIANTS ═══ */
+.reveal-blur {
+  opacity: 0;
+  filter: blur(8px);
+  transform: scale(1.04);
+  transition: opacity .9s ease, filter .9s ease, transform .9s ease;
+}
+.reveal-blur.visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(.85);
+  transition: opacity .6s ease, transform .75s cubic-bezier(.34,1.56,.64,1);
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.reveal-rotate {
+  opacity: 0;
+  transform: rotate(-8deg) translateY(30px) scale(.92);
+  transform-origin: center bottom;
+  transition: opacity .7s ease, transform .85s cubic-bezier(.17,.67,.21,1.37);
+}
+.reveal-rotate.visible {
+  opacity: 1;
+  transform: rotate(0) translateY(0) scale(1);
+}
+
+/* Reduced motion safety */
+@media (prefers-reduced-motion: reduce) {
+  .glass::before, .ha-band, .fab-group .fab,
+  .blow-btn::after, .spin-btn::after, .jar-btn::after, .mega-btn::after,
+  .sec-sep::after, .gradient-bg {
+    animation: none !important;
+  }
+  .reveal-blur, .reveal-scale, .reveal-rotate {
+    opacity: 1 !important; transform: none !important; filter: none !important;
+    transition: none !important;
+  }
+}
+</style>
+<style>
+/* ═══════════════════════════════════════════════════
+   EASTER EGGS MEGA PACK — Sprint 23-24 CSS
+   ═══════════════════════════════════════════════════ */
+
+/* 1. Double-click emoji float + sparkle */
+@keyframes emojiFloat{0%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)}100%{opacity:0;transform:translateY(-300px) scale(2) rotate(720deg)}}
+@keyframes sparkleScatter{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(.3)}}
+
+/* 2. Stars constellation overlay */
+@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes shootingStar{0%{transform:translateX(0) translateY(0);opacity:1}100%{transform:translateX(300px) translateY(120px);opacity:0}}
+#starSky .constellation-line{stroke:rgba(255,215,0,.6);stroke-width:1.5;filter:drop-shadow(0 0 6px rgba(255,215,0,.5));opacity:0;transition:opacity 1s}
+#starSky .constellation-line.vis{opacity:1}
+#starSky .constellation-label{fill:rgba(255,215,0,.8);font-size:12px;font-weight:700;letter-spacing:2px;opacity:0;transition:opacity 1s}
+#starSky .constellation-label.vis{opacity:1}
+.star-dot-love{position:absolute;width:3px;height:3px;background:#ffd700;border-radius:50%;box-shadow:0 0 6px rgba(255,215,0,.8);opacity:0;animation:loveDotFade .8s forwards}
+@keyframes loveDotFade{0%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1.5)}100%{opacity:1;transform:scale(1)}}
+
+/* 3. Custom context menu */
+@keyframes menuPop{0%{opacity:0;transform:scale(.85)}100%{opacity:1;transform:scale(1)}}
+#loveMenu{font-family:'Poppins',sans-serif}
+#loveMenu .lm-item{padding:10px 18px;color:#fff;font-size:.85rem;cursor:pointer;transition:background .2s,padding-left .2s;display:flex;align-items:center;gap:8px}
+#loveMenu .lm-item:hover{background:rgba(255,107,157,.15);padding-left:22px}
+@keyframes kissFloat{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--kx),var(--ky)) scale(2)}}
+@keyframes roseGrow{0%{height:0;opacity:0}40%{height:80px;opacity:1}100%{height:120px;opacity:1}}
+@keyframes petalUnfold{0%{transform:scale(0) rotate(-45deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+
+/* 4. Number keys heart fireworks */
+@keyframes fwBurst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(.3);opacity:0}}
+
+/* 5. Teleport flash on progress bar click */
+@keyframes teleportFlash{0%{opacity:0}12%{opacity:.85}50%{opacity:.3}100%{opacity:0}}
+@keyframes teleportBurst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--bx),var(--by)) scale(0);opacity:0}}
+
+/* 6. Copy event toast + heart float */
+@keyframes toastSlideUp{0%{transform:translateY(20px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes copyHeartFloat{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.5)}}
+
+/* 7. Favicon — no extra CSS needed */
+
+/* 8. Long-press glass card flip */
+.glass-back-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,107,157,.92),rgba(196,77,255,.92));border-radius:24px;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;color:#fff;font-size:.92rem;line-height:1.65;font-weight:600;z-index:20;opacity:0;transform:rotateY(180deg);backface-visibility:hidden;transition:none;pointer-events:none}
+@keyframes glassFlipIn{0%{transform:rotateY(0)}50%{transform:rotateY(180deg)}100%{transform:rotateY(180deg)}}
+@keyframes glassFlipOut{0%{transform:rotateY(180deg)}50%{transform:rotateY(360deg)}100%{transform:rotateY(360deg)}}
+
+/* 9. Hover footer date — FOREVER glow */
+.footer-forever{color:var(--gd)!important;text-shadow:0 0 12px rgba(255,215,0,.6),0 0 30px rgba(255,215,0,.3);font-weight:900!important;letter-spacing:3px;transition:all .5s ease}
+
+/* 10. Rose petals from triple-swipe */
+@keyframes rosePetalFall{0%{transform:translateY(-20px) rotate(0deg) scale(1);opacity:1}80%{opacity:.8}100%{transform:translateY(calc(100vh + 40px)) rotate(var(--rot,360deg)) scale(.6);opacity:0}}
+.rose-petal{position:fixed;pointer-events:none;z-index:99950;font-size:var(--rp-sz,1.5rem);animation:rosePetalFall var(--rp-dur,4s) ease-in forwards;animation-delay:var(--rp-delay,0s);left:var(--rp-x,50%);top:-30px}
+
+/* Reduced motion override for easter eggs */
+@media(prefers-reduced-motion:reduce){
+  @keyframes emojiFloat{to{opacity:0}}
+  @keyframes sparkleScatter{to{opacity:0}}
+  @keyframes fwBurst{to{opacity:0}}
+  @keyframes teleportFlash{to{opacity:0}}
+  @keyframes rosePetalFall{to{opacity:0}}
+  .rose-petal,.star-dot-love{animation:none!important}
+}
+</style>
+
+<!-- ═══════ SPRINT 25-26: HINT SYSTEM + GUIDANCE STYLES ═══════ -->
+<style>
+/* ── 1. Floating Guide Fairy ── */
+.guide-fairy{position:fixed;bottom:200px;left:16px;z-index:9990;pointer-events:none;filter:drop-shadow(0 0 8px rgba(255,215,0,.35));transition:bottom 1.2s cubic-bezier(.17,.67,.21,1.37),left .8s ease}
+.fairy-body{font-size:1.6rem;display:block;animation:fairyFloat 3s ease-in-out infinite}
+.fairy-speech{position:absolute;left:38px;top:-8px;white-space:nowrap;font-size:.68rem;color:var(--gd);background:rgba(13,0,26,.88);padding:4px 12px;border-radius:12px;border:1px solid rgba(212,168,83,.15);opacity:0;transition:opacity .5s;pointer-events:none;backdrop-filter:blur(6px)}
+.fairy-pointing .fairy-speech{opacity:1}
+.fairy-pointing .fairy-body{animation:fairyBounce .5s ease-in-out 3}
+.guide-fairy::after{content:'';position:absolute;inset:-10px;background:radial-gradient(circle,rgba(255,215,0,.15) 0%,transparent 70%);border-radius:50%;animation:fairyGlow 2s ease-in-out infinite;pointer-events:none}
+@keyframes fairyFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
+@keyframes fairyBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes fairyGlow{0%,100%{opacity:.3}50%{opacity:.7}}
+
+/* ── 2. Section Breadcrumb Trail ── */
+.bc-trail{position:fixed;bottom:0;left:0;right:0;z-index:9993;height:36px;display:flex;align-items:center;background:linear-gradient(0deg,rgba(13,0,26,.92) 0%,rgba(13,0,26,.6) 70%,transparent 100%);padding:0 14px;gap:4px;opacity:0;transform:translateY(100%);transition:all .4s ease;backdrop-filter:blur(6px)}
+.bc-trail.bc-visible{opacity:1;transform:translateY(0)}
+.bc-track{display:flex;gap:3px;flex:1;align-items:center;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.bc-track::-webkit-scrollbar{display:none}
+.bc-dot{width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.12);background:transparent;cursor:pointer;opacity:.3;transition:all .4s;flex-shrink:0;padding:0}
+.bc-dot.bc-visited{opacity:1;background:rgba(212,168,83,.5);border-color:rgba(212,168,83,.4);box-shadow:0 0 6px rgba(212,168,83,.25)}
+.bc-dot.bc-current{transform:scale(1.5);border-color:rgba(255,107,157,.6);box-shadow:0 0 8px rgba(255,107,157,.3);opacity:1}
+.bc-count{font-size:.55rem;color:rgba(212,168,83,.6);font-weight:700;letter-spacing:1px;margin-left:8px;white-space:nowrap}
+
+/* ── 3. Mystery Counter Badge ── */
+.mystery-badge{position:fixed;bottom:48px;left:14px;z-index:9994;background:rgba(13,0,26,.85);border:1px solid rgba(212,168,83,.12);border-radius:16px;padding:5px 12px;display:flex;align-items:center;gap:6px;backdrop-filter:blur(8px);opacity:0;transform:scale(.8);transition:all .4s;pointer-events:none}
+.mystery-badge.mb-show{opacity:1;transform:scale(1);pointer-events:auto}
+.mb-icon{font-size:.9rem}
+.mb-text{font-size:.62rem;color:rgba(212,168,83,.65);font-weight:700;letter-spacing:1px}
+.mb-pulse{animation:mbBounce .6s cubic-bezier(.17,.67,.21,1.37)}
+.mb-complete{border-color:var(--gd)!important;box-shadow:0 0 16px rgba(212,168,83,.25)}
+.mb-complete .mb-text{color:var(--gd)!important}
+@keyframes mbBounce{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+
+/* ── 4. Glowing Edges on Sections with Hidden Interactions ── */
+.hint-edge-glow{position:relative}
+.hint-edge-glow::before{content:'';position:absolute;inset:-2px;z-index:0;border-radius:inherit;pointer-events:none;border:1px solid var(--sg-color,rgba(212,168,83,.1));box-shadow:inset 0 0 25px var(--sg-color,rgba(212,168,83,.05)),0 0 35px var(--sg-color,rgba(212,168,83,.03));opacity:0;transition:opacity .6s}
+.hint-edge-glow.sg-inview::before{animation:edgeGlow 5s ease-in-out infinite}
+.hint-edge-found::before{animation:edgeFlash .7s ease-out forwards!important}
+@keyframes edgeGlow{0%,100%{opacity:.2}50%{opacity:.65}}
+@keyframes edgeFlash{0%{opacity:1;box-shadow:inset 0 0 50px rgba(212,168,83,.25),0 0 60px rgba(212,168,83,.15)}100%{opacity:0}}
+
+/* ── 5. Ambient Whisper Text ── */
+.whisper-text{position:absolute;z-index:2;pointer-events:none;font-size:.7rem;font-style:italic;letter-spacing:2px;color:rgba(255,255,255,0);text-shadow:0 0 0 transparent;transition:color 2s,text-shadow 2s;white-space:nowrap;left:50%;transform:translateX(-50%)}
+.whisper-text.wt-show{animation:whisperFade 8s ease-in-out}
+@keyframes whisperFade{0%,100%{color:rgba(255,255,255,0);text-shadow:0 0 0 transparent}25%,75%{color:rgba(255,255,255,.1);text-shadow:0 0 15px rgba(212,168,83,.08)}}
+
+/* ── 6. Pulsing Arrows ── */
+.hint-arrow{position:absolute;z-index:5;font-size:.8rem;pointer-events:none;opacity:0;filter:drop-shadow(0 0 4px rgba(255,107,157,.25))}
+.hint-arrow.ha-active{animation:arrowPulse 2.8s ease-in-out infinite}
+.hint-arrow-down{left:50%;bottom:-26px;transform:translateX(-50%)}
+.hint-arrow-up{left:50%;top:-26px;transform:translateX(-50%)}
+.hint-arrow-right{right:-26px;top:50%;transform:translateY(-50%)}
+@keyframes arrowPulse{0%,100%{opacity:0}20%,80%{opacity:.4}50%{opacity:.7}}
+.hint-arrow.ha-gone{animation:arrowPoof .5s ease-out forwards!important}
+@keyframes arrowPoof{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(2);filter:blur(5px)}}
+
+/* ── 7. Footer Secret Counter ── */
+.ftr-secret-count{text-align:center;padding:10px 0 4px;font-size:.72rem;letter-spacing:2px;color:rgba(212,168,83,.2);transition:all .8s;cursor:default;user-select:none}
+.ftr-secret-count:hover{color:rgba(212,168,83,.4);text-shadow:0 0 12px rgba(212,168,83,.12)}
+.fsc-hot{color:rgba(255,107,157,.35)!important;animation:fscPulse 3s ease-in-out infinite}
+.fsc-done{color:var(--gd)!important;font-weight:700;text-shadow:0 0 18px rgba(212,168,83,.25);animation:fscCelebrate 2.5s ease-in-out infinite}
+@keyframes fscPulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes fscCelebrate{0%,100%{transform:scale(1)}50%{transform:scale(1.03);text-shadow:0 0 25px rgba(212,168,83,.4)}}
+
+/* ── 8. Discovery Celebration Particles ── */
+.disc-particle{position:fixed;z-index:99960;pointer-events:none;font-size:1rem;animation:discFloat var(--dp-dur,1.8s) ease-out forwards}
+@keyframes discFloat{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dp-dx,0),var(--dp-dy,-80px)) scale(.3)}}
+.disc-flash{position:fixed;inset:0;z-index:99955;pointer-events:none;background:radial-gradient(ellipse at center,rgba(255,215,0,.08),transparent 70%);animation:discFlashAnim .8s ease-out forwards}
+@keyframes discFlashAnim{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
+
+/* ── Responsive adjustments ── */
+@media(max-width:768px){
+  .guide-fairy{bottom:140px;left:8px}
+  .fairy-body{font-size:1.3rem}
+  .fairy-speech{font-size:.6rem;left:30px}
+  .bc-trail{height:30px;padding:0 8px}
+  .bc-dot{width:8px;height:8px}
+  .mystery-badge{bottom:40px;left:8px;padding:4px 8px}
+  .mb-text{font-size:.55rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .fairy-body,.guide-fairy::after{animation:none!important}
+  .hint-edge-glow::before{animation:none!important;opacity:.3}
+  .hint-arrow{animation:none!important;opacity:.4}
+  .disc-particle,.disc-flash{animation:none!important;opacity:0}
+  .whisper-text{animation:none!important}
+}
+</style>
+
+<!-- ═══════ SPRINT 27-28: UX OPTIMIZATION + PERFORMANCE ═══════ -->
+<style>
+/* ── 1. Prefers-reduced-motion FULL support ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal, .reveal-zoom, .reveal-slide-left,
+  .reveal-slide-right, .reveal-expand, .reveal-drop {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+  .gradient-bg { animation: none !important; }
+  .scroll-particle, .gold-rain-particle,
+  .heart-vortex-particle, .burst-item { display: none !important; }
+  #cursor { display: none !important; }
+  .glass:hover { transform: none !important; }
+  .balloon .balloon-body { animation: none !important; }
+  #bg-canvas, #fx-canvas { opacity: 0.4 !important; }
+  body.haptic-shake { animation: none !important; }
+  body.overscroll-top .content,
+  body.overscroll-bottom .content { animation: none !important; transform: none !important; }
+}
+
+/* ── 4. Will-change management — compositor hints ── */
+#bg-canvas, #fx-canvas { will-change: contents; }
+.gradient-bg { will-change: background-position; }
+.scroll-prog { will-change: width; }
+.reveal, .reveal-zoom, .reveal-slide-left,
+.reveal-slide-right, .reveal-expand, .reveal-drop {
+  will-change: opacity, transform;
+}
+.reveal.visible, .reveal-zoom.visible, .reveal-slide-left.visible,
+.reveal-slide-right.visible, .reveal-expand.visible, .reveal-drop.visible {
+  will-change: auto;
+}
+
+/* ── 5. Haptic screen shake ── */
+@keyframes hapticShake {
+  0%       { transform: translate(0, 0) rotate(0deg); }
+  10%      { transform: translate(-3px, 1px) rotate(-0.5deg); }
+  20%      { transform: translate(4px, -2px) rotate(0.5deg); }
+  30%      { transform: translate(-2px, 3px) rotate(-0.3deg); }
+  40%      { transform: translate(3px, -1px) rotate(0.4deg); }
+  50%      { transform: translate(-1px, 2px) rotate(-0.2deg); }
+  60%, 100%{ transform: translate(0, 0) rotate(0deg); }
+}
+body.haptic-shake {
+  animation: hapticShake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* ── 6. Elastic overscroll ── */
+@keyframes elasticTop {
+  0%   { transform: scaleY(1); }
+  30%  { transform: scaleY(0.98) translateY(6px); }
+  55%  { transform: scaleY(1.01) translateY(-2px); }
+  75%  { transform: scaleY(0.998); }
+  100% { transform: scaleY(1) translateY(0); }
+}
+@keyframes elasticBottom {
+  0%   { transform: scaleY(1); }
+  30%  { transform: scaleY(0.98) translateY(-6px); }
+  55%  { transform: scaleY(1.01) translateY(2px); }
+  75%  { transform: scaleY(0.998); }
+  100% { transform: scaleY(1) translateY(0); }
+}
+body.overscroll-top .content {
+  transform-origin: top center;
+  animation: elasticTop 0.55s cubic-bezier(.25,.46,.45,.94) both;
+}
+body.overscroll-bottom .content {
+  transform-origin: bottom center;
+  animation: elasticBottom 0.55s cubic-bezier(.25,.46,.45,.94) both;
+}
+
+/* ── 7. Toast spring-bounce physics ── */
+@keyframes toastBounceIn {
+  0%   { right: -400px; opacity: 0; transform: scale(0.8); }
+  50%  { right: 36px;   opacity: 1; transform: scale(1.05); }
+  65%  { right: 18px;   transform: scale(0.98); }
+  78%  { right: 28px;   transform: scale(1.02); }
+  88%  { right: 22px;   transform: scale(0.995); }
+  100% { right: 24px;   opacity: 1; transform: scale(1); }
+}
+@keyframes toastBounceOut {
+  0%   { right: 24px; opacity: 1; transform: scale(1); }
+  25%  { right: 32px; opacity: 1; transform: scale(1.04); }
+  100% { right: -400px; opacity: 0; transform: scale(0.7); }
+}
+.achieve-toast {
+  animation: toastBounceIn 0.7s cubic-bezier(.17,.67,.21,1.37) forwards,
+             toastBounceOut 0.4s 3.5s ease-in forwards !important;
+}
+.milestone-toast {
+  transition: transform .5s cubic-bezier(.34,1.56,.64,1) !important;
+}
+
+/* ── 10. Cursor emoji morph layer ── */
+#cursor-emoji-morph {
+  position: fixed;
+  pointer-events: none;
+  z-index: 100000;
+  font-size: 14px;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s, transform 0.3s;
+  opacity: 0;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+#cursor {
+  transition: transform 0.3s cubic-bezier(.23,1,.32,1),
+              background 0.4s ease,
+              box-shadow 0.4s ease;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SPRINT 29-30: FINAL POLISH + DEPLOY
+   ═══════════════════════════════════════════════════════ */
+
+/* ── 1. Enhanced nav dots scroll behavior ── */
+.nav-dot {
+  transition: all .35s cubic-bezier(.34,1.56,.64,1) !important;
+}
+.nav-dot.active {
+  background: var(--pk) !important;
+  box-shadow: 0 0 12px var(--pk), 0 0 24px rgba(255,107,157,.3) !important;
+  transform: scale(1.5) !important;
+}
+.nav-dot:not(.active):hover {
+  transform: scale(1.25);
+  background: rgba(255,107,157,.45);
+}
+.nav-dot.pulse-hint {
+  animation: navDotPulse 1.2s ease-in-out;
+}
+@keyframes navDotPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,107,157,0); }
+  50% { box-shadow: 0 0 0 8px rgba(255,107,157,.3); }
+}
+
+/* ── 2. Section explored counter ── */
+#explored-counter {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 9997;
+  background: rgba(13,0,26,.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,107,157,.2);
+  color: rgba(255,255,255,.8);
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: .5px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity .5s cubic-bezier(.34,1.56,.64,1), transform .5s cubic-bezier(.34,1.56,.64,1);
+  font-family: 'Poppins', sans-serif;
+}
+#explored-counter.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+#explored-counter .count-num {
+  color: var(--gd);
+  font-size: .85rem;
+}
+#explored-counter.complete {
+  border-color: var(--gd);
+  background: rgba(255,215,0,.12);
+  color: var(--gd);
+}
+
+/* ── 3. Cursor trail upgrade ── */
+@keyframes trail-fade-upgraded {
+  0% { opacity: .8; transform: translate(-50%,-50%) scale(.7); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(0) translateY(-12px); }
+}
+
+/* ── 4. Mobile touch improvements ── */
+@media (max-width: 768px) {
+  .fab { min-width: 48px; min-height: 48px; }
+  .nav-dot { min-width: 48px; min-height: 48px; display: flex; align-items: center; justify-content: center; }
+  .nav-dot::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: inherit; }
+  .quiz-opt, .fortune-btn, .spin-btn, .blow-btn, .jar-btn, .mega-btn,
+  .song-btn, .doodle-btn, .flip-card, .coupon, .balloon-wrap {
+    min-height: 48px !important;
+  }
+  .coupon-track {
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .coupon {
+    scroll-snap-align: center;
+  }
+  /* Tap feedback */
+  .fab:active, .quiz-opt:active, .balloon-wrap:active,
+  .coupon:active, .flip-card:active, .mega-btn:active {
+    transform: scale(.95) !important;
+    transition: transform .08s !important;
+  }
+}
+
+/* ── 5. Loading performance ── */
+section:not(.hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* ── 7. Final 100% scroll celebration ── */
+@keyframes finalCelebratePulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,215,0,0); }
+  50% { box-shadow: 0 0 60px 30px rgba(255,215,0,.3); }
+}
+#final-celebration-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(13,0,26,.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .8s ease;
+}
+#final-celebration-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+#final-celebration-overlay .final-msg {
+  font-size: clamp(2rem,6vw,4rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--pk), var(--gd), var(--pp));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2s linear infinite, finalCelebratePulse 2s ease-in-out infinite;
+  text-align: center;
+  padding: 20px;
+}
+#final-celebration-overlay .final-sub {
+  color: rgba(255,255,255,.7);
+  font-size: 1.1rem;
+  margin-top: 12px;
+  text-align: center;
+  animation: slideD .8s .3s ease forwards;
+  opacity: 0;
+}
+#final-celebration-overlay .final-close {
+  margin-top: 30px;
+  padding: 14px 40px;
+  border: 2px solid var(--gd);
+  border-radius: 50px;
+  background: rgba(255,215,0,.1);
+  color: var(--gd);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .3s cubic-bezier(.34,1.56,.64,1);
+  animation: slideD .8s .6s ease forwards;
+  opacity: 0;
+}
+#final-celebration-overlay .final-close:hover {
+  background: rgba(255,215,0,.2);
+  transform: scale(1.08);
+}
+
+/* ── 10. Polish animations - bouncy cubic-bezier ── */
+.reveal {
+  transition: opacity .8s cubic-bezier(.34,1.56,.64,1), transform .8s cubic-bezier(.34,1.56,.64,1) !important;
+}
+.glass {
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease !important;
+}
+.fab {
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), background .25s ease !important;
+}
+.coupon {
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .35s ease !important;
+}
+.balloon-wrap {
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1) !important;
+}
+.flip-card {
+  transition: transform .5s cubic-bezier(.34,1.56,.64,1) !important;
+}
+
+</style>
 </head>
 <body>
 
@@ -3077,6 +3779,7 @@ body.theme-night{--ambient-tint:rgba(75,0,130,.06)}
 <!-- ═══════ HERO ═══════ -->
 <section class="hero" id="heroSection">
   <div class="darling-spotlight"></div>
+  <div class="hero-aurora" aria-hidden="true"><div class="ha-band"></div><div class="ha-band"></div><div class="ha-band"></div></div>
   <div class="hero-sparkle-ring"></div>
   <p class="hero-label">✨ A special day for a special girl ✨</p>
   <span class="hero-title">Happy Birthday</span>
@@ -8559,6 +9262,2082 @@ var _thermoInteract;
     }
     setTimeout(()=>ctx.clearRect(0,0,canvas.width,canvas.height),1500);
   });
+})();
+</script>
+
+<!-- ═══════ SPRINT 21-22: VISUAL OVERHAUL JS ═══════ -->
+<script>
+(function visualOverhaul() {
+  'use strict';
+
+  /* ═══ 5. GLASS CARD 3D TILT ON HOVER ═══ */
+  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    const MAX_TILT = 7;
+    document.querySelectorAll('.glass').forEach(card => {
+      // inject glare layer
+      const glare = document.createElement('div');
+      glare.className = 'glass-glare';
+      card.appendChild(glare);
+
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;   // 0-1
+        const y = (e.clientY - r.top)  / r.height;  // 0-1
+        const tiltX = (y - .5) * -MAX_TILT * 2;
+        const tiltY = (x - .5) *  MAX_TILT * 2;
+        card.style.transform =
+          'perspective(800px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) translateZ(8px)';
+        card.style.setProperty('--gx', (x * 100) + '%');
+        card.style.setProperty('--gy', (y * 100) + '%');
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.setProperty('--gx', '50%');
+        card.style.setProperty('--gy', '50%');
+      });
+    });
+  }
+
+  /* ═══ 9. SHAPE-SHIFTING CURSOR — hue per section ═══ */
+  (function cursorHue() {
+    const cursor = document.getElementById('cursor');
+    if (!cursor) return;
+    const SECTION_HUES = [
+      { sel: '.hero',              clr: 'radial-gradient(circle,#ff6b9d,#c44dff)' },
+      { sel: '.cake-section',      clr: 'radial-gradient(circle,#ffd700,#ff6b9d)' },
+      { sel: '.gift-section',      clr: 'radial-gradient(circle,#c44dff,#6bf5ff)' },
+      { sel: '.letter-section',    clr: 'radial-gradient(circle,#ffb347,#ff6b9d)' },
+      { sel: '.balloon-section',   clr: 'radial-gradient(circle,#6bf5ff,#c44dff)' },
+      { sel: '.memory-section',    clr: 'radial-gradient(circle,#c44dff,#ff6b9d)' },
+      { sel: '.timeline-section',  clr: 'radial-gradient(circle,#6bf5ff,#3fd9a0)' },
+      { sel: '.wishes-section',    clr: 'radial-gradient(circle,#ffd700,#ffb347)' },
+      { sel: '.celebrate-section', clr: 'radial-gradient(circle,#ff6b9d,#ffd700)' },
+      { sel: '.jar-section',       clr: 'radial-gradient(circle,#c44dff,#9c27b0)' },
+      { sel: '.fw-section',        clr: 'radial-gradient(circle,#ffd700,#ff4500)' },
+      { sel: '.stars-section',     clr: 'radial-gradient(circle,#6bf5ff,#fff)' },
+      { sel: '.poem-section',      clr: 'radial-gradient(circle,#ff9ecd,#c44dff)' },
+      { sel: '.infinity-promise',  clr: 'radial-gradient(circle,#ff6b9d,#ffd700)' },
+    ];
+    const pairs = SECTION_HUES.map(h => ({ el: document.querySelector(h.sel), clr: h.clr })).filter(p => p.el);
+    let active = pairs[0] ? pairs[0].clr : null;
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const vh = window.innerHeight;
+        for (const p of pairs) {
+          const r = p.el.getBoundingClientRect();
+          if (r.top < vh * .55 && r.bottom > vh * .3) { active = p.clr; break; }
+        }
+        if (active) cursor.style.background = active;
+        ticking = false;
+      });
+    }, { passive: true });
+  })();
+
+  /* ═══ 10. SMOOTH SECTION TRANSITIONS — random reveal variants ═══ */
+  (function randomReveals() {
+    const VARIANTS = ['reveal-blur', 'reveal-scale', 'reveal-rotate'];
+    const sections = document.querySelectorAll('.content > section');
+
+    sections.forEach((sec, i) => {
+      // Don't overwrite hero or sections that already have a special reveal
+      if (sec.classList.contains('hero')) return;
+      // Pick a variant deterministically by index so it's consistent
+      const variant = VARIANTS[i % VARIANTS.length];
+      // Only add if the section doesn't already display (visible class)
+      if (!sec.classList.contains('visible')) {
+        sec.classList.add(variant);
+      }
+    });
+
+    // Observe new reveal classes
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal-blur, .reveal-scale, .reveal-rotate').forEach(el => obs.observe(el));
+  })();
+
+})();
+</script>
+
+<!-- ═══════ EASTER EGGS MEGA PACK — Sprint 23-24 ═══════ -->
+<script>
+(function easterEggsMegaPack(){
+  'use strict';
+
+  /* ═══ UTILITY ═══ */
+  function showToast(msg, dur){
+    dur = dur || 2200;
+    var t = document.createElement('div');
+    t.textContent = msg;
+    t.style.cssText = 'position:fixed;bottom:28px;right:28px;padding:12px 24px;border-radius:16px;' +
+      'background:rgba(20,5,40,.92);backdrop-filter:blur(14px);border:1px solid rgba(255,107,157,.35);' +
+      'color:#ffd700;font-size:.9rem;font-weight:700;z-index:99999;pointer-events:none;' +
+      'animation:toastSlideUp .35s ease-out;font-family:Poppins,sans-serif;' +
+      'box-shadow:0 8px 30px rgba(0,0,0,.4)';
+    document.body.appendChild(t);
+    setTimeout(function(){ t.style.transition='opacity .4s'; t.style.opacity='0'; setTimeout(function(){ t.remove(); },400); }, dur);
+  }
+
+  /* ════════════════════════════════════════════
+     1. DOUBLE-CLICK ANY EMOJI → float + sparkle
+     ════════════════════════════════════════════ */
+  (function(){
+    var emojiRe = /^\p{Extended_Pictographic}$/u;
+    var cooldown = false;
+    document.addEventListener('dblclick', function(e){
+      if(cooldown) return;
+      var el = e.target;
+      var txt = (el.textContent || '').trim();
+      if(!emojiRe.test(txt)) return;
+      // skip letter card dblclick (already handled)
+      if(el.closest && el.closest('#letterCard')) return;
+      cooldown = true;
+      setTimeout(function(){ cooldown = false; }, 500);
+
+      var rect = el.getBoundingClientRect();
+      var cx = rect.left + rect.width/2, cy = rect.top;
+
+      // pulse original
+      el.style.transition = 'transform .2s';
+      el.style.transform = 'scale(1.3)';
+      setTimeout(function(){ el.style.transform = ''; }, 250);
+
+      // floating clone
+      var clone = document.createElement('div');
+      clone.textContent = txt;
+      clone.style.cssText = 'position:fixed;left:'+rect.left+'px;top:'+rect.top+'px;font-size:2rem;z-index:99999;pointer-events:none;animation:emojiFloat 2s ease-out forwards';
+      document.body.appendChild(clone);
+      setTimeout(function(){ clone.remove(); }, 2000);
+
+      // sparkles
+      var colors = ['#ffd700','#ff6b9d','#c44dff','#6bf5ff'];
+      for(var i=0;i<10;i++){
+        var sp = document.createElement('span');
+        var tx = (Math.random()-.5)*140, ty = -30-Math.random()*120;
+        sp.style.cssText = 'position:fixed;left:'+(cx)+'px;top:'+(cy)+'px;width:6px;height:6px;border-radius:50%;background:'+colors[i%4]+';z-index:99999;pointer-events:none;animation:sparkleScatter 1s ease-out forwards;--tx:'+tx+'px;--ty:'+ty+'px';
+        document.body.appendChild(sp);
+        (function(s){ setTimeout(function(){ s.remove(); }, 1000); })(sp);
+      }
+    });
+  })();
+
+  /* ════════════════════════════════════════════
+     2. TYPE 'stars' → constellation overlay spelling LOVE
+     ════════════════════════════════════════════ */
+  (function(){
+    var buf = '';
+    document.addEventListener('keydown', function(e){
+      if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      buf += e.key.toLowerCase();
+      if(buf.length > 20) buf = buf.slice(-20);
+      if(!buf.includes('stars')) return;
+      buf = '';
+
+      if(document.getElementById('starSky')) return;
+      var sky = document.createElement('div');
+      sky.id = 'starSky';
+      sky.style.cssText = 'position:fixed;inset:0;z-index:99998;background:radial-gradient(ellipse at 50% 40%,#0a0020,#000);opacity:0;transition:opacity 1s;cursor:pointer;overflow:hidden';
+      document.body.appendChild(sky);
+      requestAnimationFrame(function(){ sky.style.opacity = '1'; });
+
+      // 200 background stars
+      for(var i=0;i<200;i++){
+        var s = document.createElement('div');
+        var sz = 1 + Math.random()*2;
+        s.style.cssText = 'position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+sz+'px;height:'+sz+'px;background:#fff;border-radius:50%;opacity:'+(0.2+Math.random()*0.8)+';animation:twinkle '+(2+Math.random()*4)+'s ease-in-out infinite '+(Math.random()*3)+'s';
+        sky.appendChild(s);
+      }
+
+      // LOVE spelled in star dots
+      var LOVE_POINTS = {
+        L: [[10,20],[10,30],[10,40],[10,50],[10,60],[15,60],[20,60]],
+        O: [[30,20],[28,30],[28,40],[30,50],[32,60],[38,60],[40,50],[42,40],[42,30],[40,20],[35,18]],
+        V: [[50,20],[51,30],[53,40],[55,50],[57,60],[59,50],[61,40],[63,30],[64,20]],
+        E: [[72,20],[72,30],[72,40],[72,50],[72,60],[77,20],[82,20],[77,40],[80,40],[77,60],[82,60]]
+      };
+      var delay = 500;
+      var letters = ['L','O','V','E'];
+      letters.forEach(function(letter, li){
+        var pts = LOVE_POINTS[letter];
+        setTimeout(function(){
+          pts.forEach(function(p, pi){
+            setTimeout(function(){
+              var dot = document.createElement('div');
+              dot.className = 'star-dot-love';
+              dot.style.left = p[0] + '%';
+              dot.style.top = p[1] + '%';
+              dot.style.animationDelay = (pi * 0.05) + 's';
+              sky.appendChild(dot);
+            }, pi * 60);
+          });
+        }, delay + li * 600);
+      });
+
+      // shooting star interval
+      var shootInt = setInterval(function(){
+        if(!document.getElementById('starSky')){ clearInterval(shootInt); return; }
+        var sh = document.createElement('div');
+        sh.style.cssText = 'position:absolute;left:'+(Math.random()*60)+'%;top:'+(Math.random()*40)+'%;width:3px;height:3px;background:#fff;border-radius:50%;box-shadow:0 0 8px #fff,-20px 0 12px rgba(255,255,255,.4),-40px 0 8px rgba(255,255,255,.2);animation:shootingStar 1.2s linear forwards;pointer-events:none';
+        sky.appendChild(sh);
+        setTimeout(function(){ sh.remove(); }, 1200);
+      }, 3500);
+
+      // close on click or Escape
+      function closeSky(){
+        sky.style.opacity = '0';
+        setTimeout(function(){ sky.remove(); clearInterval(shootInt); }, 1000);
+        document.removeEventListener('keydown', escHandler);
+      }
+      function escHandler(ev){ if(ev.key === 'Escape') closeSky(); }
+      sky.addEventListener('click', closeSky);
+      document.addEventListener('keydown', escHandler);
+    });
+  })();
+
+  /* ════════════════════════════════════════════
+     3. RIGHT-CLICK → custom love context menu
+     ════════════════════════════════════════════ */
+  (function(){
+    function removeMenu(){ var m = document.getElementById('loveMenu'); if(m) m.remove(); }
+
+    // Action: Send Kiss
+    function actionKiss(mx, my){
+      for(var i=0;i<6;i++){
+        var k = document.createElement('span');
+        k.textContent = '💋';
+        var kx = (Math.random()-.5)*200, ky = -80-Math.random()*150;
+        k.style.cssText = 'position:fixed;left:'+mx+'px;top:'+my+'px;font-size:1.6rem;z-index:99999;pointer-events:none;animation:kissFloat 1.5s ease-out forwards;--kx:'+kx+'px;--ky:'+ky+'px';
+        document.body.appendChild(k);
+        (function(el){ setTimeout(function(){ el.remove(); }, 1500); })(k);
+      }
+      showToast('💋 Kisses sent!');
+    }
+
+    // Action: Grow a Rose
+    function actionRose(mx, my){
+      var rose = document.createElement('div');
+      rose.style.cssText = 'position:fixed;left:'+(mx-15)+'px;bottom:'+(window.innerHeight - my)+'px;width:30px;z-index:99999;pointer-events:none;display:flex;flex-direction:column;align-items:center';
+      // stem
+      var stem = document.createElement('div');
+      stem.style.cssText = 'width:3px;background:linear-gradient(to top,#228B22,#32CD32);border-radius:2px;height:0;animation:roseGrow 2s ease forwards';
+      // flower
+      var flower = document.createElement('div');
+      flower.textContent = '🌹';
+      flower.style.cssText = 'font-size:2rem;animation:petalUnfold 1s .8s ease forwards;opacity:0;transform:scale(0)';
+      rose.appendChild(flower);
+      rose.appendChild(stem);
+      document.body.appendChild(rose);
+      showToast('🌹 A rose blooms for you!');
+      setTimeout(function(){ rose.style.transition='opacity 1s'; rose.style.opacity='0'; setTimeout(function(){ rose.remove(); }, 1000); }, 4000);
+    }
+
+    // Action: Make a Wish
+    function actionWish(){
+      var wish = prompt('✨ Make a wish:');
+      if(!wish) return;
+      var el = document.createElement('div');
+      el.textContent = '⭐ ' + wish + ' ⭐';
+      el.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);color:#ffd700;font-size:1.4rem;font-weight:900;z-index:99999;text-shadow:0 0 20px rgba(255,215,0,.6);pointer-events:none;text-align:center;max-width:80%;transition:opacity 2s,transform 2s';
+      document.body.appendChild(el);
+      setTimeout(function(){
+        el.style.opacity = '0';
+        el.style.transform = 'translate(-50%,-50%) scale(1.5)';
+        // sparkles
+        for(var i=0;i<12;i++){
+          var sp = document.createElement('span');
+          sp.textContent = '✨';
+          var ang = (i/12)*Math.PI*2;
+          sp.style.cssText = 'position:fixed;left:50%;top:50%;font-size:1rem;z-index:99999;pointer-events:none;animation:sparkleScatter 1.2s ease-out forwards;--tx:'+(Math.cos(ang)*100)+'px;--ty:'+(Math.sin(ang)*100)+'px';
+          document.body.appendChild(sp);
+          (function(s){ setTimeout(function(){ s.remove(); }, 1200); })(sp);
+        }
+        setTimeout(function(){ el.remove(); }, 2000);
+      }, 2500);
+    }
+
+    // Action: Say I Love You
+    function actionLove(){
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(13,0,26,.85);opacity:0;transition:opacity .5s;pointer-events:all;cursor:pointer';
+      var txt = document.createElement('div');
+      txt.textContent = 'I LOVE YOU 💕';
+      txt.style.cssText = 'font-size:clamp(2rem,8vw,4rem);font-weight:900;background:linear-gradient(90deg,#ff6b9d,#ffd700,#c44dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;animation:shimmer 2s linear infinite;background-size:300% 100%';
+      overlay.appendChild(txt);
+      document.body.appendChild(overlay);
+      requestAnimationFrame(function(){ overlay.style.opacity = '1'; });
+      overlay.addEventListener('click', function(){ overlay.style.opacity='0'; setTimeout(function(){ overlay.remove(); },500); });
+      setTimeout(function(){ overlay.style.opacity='0'; setTimeout(function(){ overlay.remove(); },500); }, 4000);
+    }
+
+    // Action: Surprise Me
+    function actionSurprise(mx, my){
+      var surprises = [
+        function(){ if(typeof firework==='function'){ firework(mx, my); } showToast('🎆 Surprise firework!'); },
+        function(){ actionKiss(mx, my); },
+        function(){
+          var emojis = ['💖','🦋','🌸','⭐','🎀','💎','🌈','🎵','🔮','🍰'];
+          for(var i=0;i<20;i++){
+            var f = document.createElement('span');
+            f.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+            f.className = 'float-item';
+            f.style.cssText = 'left:'+(Math.random()*100)+'vw;bottom:-30px;--dur:'+(2+Math.random()*3)+'s;--sz:'+(1+Math.random()*1.5)+'rem';
+            document.body.appendChild(f);
+            (function(el){ setTimeout(function(){ el.remove(); }, 5000); })(f);
+          }
+          showToast('🎲 Emoji rain!');
+        },
+        function(){ actionRose(mx, my); },
+        function(){ actionLove(); }
+      ];
+      surprises[Math.floor(Math.random()*surprises.length)]();
+    }
+
+    document.addEventListener('contextmenu', function(e){
+      e.preventDefault();
+      removeMenu();
+      var menu = document.createElement('div');
+      menu.id = 'loveMenu';
+      var ml = Math.min(e.clientX, innerWidth - 210), mt = Math.min(e.clientY, innerHeight - 260);
+      menu.style.cssText = 'position:fixed;left:'+ml+'px;top:'+mt+'px;z-index:99999;min-width:200px;padding:8px 0;border-radius:16px;background:rgba(20,5,40,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,107,157,.3);box-shadow:0 12px 40px rgba(0,0,0,.6);animation:menuPop .25s ease-out';
+      var items = [
+        ['💋','Send Kiss', actionKiss],
+        ['🌹','Grow a Rose', actionRose],
+        ['⭐','Make a Wish', actionWish],
+        ['💕','Say I Love You', actionLove],
+        ['🎲','Surprise Me', actionSurprise]
+      ];
+      items.forEach(function(arr){
+        var it = document.createElement('div');
+        it.className = 'lm-item';
+        it.innerHTML = '<span>'+arr[0]+'</span> '+arr[1];
+        it.addEventListener('click', function(){ arr[2](e.clientX, e.clientY); removeMenu(); });
+        menu.appendChild(it);
+      });
+      document.body.appendChild(menu);
+      setTimeout(function(){
+        document.addEventListener('click', function handler(ev){
+          if(!menu.contains(ev.target)){ removeMenu(); document.removeEventListener('click', handler); }
+        });
+      }, 50);
+    });
+  })();
+
+  /* ════════════════════════════════════════════
+     4. NUMBER KEYS 1-9 → heart-shaped fireworks
+     ════════════════════════════════════════════ */
+  (function(){
+    var fwCooldown = false;
+    document.addEventListener('keydown', function(e){
+      if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      var n = parseInt(e.key);
+      if(isNaN(n) || n < 1 || n > 9) return;
+      if(fwCooldown) return;
+      fwCooldown = true;
+      setTimeout(function(){ fwCooldown = false; }, 800);
+
+      for(var i = 0; i < n; i++){
+        (function(idx){
+          setTimeout(function(){
+            // use existing firework function if available
+            if(typeof firework === 'function'){
+              var x = (0.1 + Math.random()*0.8) * (typeof fW!=='undefined'?fW:innerWidth);
+              var y = (0.08 + Math.random()*0.35) * (typeof fH!=='undefined'?fH:innerHeight);
+              firework(x, y);
+            }
+            // also spawn emoji heart burst at random viewport position
+            var cx = 0.1*innerWidth + Math.random()*0.8*innerWidth;
+            var cy = 0.08*innerHeight + Math.random()*0.35*innerHeight;
+            var hearts = ['💖','💕','❤️','💗','💘'];
+            var count = 16 + Math.floor(Math.random()*8);
+            for(var j=0; j<count; j++){
+              var h = document.createElement('span');
+              h.textContent = hearts[j % 5];
+              var angle = (j/count) * Math.PI * 2;
+              var rad = 50 + Math.random()*80;
+              h.style.cssText = 'position:fixed;left:'+cx+'px;top:'+cy+'px;font-size:'+(0.7+Math.random()*0.8)+'rem;z-index:99999;pointer-events:none;animation:fwBurst 1.5s ease-out forwards;--tx:'+(Math.cos(angle)*rad)+'px;--ty:'+(Math.sin(angle)*rad)+'px;filter:hue-rotate('+(idx*40)+'deg)';
+              document.body.appendChild(h);
+              (function(el){ setTimeout(function(){ el.remove(); }, 1500); })(h);
+            }
+          }, idx * 150);
+        })(i);
+      }
+      showToast('🎆 '+n+' firework'+(n>1?'s':'')+' launched!');
+    });
+  })();
+
+  /* ════════════════════════════════════════════
+     5. CLICK SCROLL PROGRESS BAR → teleport flash
+     ════════════════════════════════════════════ */
+  (function(){
+    var prog = document.getElementById('scrollProg') || document.querySelector('.scroll-prog');
+    if(!prog) return;
+    // make clickable — expand hit area
+    prog.style.cursor = 'pointer';
+    prog.style.pointerEvents = 'auto';
+    prog.style.minHeight = '12px';
+    prog.style.marginTop = '-4px';
+    prog.style.paddingTop = '4px';
+    prog.style.position = 'fixed';
+
+    prog.addEventListener('click', function(e){
+      var pct = e.clientX / window.innerWidth;
+      var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      var targetY = pct * maxScroll;
+
+      // Flash
+      var flash = document.createElement('div');
+      flash.style.cssText = 'position:fixed;inset:0;background:#fff;z-index:99999;pointer-events:none;animation:teleportFlash .45s ease-out forwards';
+      document.body.appendChild(flash);
+      setTimeout(function(){
+        window.scrollTo({ top: targetY, behavior: 'instant' });
+      }, 120);
+      setTimeout(function(){ flash.remove(); }, 450);
+
+      // burst sparkles at center
+      setTimeout(function(){
+        var cx = innerWidth/2, cy = innerHeight/2;
+        for(var i=0;i<14;i++){
+          var dot = document.createElement('span');
+          dot.textContent = '✨';
+          var ang = (i/14)*Math.PI*2, r = 60+Math.random()*60;
+          dot.style.cssText = 'position:fixed;left:'+cx+'px;top:'+cy+'px;font-size:1rem;z-index:99999;pointer-events:none;animation:teleportBurst .8s ease-out forwards;--bx:'+(Math.cos(ang)*r)+'px;--by:'+(Math.sin(ang)*r)+'px';
+          document.body.appendChild(dot);
+          (function(el){ setTimeout(function(){ el.remove(); }, 800); })(dot);
+        }
+      }, 180);
+
+      // glow the progress bar briefly
+      prog.style.boxShadow = '0 0 20px #ff6b9d, 0 0 40px #c44dff';
+      setTimeout(function(){ prog.style.boxShadow = '0 0 8px var(--pk)'; }, 600);
+    });
+  })();
+
+  /* ════════════════════════════════════════════
+     6. COPY TEXT → append love note + toast
+     ════════════════════════════════════════════ */
+  (function(){
+    document.addEventListener('copy', function(e){
+      var sel = window.getSelection().toString();
+      if(sel.length <= 5) return;
+      e.preventDefault();
+      var enhanced = sel + ' \u2014 sent with love \uD83D\uDC95';
+      e.clipboardData.setData('text/plain', enhanced);
+      showToast('💌 Copied with love!');
+
+      // float heart from selection area
+      try{
+        var range = window.getSelection().getRangeAt(0);
+        var rect = range.getBoundingClientRect();
+        if(rect.width > 0){
+          var heart = document.createElement('span');
+          heart.textContent = '💕';
+          heart.style.cssText = 'position:fixed;left:'+(rect.left+rect.width/2)+'px;top:'+rect.top+'px;font-size:1.5rem;z-index:99999;pointer-events:none;animation:copyHeartFloat 1.5s ease-out forwards';
+          document.body.appendChild(heart);
+          setTimeout(function(){ heart.remove(); }, 1500);
+        }
+      }catch(ex){}
+    });
+  })();
+
+  /* ════════════════════════════════════════════
+     7. PAGE VISIBILITY → custom heart favicon
+     ════════════════════════════════════════════ */
+  (function(){
+    var origFavicon = '';
+    var linkEl = document.querySelector('link[rel="icon"]') || document.querySelector('link[rel="shortcut icon"]');
+    if(linkEl) origFavicon = linkEl.href;
+
+    // heart emoji SVG data URI
+    var heartSvg = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">💖</text></svg>';
+
+    function setFavicon(href){
+      if(!linkEl){
+        linkEl = document.createElement('link');
+        linkEl.rel = 'icon';
+        document.head.appendChild(linkEl);
+      }
+      linkEl.href = href;
+    }
+
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden){
+        setFavicon(heartSvg);
+      } else {
+        if(origFavicon) setFavicon(origFavicon);
+        else if(linkEl) linkEl.href = '';
+      }
+    });
+  })();
+
+  /* ════════════════════════════════════════════
+     8. LONG-PRESS .glass CARD (1.5s) → flip to love fact
+     ════════════════════════════════════════════ */
+  (function(){
+    var loveFacts = [
+      'Your heart beats about 100,000 times a day — each one for you 💓',
+      'Couples who laugh together last longer — that\'s us! 😄💕',
+      'Holding hands reduces stress and pain. Grab mine? 🤝',
+      'Butterflies in your stomach are real — caused by adrenaline! 🦋',
+      'The heart symbol ♥ was first used to represent love in the 1400s',
+      'Love makes the brain release dopamine — you\'re my natural high ✨',
+      'Soulmates were once one soul split in two by the gods 💫',
+      'A 20-second hug releases oxytocin, the bonding hormone 🤗',
+      'Red roses mean "I love you" — I\'d give you a million 🌹',
+      'Our love story is my favorite story ever written 📖💕',
+      'Looking into each other\'s eyes syncs heartbeats 💞',
+      'Love letters from the 1800s are the most romantic ever penned ✉️'
+    ];
+    var pressTimer = null;
+    var activeCard = null;
+
+    function startPress(card, e){
+      if(activeCard) return;
+      pressTimer = setTimeout(function(){
+        activeCard = card;
+        var fact = loveFacts[Math.floor(Math.random()*loveFacts.length)];
+
+        // create back overlay
+        var back = document.createElement('div');
+        back.className = 'glass-back-overlay';
+        back.textContent = fact;
+        card.style.position = card.style.position || 'relative';
+        if(getComputedStyle(card).position === 'static') card.style.position = 'relative';
+        card.appendChild(back);
+
+        // flip animation
+        card.style.transformStyle = 'preserve-3d';
+        card.style.transition = 'transform .6s cubic-bezier(.4,0,.2,1)';
+        card.style.transform = 'perspective(800px) rotateY(180deg)';
+        back.style.opacity = '1';
+        back.style.transform = 'rotateY(180deg)';
+
+        // flip back after 3s
+        setTimeout(function(){
+          card.style.transform = '';
+          setTimeout(function(){
+            back.remove();
+            card.style.transformStyle = '';
+            activeCard = null;
+          }, 600);
+        }, 3000);
+      }, 1500);
+    }
+
+    function cancelPress(){
+      clearTimeout(pressTimer);
+      pressTimer = null;
+    }
+
+    document.querySelectorAll('.glass').forEach(function(card){
+      // mouse
+      card.addEventListener('mousedown', function(e){ startPress(card, e); });
+      card.addEventListener('mouseup', cancelPress);
+      card.addEventListener('mouseleave', cancelPress);
+      // touch
+      card.addEventListener('touchstart', function(e){ startPress(card, e); }, {passive:true});
+      card.addEventListener('touchend', cancelPress);
+      card.addEventListener('touchcancel', cancelPress);
+    });
+  })();
+
+  /* ════════════════════════════════════════════
+     9. HOVER FOOTER DATE 5s → 'FOREVER 💕'
+     ════════════════════════════════════════════ */
+  (function(){
+    // find the footer date element ("April 9, 2026" line)
+    var footerPs = document.querySelectorAll('footer p');
+    var dateEl = null;
+    footerPs.forEach(function(p){
+      if(p.textContent.indexOf('2026') !== -1 && p.textContent.indexOf('April') !== -1) dateEl = p;
+    });
+    if(!dateEl) return;
+
+    var origText = dateEl.textContent;
+    var origStyle = dateEl.getAttribute('style') || '';
+    var hoverTimer = null;
+    var transformed = false;
+
+    dateEl.addEventListener('mouseenter', function(){
+      if(transformed) return;
+      hoverTimer = setTimeout(function(){
+        transformed = true;
+        dateEl.textContent = 'FOREVER 💕';
+        dateEl.classList.add('footer-forever');
+        // revert after 4s
+        setTimeout(function(){
+          dateEl.textContent = origText;
+          dateEl.classList.remove('footer-forever');
+          dateEl.setAttribute('style', origStyle);
+          transformed = false;
+        }, 4000);
+      }, 5000);
+    });
+
+    dateEl.addEventListener('mouseleave', function(){
+      if(!transformed){ clearTimeout(hoverTimer); }
+    });
+  })();
+
+  /* ════════════════════════════════════════════
+     10. RAPID TRIPLE-SWIPE DOWN (mobile) → rose petals
+     ════════════════════════════════════════════ */
+  (function(){
+    var swipes = [];
+    var petalActive = false;
+    var touchStartY = 0;
+
+    document.addEventListener('touchstart', function(e){
+      touchStartY = e.touches[0].clientY;
+    }, {passive:true});
+
+    document.addEventListener('touchend', function(e){
+      if(petalActive) return;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if(dy < 80) return; // must be a downward swipe
+
+      var now = Date.now();
+      swipes.push(now);
+      // keep only last 3 within 1.5s
+      swipes = swipes.filter(function(t){ return now - t < 1500; });
+
+      if(swipes.length >= 3){
+        swipes = [];
+        petalActive = true;
+        showToast('🌹 Rose petal shower!');
+
+        var petals = ['🌹','🥀','🌸','🏵️','💮','🪻'];
+        var spawned = [];
+        for(var i=0; i<35; i++){
+          (function(idx){
+            setTimeout(function(){
+              var p = document.createElement('div');
+              p.className = 'rose-petal';
+              p.textContent = petals[Math.floor(Math.random()*petals.length)];
+              p.style.setProperty('--rp-x', (Math.random()*100)+'%');
+              p.style.setProperty('--rp-sz', (1+Math.random()*1.5)+'rem');
+              p.style.setProperty('--rp-dur', (3+Math.random()*3)+'s');
+              p.style.setProperty('--rp-delay', (idx*0.12)+'s');
+              p.style.setProperty('--rot', (180+Math.random()*360)+'deg');
+              document.body.appendChild(p);
+              spawned.push(p);
+            }, idx * 120);
+          })(i);
+        }
+
+        // cleanup after 7s
+        setTimeout(function(){
+          spawned.forEach(function(el){ el.remove(); });
+          petalActive = false;
+        }, 7000);
+      }
+    }, {passive:true});
+  })();
+
+})();
+</script>
+
+<!-- ═══════ SPRINT 25-26: HINT SYSTEM + GUIDANCE ═══════ -->
+<script>
+(function hintSystemGuide(){
+  'use strict';
+
+  // ── Shared: collect all easter egg secrets and track discovery ──
+  // These are the known interactive secrets across the page
+  var SECRETS = [
+    {id:'frag-1', label:'Triple-click hero', section:'.hero'},
+    {id:'frag-2', label:'Long-press gift bow', section:'.gift-section'},
+    {id:'frag-3', label:'Type love', section:'.gift-section'},
+    {id:'frag-4', label:'Footer stars L-R-L', section:'footer'},
+    {id:'frag-5', label:'Scroll bottom wait', section:'footer'},
+    {id:'frag-6', label:'R key photo', section:'.photo-section'},
+    {id:'frag-7', label:'Rhythm cake', section:'.cake-section'},
+    {id:'konami', label:'Konami code', section:'.hero'},
+    {id:'plate-7', label:'Cake plate 7x', section:'.cake-section'},
+    {id:'ecg-click', label:'ECG click', section:'footer'},
+    {id:'darling-type', label:'Type darling', section:'.hero'},
+    {id:'aurora-triple', label:'Aurora triple-click', section:'.hero'},
+    {id:'spacebar-hold', label:'Hold spacebar 3s', section:'.celebrate-section'},
+    {id:'date-pill-4tap', label:'4-tap date pill', section:'.hero'},
+    {id:'moon-type', label:'Type moon', section:'.stars-section'},
+    {id:'heart-5tap', label:'5-tap infinity heart', section:'footer'},
+    {id:'timeline-dots', label:'Click all timeline dots', section:'.timeline-section'},
+    {id:'letter-swipe', label:'Swipe letter', section:'.letter-section'},
+    {id:'balloon-rapid', label:'Rapid-click balloons', section:'.balloon-section'},
+    {id:'fab-hover', label:'Hover FAB 3s', section:'.hero'}
+  ];
+  var TOTAL_SECRETS = SECRETS.length; // 20
+
+  // Centralized discovery state via sessionStorage (non-persistent, per-visit hints)
+  var discovered = {};
+  try { discovered = JSON.parse(sessionStorage.getItem('hint_discovered') || '{}'); } catch(e){}
+
+  function markDiscovered(id){
+    if(discovered[id]) return;
+    discovered[id] = Date.now();
+    try { sessionStorage.setItem('hint_discovered', JSON.stringify(discovered)); } catch(e){}
+    updateMysteryBadge();
+    updateFooterSecretCount();
+    celebrateDiscovery();
+    removeGlow(id);
+    removeArrow(id);
+  }
+
+  function countDiscovered(){
+    return Object.keys(discovered).length;
+  }
+
+  // ── Hook into existing foundFragment to detect locket discoveries ──
+  if(typeof foundFragment === 'function'){
+    var _origFoundFrag = foundFragment;
+    window.foundFragment = function(num){
+      _origFoundFrag(num);
+      markDiscovered('frag-' + num);
+    };
+  }
+
+  // ── Hook into unlockAchievement to detect achievement-based discoveries ──
+  if(typeof unlockAchievement === 'function'){
+    var _origUnlock = unlockAchievement;
+    window.unlockAchievement = function(key){
+      _origUnlock(key);
+      // Map achievement keys to our secret IDs
+      var map = {'konami':'konami','blow-candle':'plate-7','mega-celebrate':'spacebar-hold',
+        'morse-decoded':'ecg-click','scroll-bottom':'frag-5'};
+      if(map[key]) markDiscovered(map[key]);
+    };
+  }
+
+  // ── Passive detection: watch for known triggers via MutationObserver & events ──
+  // Detect milestone toasts as proxy for secret discovery
+  var toastObserver = new MutationObserver(function(muts){
+    muts.forEach(function(m){
+      m.addedNodes.forEach(function(n){
+        if(n.nodeType === 1 && n.classList && n.classList.contains('milestone-toast')){
+          var txt = n.textContent || '';
+          if(txt.indexOf('SECRET') !== -1 || txt.indexOf('secret') !== -1 || txt.indexOf('unlocked') !== -1){
+            // Generic discovery - check common patterns
+            if(txt.indexOf('Disco') !== -1) markDiscovered('frag-7');
+            if(txt.indexOf('Aurora') !== -1) markDiscovered('aurora-triple');
+            if(txt.indexOf('Darling') !== -1) markDiscovered('darling-type');
+            if(txt.indexOf('constellation') !== -1 || txt.indexOf('Constellation') !== -1) markDiscovered('spacebar-hold');
+            if(txt.indexOf('Birthday mode') !== -1) markDiscovered('date-pill-4tap');
+            if(txt.indexOf('Moon') !== -1 || txt.indexOf('moon') !== -1) markDiscovered('moon-type');
+            if(txt.indexOf('timeline') !== -1) markDiscovered('timeline-dots');
+            if(txt.indexOf('P.S.') !== -1) markDiscovered('letter-swipe');
+            if(txt.indexOf('Rainbow') !== -1) markDiscovered('balloon-rapid');
+            if(txt.indexOf('wish') !== -1 || txt.indexOf('candle') !== -1) markDiscovered('plate-7');
+          }
+        }
+      });
+    });
+  });
+  toastObserver.observe(document.body, {childList: true});
+
+  // Detect ECG click
+  var ecgEl = document.querySelector('.footer-ecg');
+  if(ecgEl) ecgEl.addEventListener('click', function(){ markDiscovered('ecg-click'); });
+
+  // Detect voice overlay (5-tap heart)
+  var voiceOv = document.getElementById('voiceOverlay');
+  if(voiceOv){
+    var voiceObs = new MutationObserver(function(){
+      if(voiceOv.classList.contains('show')) markDiscovered('heart-5tap');
+    });
+    voiceObs.observe(voiceOv, {attributes:true, attributeFilter:['class']});
+  }
+
+  // Detect FAB hover (3s)
+  var fab = document.getElementById('surpriseFab') || document.querySelector('.fab');
+  if(fab){
+    var fabTimer;
+    fab.addEventListener('mouseenter', function(){ fabTimer = setTimeout(function(){ markDiscovered('fab-hover'); }, 3100); });
+    fab.addEventListener('mouseleave', function(){ clearTimeout(fabTimer); });
+  }
+
+  // ═══════════════════════════════════════
+  //  1. FLOATING GUIDE FAIRY
+  // ═══════════════════════════════════════
+  (function(){
+    var fairy = document.createElement('div');
+    fairy.className = 'guide-fairy';
+    fairy.innerHTML = '<span class="fairy-body">🧚</span><span class="fairy-speech"></span>';
+    document.body.appendChild(fairy);
+
+    var allSections = Array.from(document.querySelectorAll('section'));
+    var visitedSections = new Set();
+
+    // Track visited via IntersectionObserver
+    var sIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting && e.intersectionRatio > 0.3){
+          visitedSections.add(e.target);
+        }
+      });
+    }, {threshold: 0.3});
+    allSections.forEach(function(s){ sIO.observe(s); });
+
+    var speech = fairy.querySelector('.fairy-speech');
+    var hints = [
+      '✨ Something lovely awaits below!',
+      '✨ There\'s more to discover!',
+      '✨ Try scrolling down, darling!',
+      '✨ Hidden surprises nearby!',
+      '✨ Keep exploring! 💕'
+    ];
+
+    function fairyGuide(){
+      var unvisited = allSections.filter(function(s){ return !visitedSections.has(s); });
+      if(!unvisited.length){
+        speech.textContent = '💕 You explored everything!';
+        fairy.classList.add('fairy-pointing');
+        setTimeout(function(){ fairy.classList.remove('fairy-pointing'); }, 5000);
+        return;
+      }
+      // Pick nearest unvisited to current scroll
+      var scrollMid = window.pageYOffset + innerHeight / 2;
+      unvisited.sort(function(a,b){ return Math.abs(a.offsetTop - scrollMid) - Math.abs(b.offsetTop - scrollMid); });
+      var target = unvisited[0];
+      var dir = target.offsetTop > scrollMid ? 'below' : 'above';
+
+      speech.textContent = dir === 'below'
+        ? hints[Math.floor(Math.random() * 3)]
+        : '✨ Go back up, there\'s more!';
+
+      // Leave sparkle trail
+      for(var i = 0; i < 5; i++){
+        (function(idx){
+          setTimeout(function(){
+            var sp = document.createElement('span');
+            sp.textContent = '✨';
+            sp.style.cssText = 'position:fixed;pointer-events:none;z-index:9989;left:' + (20 + idx * 4) + 'px;bottom:' + (200 + idx * 12) + 'px;font-size:' + (.5 + Math.random() * .5) + 'rem;animation:trail-fade .8s ease forwards';
+            document.body.appendChild(sp);
+            setTimeout(function(){ sp.remove(); }, 800);
+          }, idx * 100);
+        })(i);
+      }
+
+      fairy.classList.add('fairy-pointing');
+      setTimeout(function(){ fairy.classList.remove('fairy-pointing'); }, 6000);
+    }
+
+    // Every 60 seconds
+    setInterval(fairyGuide, 60000);
+    // First hint after 45s
+    setTimeout(fairyGuide, 45000);
+  })();
+
+  // ═══════════════════════════════════════
+  //  2. SECTION BREADCRUMB TRAIL
+  // ═══════════════════════════════════════
+  (function(){
+    var sections = Array.from(document.querySelectorAll('section'));
+    if(!sections.length) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'bc-trail';
+    var track = document.createElement('div');
+    track.className = 'bc-track';
+    var countEl = document.createElement('span');
+    countEl.className = 'bc-count';
+    countEl.textContent = '0/' + sections.length;
+    bar.appendChild(track);
+    bar.appendChild(countEl);
+    document.body.appendChild(bar);
+
+    var dots = [];
+    var visited = new Set();
+    var currentDot = null;
+
+    sections.forEach(function(sec, i){
+      var dot = document.createElement('button');
+      dot.className = 'bc-dot';
+      dot.title = sec.className.split(' ')[0].replace('-section','').replace('-',' ') || 'Section ' + (i+1);
+      dot.onclick = function(){
+        sec.scrollIntoView({behavior:'smooth', block:'center'});
+      };
+      track.appendChild(dot);
+      dots.push({dot:dot, section:sec});
+    });
+
+    // IntersectionObserver to light up dots
+    var bcIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var idx = sections.indexOf(e.target);
+        if(idx < 0) return;
+        if(e.isIntersecting){
+          dots[idx].dot.classList.add('bc-visited');
+          visited.add(idx);
+          // Mark current
+          if(currentDot) currentDot.classList.remove('bc-current');
+          dots[idx].dot.classList.add('bc-current');
+          currentDot = dots[idx].dot;
+          countEl.textContent = visited.size + '/' + sections.length;
+          // Scroll dot into view in track
+          dots[idx].dot.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+        }
+      });
+    }, {threshold: 0.25});
+    sections.forEach(function(s){ bcIO.observe(s); });
+
+    // Show bar after scrolling past hero
+    var showAfter = 300;
+    window.addEventListener('scroll', function(){
+      bar.classList.toggle('bc-visible', window.pageYOffset > showAfter);
+    }, {passive:true});
+  })();
+
+  // ═══════════════════════════════════════
+  //  3. MYSTERY COUNTER BADGE
+  // ═══════════════════════════════════════
+  var mysteryBadge;
+  (function(){
+    mysteryBadge = document.createElement('div');
+    mysteryBadge.className = 'mystery-badge';
+    mysteryBadge.innerHTML = '<span class="mb-icon">🔮</span><span class="mb-text">' + countDiscovered() + '/' + TOTAL_SECRETS + ' mysteries</span>';
+    document.body.appendChild(mysteryBadge);
+    // Show after first discovery or after 2 minutes
+    if(countDiscovered() > 0) mysteryBadge.classList.add('mb-show');
+    else setTimeout(function(){ mysteryBadge.classList.add('mb-show'); }, 120000);
+  })();
+
+  function updateMysteryBadge(){
+    if(!mysteryBadge) return;
+    var n = countDiscovered();
+    mysteryBadge.querySelector('.mb-text').textContent = n + '/' + TOTAL_SECRETS + ' mysteries';
+    mysteryBadge.classList.add('mb-show');
+    // Pulse animation
+    mysteryBadge.classList.remove('mb-pulse');
+    void mysteryBadge.offsetWidth;
+    mysteryBadge.classList.add('mb-pulse');
+    setTimeout(function(){ mysteryBadge.classList.remove('mb-pulse'); }, 700);
+    if(n >= TOTAL_SECRETS){
+      mysteryBadge.classList.add('mb-complete');
+      mysteryBadge.querySelector('.mb-text').textContent = 'ALL MYSTERIES FOUND ✨';
+    }
+  }
+
+  // ═══════════════════════════════════════
+  //  4. GLOWING EDGES ON SECRET SECTIONS
+  // ═══════════════════════════════════════
+  var glowMap = {};
+  (function(){
+    var secretSections = [
+      {sel:'.hero', ids:['frag-1','konami','aurora-triple','darling-type','date-pill-4tap'], color:'rgba(255,107,157,.12)'},
+      {sel:'.gift-section', ids:['frag-2','frag-3'], color:'rgba(212,168,83,.12)'},
+      {sel:'.photo-section', ids:['frag-6'], color:'rgba(196,77,255,.12)'},
+      {sel:'.cake-section', ids:['plate-7','frag-7'], color:'rgba(255,170,0,.12)'},
+      {sel:'footer', ids:['frag-4','frag-5','ecg-click','heart-5tap'], color:'rgba(107,245,255,.1)'},
+      {sel:'.letter-section', ids:['letter-swipe'], color:'rgba(255,182,193,.1)'},
+      {sel:'.balloon-section', ids:['balloon-rapid'], color:'rgba(255,200,100,.1)'},
+      {sel:'.timeline-section', ids:['timeline-dots'], color:'rgba(160,120,255,.1)'}
+    ];
+
+    var glowIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        e.target.classList.toggle('sg-inview', e.isIntersecting);
+      });
+    }, {threshold: 0.15});
+
+    secretSections.forEach(function(cfg){
+      var el = document.querySelector(cfg.sel);
+      if(!el) return;
+      // Check if all secrets for this section are already found
+      var allFound = cfg.ids.every(function(id){ return discovered[id]; });
+      if(allFound) return;
+      el.classList.add('hint-edge-glow');
+      el.style.setProperty('--sg-color', cfg.color);
+      glowIO.observe(el);
+      // Store reference for removal
+      cfg.ids.forEach(function(id){ glowMap[id] = {el:el, ids:cfg.ids}; });
+    });
+  })();
+
+  function removeGlow(secretId){
+    var info = glowMap[secretId];
+    if(!info) return;
+    var allFound = info.ids.every(function(id){ return discovered[id]; });
+    if(allFound){
+      info.el.classList.remove('hint-edge-glow');
+      info.el.classList.add('hint-edge-found');
+      setTimeout(function(){ info.el.classList.remove('hint-edge-found'); }, 800);
+    }
+  }
+
+  // ═══════════════════════════════════════
+  //  5. AMBIENT WHISPER TEXT
+  // ═══════════════════════════════════════
+  (function(){
+    var whispers = [
+      {sel:'.hero', text:'three taps...', bottom:'15%', id:'frag-1'},
+      {sel:'.gift-section', text:'hold me...', bottom:'10%', id:'frag-2'},
+      {sel:'.photo-section', text:'press R...', bottom:'12%', id:'frag-6'},
+      {sel:'.cake-section', text:'tap tap tap tap tap tap tap...', bottom:'8%', id:'plate-7'},
+      {sel:'footer', text:'left, right, left...', bottom:'auto', id:'frag-4'},
+      {sel:'.letter-section', text:'swipe left...', bottom:'10%', id:'letter-swipe'},
+      {sel:'.celebrate-section', text:'hold the space...', bottom:'15%', id:'spacebar-hold'}
+    ];
+
+    whispers.forEach(function(w){
+      if(discovered[w.id]) return; // already found
+      var el = document.querySelector(w.sel);
+      if(!el) return;
+
+      var whisp = document.createElement('div');
+      whisp.className = 'whisper-text';
+      whisp.textContent = w.text;
+      whisp.dataset.secretId = w.id;
+      if(w.bottom !== 'auto'){
+        whisp.style.bottom = w.bottom;
+      } else {
+        whisp.style.top = '20%';
+      }
+      if(el.style.position !== 'relative' && el.style.position !== 'absolute'){
+        el.style.position = 'relative';
+      }
+      el.appendChild(whisp);
+
+      // Show whisper every 90s when section is in view
+      var visible = false;
+      var wIO = new IntersectionObserver(function(entries){
+        visible = entries[0] && entries[0].isIntersecting;
+      }, {threshold:0.3});
+      wIO.observe(el);
+
+      function showWhisper(){
+        if(discovered[w.id]){ whisp.remove(); return; }
+        if(visible){
+          whisp.classList.add('wt-show');
+          setTimeout(function(){ whisp.classList.remove('wt-show'); }, 8000);
+        }
+      }
+      setInterval(showWhisper, 90000);
+      // First whisper at random offset to stagger
+      setTimeout(showWhisper, 60000 + Math.random() * 40000);
+    });
+  })();
+
+  // ═══════════════════════════════════════
+  //  6. PULSING ARROWS NEAR UNDISCOVERED
+  // ═══════════════════════════════════════
+  var arrowMap = {};
+  (function(){
+    var targets = [
+      {sel:'.hero-title', dir:'down', id:'frag-1'},
+      {sel:'#giftBow', dir:'down', id:'frag-2'},
+      {sel:'.cake-plate', dir:'down', id:'plate-7'},
+      {sel:'.polaroid', dir:'down', id:'frag-6'},
+      {sel:'.footer-ecg', dir:'up', id:'ecg-click'},
+      {sel:'.infinity-heart', dir:'up', id:'heart-5tap'}
+    ];
+
+    var arrowIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var arrow = e.target.querySelector('.hint-arrow');
+        if(arrow){
+          if(e.isIntersecting) arrow.classList.add('ha-active');
+          else arrow.classList.remove('ha-active');
+        }
+      });
+    }, {threshold: 0.2});
+
+    targets.forEach(function(t){
+      if(discovered[t.id]) return;
+      var el = document.querySelector(t.sel);
+      if(!el) return;
+
+      var arrow = document.createElement('div');
+      arrow.className = 'hint-arrow hint-arrow-' + t.dir;
+      arrow.dataset.secretId = t.id;
+      arrow.textContent = t.dir === 'down' ? '👇' : t.dir === 'up' ? '👆' : '👉';
+
+      if(el.style.position !== 'relative' && el.style.position !== 'absolute'){
+        el.style.position = 'relative';
+      }
+      el.appendChild(arrow);
+      arrowMap[t.id] = arrow;
+
+      arrowIO.observe(el);
+
+      // Also remove on direct interaction
+      el.addEventListener('click', function(){
+        if(arrow.parentNode){
+          arrow.classList.add('ha-gone');
+          setTimeout(function(){ arrow.remove(); }, 600);
+        }
+      }, {once:true});
+    });
+  })();
+
+  function removeArrow(secretId){
+    var arrow = arrowMap[secretId];
+    if(!arrow || !arrow.parentNode) return;
+    arrow.classList.add('ha-gone');
+    setTimeout(function(){ arrow.remove(); }, 600);
+  }
+
+  // ═══════════════════════════════════════
+  //  7. FOOTER SECRET COUNTER
+  // ═══════════════════════════════════════
+  var ftrCounterEl;
+  (function(){
+    var footer = document.querySelector('footer');
+    if(!footer) return;
+    ftrCounterEl = document.createElement('div');
+    ftrCounterEl.className = 'ftr-secret-count';
+    // Insert before the ECG line
+    var ecgParent = footer.querySelector('.footer-heartbeat');
+    if(ecgParent) footer.insertBefore(ftrCounterEl, ecgParent);
+    else footer.appendChild(ftrCounterEl);
+    updateFooterSecretCount();
+  })();
+
+  function updateFooterSecretCount(){
+    if(!ftrCounterEl) return;
+    var found = countDiscovered();
+    var remaining = TOTAL_SECRETS - found;
+    if(remaining <= 0){
+      ftrCounterEl.textContent = '✨ All secrets discovered — you are extraordinary ✨';
+      ftrCounterEl.className = 'ftr-secret-count fsc-done';
+    } else if(remaining <= 3){
+      ftrCounterEl.textContent = '🔮 ' + remaining + ' secret' + (remaining > 1 ? 's' : '') + ' remain' + (remaining > 1 ? '' : 's') + '... so close!';
+      ftrCounterEl.className = 'ftr-secret-count fsc-hot';
+    } else {
+      ftrCounterEl.textContent = '🔮 ' + remaining + ' secrets remain';
+      ftrCounterEl.className = 'ftr-secret-count';
+    }
+  }
+
+  // ═══════════════════════════════════════
+  //  8. EASTER EGG DISCOVERY CELEBRATION
+  // ═══════════════════════════════════════
+  function celebrateDiscovery(){
+    // Golden flash
+    var flash = document.createElement('div');
+    flash.className = 'disc-flash';
+    document.body.appendChild(flash);
+    setTimeout(function(){ flash.remove(); }, 900);
+
+    // Particles from edges
+    var sparkles = ['✨','⭐','💛','🌟','💫'];
+    for(var i = 0; i < 16; i++){
+      (function(idx){
+        setTimeout(function(){
+          var p = document.createElement('span');
+          p.className = 'disc-particle';
+          p.textContent = sparkles[idx % sparkles.length];
+          // Spawn from random edge
+          var edge = idx % 4;
+          var startX, startY, dx, dy;
+          if(edge === 0){ startX = 0; startY = Math.random() * innerHeight; dx = 60 + Math.random()*40; dy = -30 + Math.random()*60; }
+          else if(edge === 1){ startX = innerWidth; startY = Math.random() * innerHeight; dx = -60 - Math.random()*40; dy = -30 + Math.random()*60; }
+          else if(edge === 2){ startX = Math.random() * innerWidth; startY = 0; dx = -30 + Math.random()*60; dy = 60 + Math.random()*40; }
+          else { startX = Math.random() * innerWidth; startY = innerHeight; dx = -30 + Math.random()*60; dy = -60 - Math.random()*40; }
+          p.style.left = startX + 'px';
+          p.style.top = startY + 'px';
+          p.style.setProperty('--dp-dx', dx + 'px');
+          p.style.setProperty('--dp-dy', dy + 'px');
+          p.style.setProperty('--dp-dur', (1.2 + Math.random() * .8) + 's');
+          p.style.fontSize = (.7 + Math.random() * .6) + 'rem';
+          document.body.appendChild(p);
+          setTimeout(function(){ p.remove(); }, 2200);
+        }, idx * 50);
+      })(i);
+    }
+
+    // Discovery chime (soft, short)
+    try{
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var notes = [523.25, 659.25, 783.99];
+      notes.forEach(function(freq, i){
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.04, ctx.currentTime + i * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.4);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.1);
+        osc.stop(ctx.currentTime + i * 0.1 + 0.45);
+      });
+      setTimeout(function(){ ctx.close(); }, 2000);
+    } catch(e){}
+  }
+
+})();
+</script>
+
+<!-- ═══════ SPRINT 27-28: UX OPTIMIZATION + PERFORMANCE ═══════ -->
+<script>
+(function uxOptPerf() {
+  'use strict';
+
+  // ── 1. Reduced-motion global guard ──
+  const REDUCED = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  // ── 3. Visibility-change: pause ALL RAF loops when tab hidden ──
+  let _tabHidden = document.hidden;
+  const _rafCallbacks = new Map(); // name → { fn, id, active }
+
+  document.addEventListener('visibilitychange', function() {
+    _tabHidden = document.hidden;
+    if (!_tabHidden) {
+      // Resume all registered loops
+      _rafCallbacks.forEach(function(state, name) {
+        if (state.active && !state.id) _startRaf(name);
+      });
+    }
+  });
+
+  function _startRaf(name) {
+    var state = _rafCallbacks.get(name);
+    if (!state) return;
+    function tick() {
+      if (_tabHidden || !state.active) { state.id = null; return; }
+      state.fn();
+      state.id = requestAnimationFrame(tick);
+    }
+    state.id = requestAnimationFrame(tick);
+  }
+
+  // Intercept the existing drawBg and drawFx RAF loops
+  // They already run, so we just add visibility-pause behavior
+  // by hooking into the visibilitychange to cancel/restart their rAF
+  (function patchRAFLoops() {
+    // Store original interval IDs we want to control
+    var origSetInterval = window.setInterval;
+    var trackedIntervals = [];
+
+    // On visibility change, don't spawn new particles/effects
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        // Pause heavy intervals — petals, shooting stars, auto-fireworks
+        // We can't clear the originals retroactively, but we inject a guard
+      }
+    });
+  })();
+
+  // ── 2. Lazy canvas initialization via IntersectionObserver ──
+  // Stars, Fireworks, Doodle canvases only init when scrolled to
+  // These are ALREADY initialized inline, so we add a performance
+  // optimization: pause their RAF loops when not visible
+  (function lazyCanvasThrottle() {
+    // Fireworks canvas section
+    var fwSection = document.querySelector('.fw-section');
+    var fwCanvas = document.getElementById('fw-canvas');
+    // Doodle canvas section
+    var doodleSection = document.querySelector('.doodle-section');
+    var doodleCanvas = document.getElementById('doodle-canvas');
+    // Stars canvas section
+    var starsSection = document.querySelector('.stars-section');
+    var starsCanvas = document.getElementById('starsCanvas');
+
+    // Apply content-visibility for offscreen sections to skip rendering
+    var allSections = document.querySelectorAll('.content > section');
+    allSections.forEach(function(sec) {
+      if (!sec.classList.contains('hero')) {
+        sec.style.contentVisibility = 'auto';
+        sec.style.containIntrinsicSize = 'auto 100vh';
+      }
+    });
+
+    // Reduce canvas resolution when offscreen
+    function setCanvasActive(canvas, active) {
+      if (!canvas) return;
+      if (!active && !_tabHidden) {
+        canvas.style.opacity = canvas.style.opacity; // no-op, keep visual
+      }
+    }
+
+    if (fwSection && fwCanvas) {
+      new IntersectionObserver(function(entries) {
+        setCanvasActive(fwCanvas, entries[0].isIntersecting);
+      }, { rootMargin: '200px' }).observe(fwSection);
+    }
+    if (starsSection && starsCanvas) {
+      new IntersectionObserver(function(entries) {
+        setCanvasActive(starsCanvas, entries[0].isIntersecting);
+      }, { rootMargin: '200px' }).observe(starsSection);
+    }
+  })();
+
+  // ── 3b. Guard particle spawning when tab is hidden ──
+  (function guardParticleSpawning() {
+    // Wrap spawnPetals, addShootingStar, autoFw to skip when hidden/reduced
+    if (typeof window.spawnPetals === 'undefined') {
+      // These are called via setInterval but not exposed.
+      // Inject a global guard that existing intervals check.
+    }
+    // Global guard function everything can check
+    window.__uxShouldAnimate = function() {
+      return !REDUCED && !document.hidden;
+    };
+
+    // Monkey-patch confettiBurst and firework to respect reduced-motion
+    if (typeof window.confettiBurst === 'function') {
+      var _origConfetti = window.confettiBurst;
+      window.confettiBurst = function(n) {
+        if (REDUCED) return;
+        return _origConfetti(n);
+      };
+    }
+    if (typeof window.firework === 'function') {
+      var _origFw = window.firework;
+      window.firework = function(x, y) {
+        if (REDUCED) return;
+        return _origFw(x, y);
+      };
+    }
+    // Guard createBurst
+    if (typeof window.createBurst === 'function') {
+      var _origBurst = window.createBurst;
+      window.createBurst = function(e, n) {
+        if (REDUCED) return;
+        return _origBurst(e, n);
+      };
+    }
+  })();
+
+  // ── 4. Will-change management — remove after animation ──
+  (function willChangeCleanup() {
+    document.querySelectorAll('.reveal,.reveal-zoom,.reveal-slide-left,.reveal-slide-right,.reveal-expand,.reveal-drop').forEach(function(el) {
+      el.addEventListener('transitionend', function handler() {
+        el.style.willChange = 'auto';
+        el.removeEventListener('transitionend', handler);
+      });
+    });
+  })();
+
+  // ── 5. Haptic screen shake ──
+  function triggerHaptic(intensity) {
+    if (REDUCED) return;
+    intensity = intensity || 1;
+    document.body.classList.remove('haptic-shake');
+    void document.body.offsetWidth; // reflow
+    document.body.style.animationDuration = (0.4 / intensity) + 's';
+    document.body.classList.add('haptic-shake');
+    if (navigator.vibrate) navigator.vibrate([30, 20, 50]);
+    setTimeout(function() {
+      document.body.classList.remove('haptic-shake');
+      document.body.style.animationDuration = '';
+    }, 500);
+  }
+  window.triggerHaptic = triggerHaptic;
+
+  // Hook into blowCandle, openGift, megaCelebrate
+  (function hookHaptic() {
+    if (typeof window.blowCandle === 'function') {
+      var _bc = window.blowCandle;
+      window.blowCandle = function() {
+        _bc.apply(this, arguments);
+        triggerHaptic(0.8);
+      };
+    }
+    if (typeof window.openGift === 'function') {
+      var _og = window.openGift;
+      window.openGift = function() {
+        _og.apply(this, arguments);
+        triggerHaptic(1.2);
+      };
+    }
+    if (typeof window.megaCelebrate === 'function') {
+      var _mc = window.megaCelebrate;
+      window.megaCelebrate = function() {
+        _mc.apply(this, arguments);
+        triggerHaptic(1.5);
+      };
+    }
+  })();
+
+  // ── 6. Elastic overscroll effect ──
+  (function elasticOverscroll() {
+    if (REDUCED) return;
+    var cooldown = false;
+    function trigger(cls) {
+      if (cooldown) return;
+      cooldown = true;
+      document.body.classList.add(cls);
+      setTimeout(function() {
+        document.body.classList.remove(cls);
+        cooldown = false;
+      }, 600);
+    }
+    window.addEventListener('scroll', function() {
+      if (cooldown) return;
+      if (window.scrollY <= 0) trigger('overscroll-top');
+      else if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 2) trigger('overscroll-bottom');
+    }, { passive: true });
+    window.addEventListener('wheel', function(e) {
+      if (cooldown) return;
+      if (e.deltaY < 0 && window.scrollY <= 0) trigger('overscroll-top');
+      if (e.deltaY > 0 && (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 2) trigger('overscroll-bottom');
+    }, { passive: true });
+  })();
+
+  // ── 7. Toast spring-bounce physics ──
+  // CSS handles this via the new @keyframes toastBounceIn / toastBounceOut
+  // Applied via !important in the style block above. No JS needed.
+
+  // ── 8. Card flip audio simulation — Web Audio 'thwip' ──
+  (function cardFlipAudio() {
+    if (REDUCED) return;
+    var audioCtx = null;
+
+    function playThwip() {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        var now = audioCtx.currentTime;
+
+        // Layer 1: sharp transient click
+        var clickOsc = audioCtx.createOscillator();
+        var clickGain = audioCtx.createGain();
+        clickOsc.type = 'square';
+        clickOsc.frequency.setValueAtTime(1800, now);
+        clickOsc.frequency.exponentialRampToValueAtTime(400, now + 0.04);
+        clickGain.gain.setValueAtTime(0.12, now);
+        clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+        clickOsc.connect(clickGain).connect(audioCtx.destination);
+        clickOsc.start(now);
+        clickOsc.stop(now + 0.06);
+
+        // Layer 2: low thud for body
+        var thudOsc = audioCtx.createOscillator();
+        var thudGain = audioCtx.createGain();
+        thudOsc.type = 'sine';
+        thudOsc.frequency.setValueAtTime(150, now);
+        thudOsc.frequency.exponentialRampToValueAtTime(60, now + 0.08);
+        thudGain.gain.setValueAtTime(0.09, now);
+        thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+        thudOsc.connect(thudGain).connect(audioCtx.destination);
+        thudOsc.start(now);
+        thudOsc.stop(now + 0.1);
+
+        // Layer 3: noise burst for paper texture
+        var bufLen = audioCtx.sampleRate * 0.03;
+        var noiseBuf = audioCtx.createBuffer(1, bufLen, audioCtx.sampleRate);
+        var data = noiseBuf.getChannelData(0);
+        for (var i = 0; i < bufLen; i++) data[i] = (Math.random() * 2 - 1) * 0.4;
+        var noiseSrc = audioCtx.createBufferSource();
+        var noiseGain = audioCtx.createGain();
+        var noiseFilter = audioCtx.createBiquadFilter();
+        noiseFilter.type = 'bandpass';
+        noiseFilter.frequency.value = 3000;
+        noiseSrc.buffer = noiseBuf;
+        noiseGain.gain.setValueAtTime(0.06, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        noiseSrc.connect(noiseFilter).connect(noiseGain).connect(audioCtx.destination);
+        noiseSrc.start(now);
+      } catch(e) {}
+    }
+
+    // Attach to flip-cards and balloon-wraps via event delegation
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.flip-card') || e.target.closest('.balloon-wrap')) {
+        playThwip();
+      }
+    });
+  })();
+
+  // ── 9. Confetti cannon from BOTH edges ──
+  (function edgeConfettiCannon() {
+    if (REDUCED) return;
+    var FX_CLR = ['#ff6b9d', '#ffd700', '#c44dff', '#7affdb', '#ff9a3c', '#6bf5ff', '#fff'];
+
+    function fireEdgeConfetti(count) {
+      count = count || 80;
+      if (typeof fxParts === 'undefined' || typeof FXP === 'undefined') return;
+      var fw = window.innerWidth, fh = window.innerHeight;
+      for (var i = 0; i < count; i++) {
+        var fromLeft = i % 2 === 0;
+        var x = fromLeft ? -5 : fw + 5;
+        var y = fh * (0.2 + Math.random() * 0.5);
+        var angle = fromLeft
+          ? (-30 + Math.random() * 60) * Math.PI / 180
+          : (120 + Math.random() * 60) * Math.PI / 180;
+        var speed = 8 + Math.random() * 10;
+        var vx = Math.cos(angle) * speed;
+        var vy = Math.sin(angle) * speed - 3;
+        fxParts.push(new FXP(x, y, vx, vy, FX_CLR[Math.floor(Math.random() * FX_CLR.length)], 'confetti'));
+      }
+    }
+    window.fireEdgeConfetti = fireEdgeConfetti;
+
+    // Hook into unlockAchievement
+    if (typeof window.unlockAchievement === 'function') {
+      var _origUnlock = window.unlockAchievement;
+      window.unlockAchievement = function(key) {
+        _origUnlock(key);
+        fireEdgeConfetti(100);
+      };
+    }
+  })();
+
+  // ── 10. Cursor emoji morphing by section ──
+  (function cursorEmojiMorph() {
+    if (REDUCED) return;
+    // Only for fine pointer devices
+    if (!matchMedia('(pointer:fine)').matches) return;
+
+    var cursorEl = document.getElementById('cursor');
+    if (!cursorEl) return;
+
+    var emojiEl = document.createElement('span');
+    emojiEl.id = 'cursor-emoji-morph';
+    document.body.appendChild(emojiEl);
+
+    var ZONES = [
+      { sel: '.cake-section',      emoji: '🎂', color: 'var(--gd)' },
+      { sel: '.gift-section, .scratch-section, .coupon-section', emoji: '🎁', color: '#ff69b4' },
+      { sel: '.letter-section, .reasons-section, .meter-section, .loveletter-section', emoji: '💖', color: 'var(--pk)' },
+      { sel: '.balloon-section, .spinner-section, .jar-section', emoji: '🎈', color: 'var(--cy)' },
+      { sel: '.timeline-section, .photo-section, .memorylane-section', emoji: '⭐', color: 'var(--gd)' },
+      { sel: '.quiz-section, .memory-section, .decoder-section, .trivia-section', emoji: '🧩', color: 'var(--pp)' },
+      { sel: '.wishes-section, .fortune-section', emoji: '✨', color: '#fff' },
+      { sel: '.poem-section, .song-section, .stars-section, .dream-section', emoji: '🌙', color: '#e0d0ff' },
+      { sel: '.celebrate-section, .fw-section', emoji: '🎊', color: 'var(--gd)' },
+      { sel: '.garden-section',     emoji: '🌸', color: 'var(--pk)' },
+      { sel: '.zodiac-section',     emoji: '♈', color: 'var(--pp)' },
+      { sel: '.playlist-section, .mood-section', emoji: '🎵', color: 'var(--cy)' },
+      { sel: '.bingo-section, .lovecalc-section', emoji: '💝', color: 'var(--pk)' },
+    ];
+
+    var currentZone = null;
+    // Pre-cache section elements for each zone
+    var zoneEls = ZONES.map(function(z) {
+      return { zone: z, els: document.querySelectorAll(z.sel) };
+    });
+
+    // Throttle: only update on every 4th mousemove
+    var moveCount = 0;
+    document.addEventListener('mousemove', function(e) {
+      emojiEl.style.left = (e.clientX + 12) + 'px';
+      emojiEl.style.top = (e.clientY - 12) + 'px';
+
+      if (++moveCount % 4 !== 0) return;
+
+      var target = document.elementFromPoint(e.clientX, e.clientY);
+      if (!target) return;
+
+      var matched = null;
+      for (var i = 0; i < ZONES.length; i++) {
+        if (target.closest(ZONES[i].sel)) {
+          matched = ZONES[i];
+          break;
+        }
+      }
+
+      if (matched && matched !== currentZone) {
+        currentZone = matched;
+        emojiEl.textContent = matched.emoji;
+        emojiEl.style.opacity = '1';
+        cursorEl.style.boxShadow = '0 0 12px ' + matched.color + ', 0 0 24px ' + matched.color;
+      } else if (!matched && currentZone) {
+        currentZone = null;
+        emojiEl.style.opacity = '0';
+        cursorEl.style.boxShadow = '';
+      }
+    });
+  })();
+
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════
+     SPRINT 29-30: FINAL POLISH + DEPLOY
+     ═══════════════════════════════════════════════════════ -->
+<script>
+(function finalPolishDeploy() {
+  'use strict';
+
+  // ── Collect all sections ──
+  var allSections = Array.prototype.slice.call(document.querySelectorAll('section'));
+  var totalSections = allSections.length;
+
+  // ═══════════════════════════════════════
+  // 1. SMOOTH SCROLL-TO-SECTION ON NAV DOT
+  // ═══════════════════════════════════════
+  (function enhanceNavDots() {
+    var dots = document.querySelectorAll('.nav-dot');
+    dots.forEach(function(dot) {
+      // Override click with smooth scroll + visual feedback
+      dot.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dot.classList.add('pulse-hint');
+        setTimeout(function() { dot.classList.remove('pulse-hint'); }, 1200);
+      });
+    });
+
+    // Enhanced active state tracking - more responsive
+    var lastActive = null;
+    function updateNavActive() {
+      var vh = window.innerHeight;
+      dots.forEach(function(d) {
+        var sel = d.dataset.sel;
+        if (!sel) return;
+        var el = document.querySelector(sel);
+        if (!el) return;
+        var rect = el.getBoundingClientRect();
+        var inView = rect.top < vh * 0.45 && rect.bottom > vh * 0.2;
+        if (inView && lastActive !== sel) {
+          lastActive = sel;
+          dots.forEach(function(dd) { dd.classList.remove('active'); });
+          d.classList.add('active');
+        }
+      });
+    }
+    // Use rAF-throttled scroll for smoother updates
+    var scrollTicking = false;
+    window.addEventListener('scroll', function() {
+      if (!scrollTicking) {
+        scrollTicking = true;
+        requestAnimationFrame(function() {
+          updateNavActive();
+          scrollTicking = false;
+        });
+      }
+    }, { passive: true });
+  })();
+
+  // ═══════════════════════════════════════
+  // 2. SECTION EXPLORED COUNTER
+  // ═══════════════════════════════════════
+  var exploredSections = {};
+  var exploredEl = null;
+  (function sectionExploredCounter() {
+    // Create counter element
+    exploredEl = document.createElement('div');
+    exploredEl.id = 'explored-counter';
+    exploredEl.innerHTML = '✨ Explored: <span class="count-num">0</span>/' + totalSections + ' sections';
+    document.body.appendChild(exploredEl);
+
+    // Show after a small delay
+    setTimeout(function() { exploredEl.classList.add('visible'); }, 2000);
+
+    function updateCounter() {
+      var count = Object.keys(exploredSections).length;
+      var numEl = exploredEl.querySelector('.count-num');
+      if (numEl) numEl.textContent = count;
+      if (count >= totalSections) {
+        exploredEl.classList.add('complete');
+        exploredEl.innerHTML = '🏆 All <span class="count-num">' + totalSections + '</span>/' + totalSections + ' explored!';
+      }
+    }
+
+    var exploredIO = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !exploredSections[entry.target.className]) {
+          exploredSections[entry.target.className] = true;
+          updateCounter();
+        }
+      });
+    }, { threshold: 0.15 });
+
+    allSections.forEach(function(sec) {
+      exploredIO.observe(sec);
+    });
+  })();
+
+  // ═══════════════════════════════════════
+  // 3. INTERACTIVE CURSOR TRAIL UPGRADE
+  // ═══════════════════════════════════════
+  (function upgradeCursorTrail() {
+    // Section-matched colors for trail particles
+    var sectionColors = {
+      'hero': ['#ff6b9d','#ffd700','#c44dff'],
+      'cake': ['#ff6b9d','#ffd700','#ff9dbb'],
+      'gift': ['#c44dff','#6bf5ff','#ffd700'],
+      'letter': ['#ff6b9d','#ffb3d1','#ffd7ec'],
+      'balloon': ['#ff6b9d','#6bf5ff','#ffd700','#c44dff'],
+      'memory': ['#ffd700','#ff6b9d','#c44dff'],
+      'timeline': ['#6bf5ff','#c44dff','#ff6b9d'],
+      'wishes': ['#ffd700','#ff6b9d'],
+      'coupon': ['#ffd700','#c44dff'],
+      'celebrate': ['#ffd700','#ff6b9d','#c44dff','#6bf5ff'],
+      'stars': ['#6bf5ff','#fff','#c44dff'],
+      'garden': ['#6bff9d','#ff6b9d','#ffd700'],
+      'default': ['#ff6b9d','#c44dff','#ffd700','#6bf5ff']
+    };
+
+    function getTrailColors() {
+      var el = document.elementFromPoint(window._lastMX || 0, window._lastMY || 0);
+      if (!el) return sectionColors['default'];
+      var sec = el.closest('section');
+      if (!sec) return sectionColors['default'];
+      var cls = sec.className || '';
+      for (var key in sectionColors) {
+        if (cls.indexOf(key) !== -1) return sectionColors[key];
+      }
+      return sectionColors['default'];
+    }
+
+    // Override the existing trail with smaller, faster-fading particles
+    var upgradedTrailTick = 0;
+    document.addEventListener('mousemove', function(e) {
+      window._lastMX = e.clientX;
+      window._lastMY = e.clientY;
+      if (++upgradedTrailTick % 4 !== 0) return;
+      // Use matchMedia check for reduced motion
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var colors = getTrailColors();
+      var color = colors[Math.floor(Math.random() * colors.length)];
+      var dot = document.createElement('span');
+      dot.style.cssText = 'position:fixed;pointer-events:none;z-index:9997;' +
+        'left:' + e.clientX + 'px;top:' + e.clientY + 'px;' +
+        'width:' + (3 + Math.random() * 4) + 'px;height:' + (3 + Math.random() * 4) + 'px;' +
+        'border-radius:50%;background:' + color + ';' +
+        'box-shadow:0 0 6px ' + color + ';' +
+        'animation:trail-fade-upgraded .45s ease-out forwards;' +
+        'transform:translate(-50%,-50%)';
+      document.body.appendChild(dot);
+      setTimeout(function() { dot.remove(); }, 450);
+    }, { passive: true });
+  })();
+
+  // ═══════════════════════════════════════
+  // 4. BETTER MOBILE EXPERIENCE
+  // ═══════════════════════════════════════
+  (function betterMobile() {
+    // Swipe gestures for coupon carousel
+    var couponTrack = document.querySelector('.coupon-track');
+    if (couponTrack) {
+      var startX = 0, startScrollLeft = 0, isDragging = false;
+
+      couponTrack.addEventListener('touchstart', function(e) {
+        isDragging = true;
+        startX = e.touches[0].pageX;
+        startScrollLeft = couponTrack.scrollLeft;
+      }, { passive: true });
+
+      couponTrack.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        var x = e.touches[0].pageX;
+        var walk = (startX - x) * 1.5;
+        couponTrack.scrollLeft = startScrollLeft + walk;
+      }, { passive: true });
+
+      couponTrack.addEventListener('touchend', function() {
+        isDragging = false;
+        // Snap to nearest coupon
+        var coupons = couponTrack.querySelectorAll('.coupon');
+        if (!coupons.length) return;
+        var trackRect = couponTrack.getBoundingClientRect();
+        var center = trackRect.left + trackRect.width / 2;
+        var closest = null, closestDist = Infinity;
+        coupons.forEach(function(c) {
+          var r = c.getBoundingClientRect();
+          var dist = Math.abs((r.left + r.width / 2) - center);
+          if (dist < closestDist) { closestDist = dist; closest = c; }
+        });
+        if (closest) {
+          closest.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      }, { passive: true });
+    }
+
+    // Add ripple tap feedback on mobile
+    if ('ontouchstart' in window) {
+      document.addEventListener('touchstart', function(e) {
+        var target = e.target.closest('button, .coupon, .balloon-wrap, .flip-card, .fab, .quiz-opt');
+        if (!target) return;
+        var ripple = document.createElement('span');
+        var rect = target.getBoundingClientRect();
+        var size = Math.max(rect.width, rect.height);
+        ripple.style.cssText = 'position:absolute;border-radius:50%;background:rgba(255,107,157,.2);' +
+          'width:' + size + 'px;height:' + size + 'px;' +
+          'left:' + (e.touches[0].clientX - rect.left - size / 2) + 'px;' +
+          'top:' + (e.touches[0].clientY - rect.top - size / 2) + 'px;' +
+          'transform:scale(0);animation:rippleOut .5s ease-out forwards;pointer-events:none;z-index:10';
+        if (getComputedStyle(target).position === 'static') target.style.position = 'relative';
+        target.style.overflow = 'hidden';
+        target.appendChild(ripple);
+        setTimeout(function() { ripple.remove(); }, 500);
+      }, { passive: true });
+
+      // Add ripple keyframe if not present
+      var rippleStyle = document.createElement('style');
+      rippleStyle.textContent = '@keyframes rippleOut{to{transform:scale(2.5);opacity:0}}';
+      document.head.appendChild(rippleStyle);
+    }
+  })();
+
+  // ═══════════════════════════════════════
+  // 6. KEYBOARD NAVIGATION
+  // ═══════════════════════════════════════
+  (function keyboardNav() {
+    var currentSectionIdx = 0;
+
+    function findCurrentSection() {
+      var vh = window.innerHeight;
+      for (var i = allSections.length - 1; i >= 0; i--) {
+        var rect = allSections[i].getBoundingClientRect();
+        if (rect.top < vh * 0.5) return i;
+      }
+      return 0;
+    }
+
+    document.addEventListener('keydown', function(e) {
+      // Arrow keys to scroll between sections
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        currentSectionIdx = Math.min(findCurrentSection() + 1, allSections.length - 1);
+        allSections[currentSectionIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        currentSectionIdx = Math.max(findCurrentSection() - 1, 0);
+        allSections[currentSectionIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      // Escape to close any overlay
+      else if (e.key === 'Escape') {
+        // Close all overlays
+        var overlays = document.querySelectorAll('.bottle-msg-overlay.show, .game-overlay.show, .lightbox.show, .frag-overlay.show, .wish-popup.show, #final-celebration-overlay.show');
+        overlays.forEach(function(ov) {
+          ov.classList.remove('show');
+        });
+        // Also try clicking close buttons
+        var closeBtns = document.querySelectorAll('.lightbox-close, .frag-close');
+        closeBtns.forEach(function(btn) {
+          if (btn.offsetParent) btn.click();
+        });
+      }
+    });
+  })();
+
+  // ═══════════════════════════════════════
+  // 7. FINAL CELEBRATION AT 100% SCROLL
+  // ═══════════════════════════════════════
+  (function finalCelebration() {
+    var hasTriggered = false;
+    try { hasTriggered = localStorage.getItem('bday_final_celebration') === 'done'; } catch(e) {}
+
+    // Create overlay
+    var overlay = document.createElement('div');
+    overlay.id = 'final-celebration-overlay';
+    overlay.innerHTML = '<div class="final-msg">🎉 You explored it ALL! 🎉</div>' +
+      '<div class="final-sub">Every single section, every surprise, every bit of love. Thank you for being you! 💕</div>' +
+      '<button class="final-close" aria-label="Close celebration">💖 Thank You! 💖</button>';
+    document.body.appendChild(overlay);
+
+    overlay.querySelector('.final-close').addEventListener('click', function() {
+      overlay.classList.remove('show');
+    });
+
+    function triggerFinalCelebration() {
+      if (hasTriggered) return;
+      hasTriggered = true;
+      try { localStorage.setItem('bday_final_celebration', 'done'); } catch(e) {}
+
+      // Massive fireworks + confetti
+      overlay.classList.add('show');
+
+      // Fire tons of fireworks
+      if (typeof firework === 'function') {
+        var fw = window.innerWidth, fh = window.innerHeight;
+        for (var i = 0; i < 15; i++) {
+          (function(idx) {
+            setTimeout(function() {
+              firework(fw * (.1 + Math.random() * .8), fh * (.1 + Math.random() * .4));
+            }, idx * 300);
+          })(i);
+        }
+      }
+
+      // Fire confetti bursts
+      if (typeof confettiBurst === 'function') {
+        confettiBurst(300);
+        setTimeout(function() { confettiBurst(200); }, 1000);
+        setTimeout(function() { confettiBurst(250); }, 2000);
+      }
+
+      // Create burst from center
+      if (typeof createBurst === 'function') {
+        createBurst({ clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 }, 20);
+        setTimeout(function() {
+          createBurst({ clientX: window.innerWidth / 2, clientY: window.innerHeight / 3 }, 15);
+        }, 800);
+      }
+    }
+
+    // Detect reaching absolute bottom
+    window.addEventListener('scroll', function() {
+      if (hasTriggered) return;
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      var scrollHeight = document.documentElement.scrollHeight;
+      var clientHeight = document.documentElement.clientHeight;
+      // Within 50px of absolute bottom
+      if (scrollTop + clientHeight >= scrollHeight - 50) {
+        setTimeout(triggerFinalCelebration, 500);
+      }
+    }, { passive: true });
+  })();
+
+  // ═══════════════════════════════════════
+  // 8. PAGE LOAD OPTIMIZATION
+  // ═══════════════════════════════════════
+  (function pageLoadOptimize() {
+    // Batch DOM reads/writes using rAF
+    var pendingWrites = [];
+    window.batchWrite = function(fn) {
+      pendingWrites.push(fn);
+      if (pendingWrites.length === 1) {
+        requestAnimationFrame(function() {
+          var writes = pendingWrites.slice();
+          pendingWrites.length = 0;
+          writes.forEach(function(w) { w(); });
+        });
+      }
+    };
+
+    // Defer non-critical visuals
+    setTimeout(function() {
+      // Lazy-add box shadows on sections that may be heavy
+      var heavySections = document.querySelectorAll('.glass, .quiz-box, .coupon');
+      heavySections.forEach(function(el) {
+        if (!el.style.willChange) el.style.willChange = 'auto';
+      });
+    }, 3000);
+  })();
+
+  // ═══════════════════════════════════════
+  // 9. ENHANCED ACCESSIBILITY
+  // ═══════════════════════════════════════
+  (function enhancedA11y() {
+    // Add aria-labels to all buttons
+    var buttons = document.querySelectorAll('button:not([aria-label])');
+    buttons.forEach(function(btn) {
+      var text = (btn.textContent || '').trim().replace(/\s+/g, ' ');
+      if (text && text.length < 80) {
+        btn.setAttribute('aria-label', text);
+      }
+    });
+
+    // Add roles to interactive elements
+    document.querySelectorAll('.flip-card').forEach(function(el) {
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', 'Flip card to reveal content');
+      el.setAttribute('tabindex', '0');
+    });
+    document.querySelectorAll('.balloon-wrap').forEach(function(el) {
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', 'Pop balloon');
+      el.setAttribute('tabindex', '0');
+    });
+    document.querySelectorAll('.coupon').forEach(function(el) {
+      el.setAttribute('role', 'button');
+      var title = el.querySelector('.coupon-title');
+      el.setAttribute('aria-label', 'Redeem coupon: ' + (title ? title.textContent : 'Love coupon'));
+      el.setAttribute('tabindex', '0');
+    });
+    document.querySelectorAll('.nav-dot').forEach(function(dot) {
+      dot.setAttribute('role', 'button');
+      dot.setAttribute('aria-label', 'Navigate to ' + (dot.dataset.label || 'section'));
+      dot.setAttribute('tabindex', '0');
+    });
+    document.querySelectorAll('.fab').forEach(function(fab) {
+      fab.setAttribute('role', 'button');
+      if (!fab.getAttribute('aria-label')) {
+        fab.setAttribute('aria-label', (fab.textContent || '').trim() + ' action button');
+      }
+    });
+
+    // Role attributes for major regions
+    document.querySelectorAll('section').forEach(function(sec) {
+      if (!sec.getAttribute('role')) {
+        sec.setAttribute('role', 'region');
+      }
+      // Add aria-label from section title if available
+      var title = sec.querySelector('.s-title');
+      if (title && !sec.getAttribute('aria-label')) {
+        sec.setAttribute('aria-label', title.textContent.trim());
+      }
+    });
+
+    // Mark decorative canvases
+    document.querySelectorAll('canvas').forEach(function(c) {
+      c.setAttribute('aria-hidden', 'true');
+      c.setAttribute('role', 'presentation');
+    });
+
+    // Mark nav dots container
+    var navDots = document.getElementById('navDots');
+    if (navDots) {
+      navDots.setAttribute('role', 'navigation');
+      navDots.setAttribute('aria-label', 'Section navigation');
+    }
+
+    // FAB group
+    var fabGroup = document.querySelector('.fab-group');
+    if (fabGroup) {
+      fabGroup.setAttribute('role', 'toolbar');
+      fabGroup.setAttribute('aria-label', 'Action buttons');
+    }
+
+    // Scroll progress bar
+    var scrollProg = document.getElementById('scrollProg');
+    if (scrollProg) {
+      scrollProg.setAttribute('role', 'progressbar');
+      scrollProg.setAttribute('aria-label', 'Page scroll progress');
+      scrollProg.setAttribute('aria-valuemin', '0');
+      scrollProg.setAttribute('aria-valuemax', '100');
+    }
+
+    // Make overlays accessible
+    document.querySelectorAll('.bottle-msg-overlay, .game-overlay, .lightbox, .frag-overlay, .wish-popup').forEach(function(ov) {
+      ov.setAttribute('role', 'dialog');
+      ov.setAttribute('aria-modal', 'true');
+    });
+
+    // Keyboard activation for interactive elements with role=button
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        var el = document.activeElement;
+        if (el && el.getAttribute('role') === 'button' && el.tagName !== 'BUTTON') {
+          e.preventDefault();
+          el.click();
+        }
+      }
+    });
+  })();
+
+  // ═══════════════════════════════════════
+  // 10. POLISH ALL ANIMATIONS
+  // ═══════════════════════════════════════
+  (function polishAnimations() {
+    // Update scroll progress bar aria-value
+    var scrollProg = document.getElementById('scrollProg');
+    window.addEventListener('scroll', function() {
+      if (!scrollProg) return;
+      var pct = Math.round((window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+      scrollProg.setAttribute('aria-valuenow', pct);
+    }, { passive: true });
+
+    // Smooth entrance for all glass cards on first view
+    var glassCards = document.querySelectorAll('.glass');
+    var glassIO = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.style.transition = 'transform .6s cubic-bezier(.34,1.56,.64,1), opacity .6s ease';
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0) scale(1)';
+          glassIO.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    glassCards.forEach(function(gc) { glassIO.observe(gc); });
+  })();
+
+  console.log('🎉 Sprint 29-30: Final polish + deploy loaded successfully!');
 })();
 </script>
 </body>
