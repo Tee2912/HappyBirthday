@@ -2659,6 +2659,11 @@ body.disco-mode .hero-title{animation:shimmer 1s linear infinite!important}
   border-radius:30px;font-size:.85rem;cursor:pointer;margin-top:18px;transition:all .3s}
 .ll-restart:hover{border-color:var(--pp);color:var(--pp)}
 
+
+/* ── Performance: content-visibility for offscreen sections ── */
+.content > section:nth-child(n+3) { content-visibility: auto; contain-intrinsic-size: auto 600px; }
+/* ── Performance: reduce paint for decorative elements ── */
+.wave-sep { contain: layout style; }
 </style>
 <style>
 /* ═══════ SPRINT 12-13: Time Capsule, Flower Garden, Dream Board, Zodiac Fun, Mood Ring ═══════ */
@@ -2702,38 +2707,6 @@ body.disco-mode .hero-title{animation:shimmer 1s linear infinite!important}
 .garden-msg.show{opacity:1}
 .garden-clear{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);padding:6px 18px;border-radius:30px;cursor:pointer;font-size:.8rem;margin-top:10px;font-family:inherit;transition:all .3s}
 .garden-clear:hover{border-color:var(--pk);color:var(--pk)}
-
-/* ── Dream Board ── */
-.dream-section{padding:80px 20px;text-align:center}
-.dream-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px;max-width:800px;margin:0 auto}
-.dream-card{height:180px;perspective:1000px;cursor:pointer}
-.dream-card-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,0,.2,1);position:relative}
-.dream-card.flipped .dream-card-inner{transform:rotateY(180deg)}
-.dream-front,.dream-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px}
-.dream-front{background:rgba(255,255,255,.06);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);transition:background .3s,box-shadow .3s}
-.dream-card:hover .dream-front{background:rgba(196,77,255,.12);box-shadow:0 0 25px rgba(196,77,255,.15)}
-.dream-front .d-icon{font-size:2.8rem;margin-bottom:8px}
-.dream-front .d-label{color:#fff;font-weight:700;font-size:.95rem}
-.dream-front .d-hint{color:rgba(255,255,255,.3);font-size:.68rem;margin-top:6px;letter-spacing:1px}
-.dream-back{background:linear-gradient(135deg,rgba(255,215,0,.18),rgba(255,107,157,.18));border:1px solid rgba(255,215,0,.25);transform:rotateY(180deg)}
-.dream-back .d-wish{color:#fff;font-size:.9rem;line-height:1.65;text-align:center;font-style:italic}
-.dream-back .d-wish-icon{font-size:1.8rem;margin-bottom:8px}
-
-/* ── Zodiac Fun ── */
-.zodiac-section{padding:80px 20px;text-align:center}
-.zodiac-box{max-width:480px;margin:0 auto;padding:30px}
-.zodiac-signs{display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
-.zodiac-sign{font-size:3.5rem;display:flex;flex-direction:column;align-items:center;gap:4px}
-.zodiac-sign-label{font-size:.78rem;color:rgba(255,255,255,.5);font-weight:600}
-.zodiac-heart{font-size:2.2rem;animation:hbeat 1.3s ease-in-out infinite}
-.zodiac-compat{font-size:3.8rem;font-weight:900;color:var(--gd);text-shadow:0 0 24px rgba(255,215,0,.5);margin:14px 0 8px}
-.zodiac-bar-wrap{width:100%;max-width:300px;height:12px;border-radius:10px;background:rgba(255,255,255,.08);margin:0 auto 16px;overflow:hidden}
-.zodiac-bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--pk),var(--gd),var(--pp));background-size:200% 100%;animation:shimmer 3s linear infinite;width:0;transition:width 2s cubic-bezier(.4,0,.2,1)}
-.zodiac-desc{color:rgba(255,255,255,.65);font-size:1rem;line-height:1.7;max-width:420px;margin:0 auto}
-.zodiac-traits{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px auto 0;max-width:400px}
-.zodiac-trait{padding:5px 14px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:.8rem;letter-spacing:.5px}
-.zodiac-btn{padding:10px 28px;border:none;border-radius:50px;background:linear-gradient(135deg,var(--pp),#9c27b0);color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;transition:transform .2s;margin-top:18px;font-family:inherit}
-.zodiac-btn:hover{transform:translateY(-3px) scale(1.05)}
 
 /* ── Mood Ring ── */
 .mood-section{padding:80px 20px;text-align:center}
@@ -2856,41 +2829,6 @@ body.disco-mode .hero-title{animation:shimmer 1s linear infinite!important}
 
 /* ═══════ SPRINT 16-17: Memory Lane, Love Letter, Together Stats, Emoji Story, Secret Diary + UX Enhancements ═══════ */
 
-/* ── Memory Lane Timeline ── */
-.memorylane-section{padding:80px 20px;text-align:center;overflow:hidden}
-.memory-track-wrap{position:relative;max-width:900px;margin:0 auto;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.memory-track{display:flex;gap:24px;padding:20px 40px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
-.memory-track::-webkit-scrollbar{display:none}
-.memory-card{flex:0 0 220px;padding:28px 18px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);text-align:center;transition:transform .35s,box-shadow .35s,border-color .35s;cursor:default}
-.memory-card:hover{transform:translateY(-8px) scale(1.04);box-shadow:0 12px 40px rgba(255,107,157,.2);border-color:rgba(255,107,157,.3)}
-.memory-icon{font-size:3rem;display:block;margin-bottom:12px}
-.memory-title{color:#fff;font-weight:700;font-size:1rem;margin-bottom:8px}
-.memory-desc{color:rgba(255,255,255,.5);font-size:.82rem;line-height:1.5}
-.memory-nav{display:flex;justify-content:center;gap:16px;margin-top:18px}
-.memory-nav-btn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:1.2rem;cursor:pointer;transition:all .25s}
-.memory-nav-btn:hover{background:rgba(255,107,157,.2);border-color:var(--pk)}
-
-/* ── Love Letter Generator ── */
-.loveletter-section{padding:80px 20px;text-align:center}
-.loveletter-box{max-width:520px;margin:0 auto;padding:32px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid rgba(196,77,255,.15)}
-.loveletter-row{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
-.loveletter-select{padding:10px 16px;border:1px solid rgba(255,255,255,.15);border-radius:50px;background:rgba(255,255,255,.06);color:#fff;font-size:.95rem;font-family:inherit;cursor:pointer;appearance:none;-webkit-appearance:none;min-width:140px;text-align:center;transition:border-color .3s}
-.loveletter-select:focus{outline:none;border-color:var(--pp);box-shadow:0 0 15px rgba(196,77,255,.2)}
-.loveletter-select option{background:#1a0030;color:#fff}
-.loveletter-btn{padding:12px 36px;border:none;border-radius:50px;background:linear-gradient(135deg,var(--pp),#8b22cc);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .2s;font-family:inherit;margin-bottom:18px}
-.loveletter-btn:hover{transform:translateY(-3px) scale(1.05)}
-.loveletter-output{min-height:60px;padding:20px;border-radius:16px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,215,0,.2);font-family:'Dancing Script',cursive;font-size:1.25rem;color:var(--gd);line-height:1.8;opacity:0;transition:opacity .6s}
-.loveletter-output.show{opacity:1}
-
-/* ── Together Stats ── */
-.togetherstats-section{padding:80px 20px;text-align:center}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;max-width:700px;margin:0 auto}
-.stat-card{padding:28px 14px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);transition:transform .3s,box-shadow .3s}
-.stat-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(255,107,157,.15)}
-.stat-icon{font-size:2.2rem;display:block;margin-bottom:10px}
-.stat-number{font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,var(--pk),var(--gd));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-bottom:4px}
-.stat-label{color:rgba(255,255,255,.5);font-size:.85rem;font-weight:600}
-
 /* ── Emoji Story ── */
 .emojistory-section{padding:80px 20px;text-align:center}
 .comic-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:860px;margin:0 auto}
@@ -2936,16 +2874,6 @@ body.disco-mode .hero-title{animation:shimmer 1s linear infinite!important}
 .smart-hint.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ═══════ SPRINT 18-20: GRAND FINALE CSS ═══════ */
-
-/* ── Infinity Promise ── */
-.infinity-promise{padding:100px 20px;text-align:center;position:relative;overflow:hidden}
-.infinity-promise::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(255,107,157,.08) 0%,transparent 70%);pointer-events:none}
-.inf-quote{font-family:'Dancing Script',cursive;font-size:clamp(1.4rem,4vw,2.4rem);color:rgba(255,255,255,.88);line-height:1.8;max-width:700px;margin:0 auto 30px;text-shadow:0 0 30px rgba(255,107,157,.3)}
-.inf-heart-anim{font-size:5rem;display:inline-block;animation:infHeartPulse 2s ease-in-out infinite;cursor:pointer;filter:drop-shadow(0 0 20px rgba(255,107,157,.6));user-select:none;-webkit-user-select:none}
-@keyframes infHeartPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 20px rgba(255,107,157,.6))}25%{transform:scale(1.15);filter:drop-shadow(0 0 40px rgba(255,107,157,.9))}50%{transform:scale(1.05);filter:drop-shadow(0 0 25px rgba(255,107,157,.7))}75%{transform:scale(1.2);filter:drop-shadow(0 0 50px rgba(255,107,157,1))}}
-.inf-sparkles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.inf-sparkle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gd);animation:infSparkle var(--dur,3s) var(--delay,0s) ease-in-out infinite;opacity:0}
-@keyframes infSparkle{0%,100%{opacity:0;transform:translateY(0) scale(.5)}50%{opacity:1;transform:translateY(-30px) scale(1.2)}}
 
 /* ── Final Countdown ── */
 .final-countdown{padding:100px 20px;text-align:center;position:relative}
@@ -3460,9 +3388,6 @@ body.theme-night{--ambient-tint:rgba(75,0,130,.06)}
 }
 
 /* ── 4. Will-change management — compositor hints ── */
-#bg-canvas, #fx-canvas { will-change: contents; }
-.gradient-bg { will-change: background-position; }
-.scroll-prog { will-change: width; }
 .reveal, .reveal-zoom, .reveal-slide-left,
 .reveal-slide-right, .reveal-expand, .reveal-drop {
   will-change: opacity, transform;
@@ -4348,32 +4273,7 @@ section:not(.hero) {
   <button class="garden-clear" id="gardenClear">🗑️ Clear Garden</button>
 </section>
 
-<!-- ═══════ DREAM BOARD ═══════ -->
-<div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 C240,100 480,10 720,60 C960,110 1200,20 1440,55 L1440,120 L0,120 Z" fill="rgba(255,215,0,0.07)"/><path d="M0,85 C360,40 720,100 1080,55 L1440,80 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.05)"/></svg></div>
-<section class="dream-section">
-  <h2 class="s-title reveal">✨ Dream Board</h2>
-  <p class="s-sub reveal">Flip each card to reveal our shared dreams & wishes 💫</p>
-  <div class="dream-grid" id="dreamGrid"></div>
-</section>
 
-<!-- ═══════ ZODIAC FUN ═══════ -->
-<div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,65 C220,105 440,20 660,70 C880,120 1100,30 1320,65 L1440,50 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.07)"/><path d="M0,80 C320,40 640,100 960,50 L1440,75 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.05)"/></svg></div>
-<section class="zodiac-section">
-  <h2 class="s-title reveal">🔮 Zodiac Fun</h2>
-  <p class="s-sub reveal">How the stars align for us 💫</p>
-  <div class="zodiac-box glass glass-glow reveal">
-    <div class="zodiac-signs">
-      <div class="zodiac-sign"><span id="zodiacSign1">♈</span><span class="zodiac-sign-label" id="zodiacLabel1">Aries</span></div>
-      <span class="zodiac-heart">💕</span>
-      <div class="zodiac-sign"><span id="zodiacSign2">♋</span><span class="zodiac-sign-label" id="zodiacLabel2">Cancer</span></div>
-    </div>
-    <div class="zodiac-compat" id="zodiacPct">0%</div>
-    <div class="zodiac-bar-wrap"><div class="zodiac-bar-fill" id="zodiacBar"></div></div>
-    <div class="zodiac-desc" id="zodiacDesc"></div>
-    <div class="zodiac-traits" id="zodiacTraits"></div>
-    <button class="zodiac-btn" id="zodiacBtn">🔮 Check Another Pair</button>
-  </div>
-</section>
 
 <!-- ═══════ MOOD RING ═══════ -->
 <div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,55 C260,100 520,15 780,65 C1040,115 1300,25 1440,55 L1440,120 L0,120 Z" fill="rgba(107,197,255,0.07)"/><path d="M0,85 C360,40 720,100 1080,55 L1440,80 L1440,120 L0,120 Z" fill="rgba(255,215,0,0.05)"/></svg></div>
@@ -4464,58 +4364,8 @@ section:not(.hero) {
   <div class="trivia-grid reveal" id="triviaGrid"></div>
 </section>
 
-<!-- ═══════ MEMORY LANE ═══════ -->
-<div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 C200,95 400,15 600,70 C800,110 1000,30 1200,65 C1350,90 1420,40 1440,55 L1440,120 L0,120 Z" fill="rgba(107,245,255,0.06)"/><path d="M0,85 C320,55 680,100 1040,60 L1440,80 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.04)"/></svg></div>
-<section class="memorylane-section" id="memorySection">
-  <h2 class="s-title reveal">🛤️ Memory Lane</h2>
-  <p class="s-sub reveal">Scroll through our sweetest moments together 💭</p>
-  <div class="memory-track-wrap reveal">
-    <div class="memory-track" id="memoryTrack"></div>
-  </div>
-  <div class="memory-nav">
-    <button class="memory-nav-btn" id="memPrev">‹</button>
-    <button class="memory-nav-btn" id="memNext">›</button>
-  </div>
-</section>
 
-<!-- ═══════ LOVE LETTER GENERATOR ═══════ -->
-<div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,60 C240,20 480,100 720,50 C960,100 1200,20 1440,60 L1440,120 L0,120 Z" fill="rgba(196,77,255,0.06)"/><path d="M0,90 C400,60 800,95 1200,55 L1440,75 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.04)"/></svg></div>
-<section class="loveletter-section" id="loveletterSection">
-  <h2 class="s-title reveal">💌 Love Letter Generator</h2>
-  <p class="s-sub reveal">Pick words and create a love letter just for us ✍️</p>
-  <div class="loveletter-box reveal">
-    <div class="loveletter-row">
-      <select class="loveletter-select" id="llAdj">
-        <option value="" disabled selected>Pick adjective…</option>
-        <option value="enchanting">Enchanting</option>
-        <option value="breathtaking">Breathtaking</option>
-        <option value="radiant">Radiant</option>
-        <option value="captivating">Captivating</option>
-        <option value="mesmerizing">Mesmerizing</option>
-        <option value="irresistible">Irresistible</option>
-      </select>
-      <select class="loveletter-select" id="llNoun">
-        <option value="" disabled selected>Pick noun…</option>
-        <option value="starlight">Starlight</option>
-        <option value="sunshine">Sunshine</option>
-        <option value="heartbeat">Heartbeat</option>
-        <option value="moonbeam">Moonbeam</option>
-        <option value="soulmate">Soulmate</option>
-        <option value="paradise">Paradise</option>
-      </select>
-    </div>
-    <button class="loveletter-btn" id="llGenBtn">💜 Generate Letter</button>
-    <div class="loveletter-output" id="llOutput"></div>
-  </div>
-</section>
 
-<!-- ═══════ TOGETHER STATS ═══════ -->
-<div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,45 C180,90 360,15 540,65 C720,115 900,25 1080,60 C1260,95 1380,35 1440,50 L1440,120 L0,120 Z" fill="rgba(255,215,0,0.06)"/><path d="M0,80 C350,50 700,100 1050,55 L1440,75 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.04)"/></svg></div>
-<section class="togetherstats-section" id="togetherSection">
-  <h2 class="s-title reveal">📊 Together Stats</h2>
-  <p class="s-sub reveal">Our love by the numbers — since Dec 1, 2025 💑</p>
-  <div class="stats-grid reveal" id="statsGrid"></div>
-</section>
 
 <!-- ═══════ EMOJI STORY ═══════ -->
 <div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,55 C200,100 400,20 600,70 C800,105 1000,30 1200,55 C1360,80 1420,50 1440,60 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.06)"/><path d="M0,88 C360,50 720,95 1080,50 L1440,80 L1440,120 L0,120 Z" fill="rgba(107,245,255,0.04)"/></svg></div>
@@ -4533,14 +4383,6 @@ section:not(.hero) {
   <div class="diary-card glass reveal" id="diaryCard"></div>
 </section>
 
-<!-- ═══════ INFINITY PROMISE ═══════ -->
-<div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 C360,100 720,10 1080,70 C1260,90 1380,40 1440,55 L1440,120 L0,120 Z" fill="rgba(255,107,157,0.07)"/></svg></div>
-<section class="infinity-promise" id="infinityPromise">
-  <div class="inf-sparkles" id="infSparkles"></div>
-  <p class="s-sub reveal" style="margin-bottom:16px">✨ A PROMISE FOR ETERNITY ✨</p>
-  <p class="inf-quote reveal">In every lifetime, in every universe,<br>I would find you and choose you again.</p>
-  <div class="reveal" style="margin-top:20px"><span class="inf-heart-anim" id="infHeart">💖</span></div>
-</section>
 
 <!-- ═══════ FINAL COUNTDOWN ═══════ -->
 <div class="wave-sep"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,60 C240,20 480,100 720,45 C960,95 1200,30 1440,70 L1440,120 L0,120 Z" fill="rgba(255,215,0,0.06)"/></svg></div>
@@ -4626,7 +4468,7 @@ const TRAIL=['✨','💖','⭐','🌸','💫'];
 let trailTick=0;
 document.addEventListener('mousemove',e=>{
   cursorEl.style.left=e.clientX+'px';cursorEl.style.top=e.clientY+'px';
-  if(++trailTick%3!==0)return;
+  if(++trailTick%5!==0)return;
   const t=document.createElement('span');
   t.textContent=TRAIL[Math.floor(Math.random()*TRAIL.length)];
   t.style.cssText=`position:fixed;pointer-events:none;z-index:9998;left:${e.clientX}px;top:${e.clientY}px;
@@ -4646,6 +4488,7 @@ document.addEventListener('click',e=>{
   createBurst(e,6);
 });
 function createBurst(e,count){
+  if(document.querySelectorAll('.burst-item').length>50)return;
   const x=e.clientX||e.touches?.[0]?.clientX||innerWidth/2, y=e.clientY||e.touches?.[0]?.clientY||innerHeight/2;
   for(let i=0;i<count;i++){
     const el=document.createElement('span');el.className='burst-item';
@@ -4663,7 +4506,7 @@ function createBurst(e,count){
 window.addEventListener('scroll',()=>{
   const h=document.documentElement.scrollHeight-innerHeight;
   document.getElementById('scrollProg').style.width=(scrollY/h*100)+'%';
-});
+},{passive:true});
 
 // ═══════════════════════════════════════
 //  COUNTDOWN
@@ -4712,12 +4555,13 @@ updateCountdown();setInterval(updateCountdown,1000);
 //  BACKGROUND CANVAS — Starfield
 // ═══════════════════════════════════════
 const bgC=document.getElementById('bg-canvas'),bgX=bgC.getContext('2d');let bW,bH;
-const STARS=Array.from({length:200},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.6+.3,
+const STARS=Array.from({length:120},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.6+.3,
   phase:Math.random()*Math.PI*2,speed:Math.random()*.022+.006}));
 const shootingStars=[];
 function resizeBg(){bW=bgC.width=innerWidth;bH=bgC.height=innerHeight}
 addEventListener('resize',resizeBg);resizeBg();
 function drawBg(){
+  if(document.hidden){requestAnimationFrame(drawBg);return;}
   bgX.clearRect(0,0,bW,bH);
   const g=bgX.createRadialGradient(bW*.5,bH*.3,0,bW*.5,bH*.5,bW);
   g.addColorStop(0,'#2d0045');g.addColorStop(.5,'#18002e');g.addColorStop(1,'#0d001a');
@@ -4784,7 +4628,7 @@ function firework(x,y){
   for(let i=0;i<n;i++){const ang=i/n*Math.PI*2,spd=Math.random()*6+2;
     fxParts.push(new FXP(x,y,Math.cos(ang)*spd,Math.sin(ang)*spd,FX_CLR[Math.floor(Math.random()*FX_CLR.length)]));}
 }
-function confettiBurst(n=120){
+function confettiBurst(n=80){
   for(let i=0;i<n;i++)fxParts.push(new FXP(Math.random()*fW,-10,(Math.random()-.5)*4,Math.random()*3+1,FX_CLR[Math.floor(Math.random()*FX_CLR.length)],'confetti'));
 }
 // Cherry blossom petals
@@ -4795,6 +4639,7 @@ function spawnPetals(){
 setInterval(spawnPetals,600);
 
 function drawFx(){
+  if(document.hidden){requestAnimationFrame(drawFx);return;}
   fxX.clearRect(0,0,fW,fH);
   for(let i=fxParts.length-1;i>=0;i--){fxParts[i].update();fxParts[i].draw();if(fxParts[i].dead)fxParts.splice(i,1);}
   requestAnimationFrame(drawFx);
@@ -4829,7 +4674,7 @@ function blowCandle(){
   const m=document.getElementById('cakeMsg');m.textContent=cakeMsgs[3-candlesLeft];m.classList.add('show');
   const r=document.querySelector('.cake-wrapper').getBoundingClientRect();
   firework(r.left+r.width/2,r.top+r.height/2-40);
-  if(!candlesLeft)setTimeout(()=>{confettiBurst(160);firework(fW*.3,fH*.3);firework(fW*.7,fH*.3);firework(fW*.5,fH*.25);},400);
+  if(!candlesLeft)setTimeout(()=>{confettiBurst(80);firework(fW*.3,fH*.3);firework(fW*.7,fH*.3);firework(fW*.5,fH*.25);},400);
 }
 
 // ═══════════════════════════════════════
@@ -4905,7 +4750,7 @@ function popBalloon(el,i){
   if(el.classList.contains('popped'))return;el.classList.add('popped');popCount++;
   document.getElementById('popScore').innerHTML=`💥 Popped: ${popCount} / 8` + (popCount===8?' — 🎉 ALL POPPED!':'');
   const r=el.getBoundingClientRect();createBurst({clientX:r.left+r.width/2,clientY:r.top+r.height/3},8);
-  if(popCount===8){setTimeout(()=>{confettiBurst(120);firework(fW*.5,fH*.4);},300);}
+  if(popCount===8){setTimeout(()=>{confettiBurst(80);firework(fW*.5,fH*.4);},300);}
 }
 
 // ═══════════════════════════════════════
@@ -4973,7 +4818,7 @@ function spinCompliment(){
   canvas.addEventListener('mousemove',e=>{if(scratching)scratch(e)});
   canvas.addEventListener('touchstart',e=>{scratching=true;scratch(e)},{passive:false});
   canvas.addEventListener('touchmove',e=>{if(scratching)scratch(e)},{passive:false});
-  canvas.addEventListener('touchend',()=>scratching=false);
+  canvas.addEventListener('touchend',()=>scratching=false,{passive:true});
   // Resize handler
   new ResizeObserver(()=>{if(!scratched){const w=wrap.offsetWidth,h=wrap.offsetHeight;
     canvas.width=w;canvas.height=h;const g2=ctx.createLinearGradient(0,0,w,h);
@@ -5005,7 +4850,7 @@ function pullWish(){
 //  MEGA CELEBRATE
 // ═══════════════════════════════════════
 function megaCelebrate(){
-  confettiBurst(250);
+  confettiBurst(80);
   for(let i=0;i<9;i++)setTimeout(()=>firework(fW*(.1+Math.random()*.8),fH*(.1+Math.random()*.45)),i*250);
   createBurst({clientX:innerWidth/2,clientY:innerHeight/2},20);
   for(let i=0;i<3;i++)setTimeout(addShootingStar,i*400);
@@ -5063,7 +4908,7 @@ function toggleMusic(){
 //  SPLASH SCREEN
 // ═══════════════════════════════════════
 setTimeout(()=>{const sp=document.getElementById('splash');sp.classList.add('hide');
-  setTimeout(()=>{sp.remove();confettiBurst(100);firework(fW*.3,fH*.2);firework(fW*.7,fH*.2);},800);
+  setTimeout(()=>{sp.remove();confettiBurst(80);firework(fW*.3,fH*.2);firework(fW*.7,fH*.2);},800);
 },2400);
 
 // ═══════════════════════════════════════
@@ -5120,7 +4965,7 @@ function sfx(type){
       if(el&&el.getBoundingClientRect().top<innerHeight*.5)active=sel;});
     dots.forEach(d=>{d.classList.toggle('active',d.dataset.sel===active);});
   }
-  window.addEventListener('scroll',updateActive);updateActive();
+  window.addEventListener('scroll',updateActive,{passive:true});updateActive();
 })();
 
 // ═══════════════════════════════════════
@@ -5433,7 +5278,7 @@ function memWin(){
   document.getElementById('memResultText').innerHTML =
     `${stars}<br>Completed in ${memMoves} moves!<br>A perfect match, just like us! 💕`;
   result.style.display = 'flex';
-  confettiBurst(160);
+  confettiBurst(80);
   firework(fW*.3, fH*.3);
   firework(fW*.7, fH*.3);
   sfx('tada');
@@ -5623,7 +5468,7 @@ function toggleAchievePanel(){
     document.body.appendChild(txt);
     setTimeout(() => txt.remove(), 2500);
     // Effects
-    confettiBurst(500);
+    confettiBurst(80);
     for(let i = 0; i < 12; i++) setTimeout(() => firework(fW*(.1+Math.random()*.8), fH*(.1+Math.random()*.45)), i*150);
     // 8-bit chime
     try{
@@ -5654,7 +5499,7 @@ function toggleAchievePanel(){
     lastAccel = {x:a.x, y:a.y, z:a.z};
     if(d > 25 && Date.now() - lastShake > 3000){
       lastShake = Date.now();
-      confettiBurst(150);
+      confettiBurst(80);
       sfx('tada');
       // Floating message
       const msg = document.createElement('div');
@@ -5714,7 +5559,7 @@ function toggleAchievePanel(){
       lastTapX = t.clientX;
       lastTapY = t.clientY;
     }
-  });
+  },{passive:true});
 })();
 
 // ═══════════════════════════════════════
@@ -5764,9 +5609,9 @@ function toggleAchievePanel(){
       triggered.add(100);
       unlockAchievement('scroll-bottom');
       for(let i = 0; i < 5; i++) setTimeout(() => firework(fW*(0.15+i*0.175), fH*0.25), i*300);
-      confettiBurst(100);
+      confettiBurst(80);
     }
-  });
+  },{passive:true});
 })();
 
 // ═══════════════════════════════════════
@@ -6175,7 +6020,7 @@ function toggleAchievePanel(){
   canvas.addEventListener('mouseup',stopDraw);canvas.addEventListener('mouseleave',stopDraw);
   canvas.addEventListener('touchstart',startDraw,{passive:false});
   canvas.addEventListener('touchmove',draw,{passive:false});
-  canvas.addEventListener('touchend',stopDraw);
+  canvas.addEventListener('touchend',stopDraw,{passive:true});
   // Controls
   window.doodleSize=function(s){brushSize=s;document.querySelectorAll('.doodle-sz').forEach(b=>b.classList.remove('active'));
     document.querySelector(`.doodle-sz[data-sz="${s}"]`)?.classList.add('active');};
@@ -6365,7 +6210,7 @@ function toggleAchievePanel(){
     const now=new Date();
     if(now.getMonth()===3&&now.getDate()===9){// April 9
       setTimeout(()=>{
-        confettiBurst(300);
+        confettiBurst(80);
         for(let i=0;i<5;i++)setTimeout(()=>firework(fW*(0.15+i*0.175),fH*0.25),i*300);
         const t=document.createElement('div');t.className='milestone-toast';
         t.innerHTML='<span class="milestone-toast-emoji">🎂</span><span class="milestone-toast-text">It\'s Your Special Day!</span><span class="milestone-toast-sub">Happy Birthday, Darling! 🎉💖</span>';
@@ -6472,7 +6317,7 @@ window.closeFragCard=function(){document.getElementById('fragOverlay').classList
 function showGrandReveal(){
   const gr=document.getElementById('grandReveal');if(!gr)return;
   gr.classList.add('show');
-  if(typeof confettiBurst==='function')confettiBurst(200);
+  if(typeof confettiBurst==='function')confettiBurst(80);
   // Stagger fragments
   gr.querySelectorAll('.gl-frag').forEach((f,i)=>{
     setTimeout(()=>f.classList.add('visible'),1500+i*2000);
@@ -6480,7 +6325,7 @@ function showGrandReveal(){
 }
 window.closeGrandReveal=function(){
   document.getElementById('grandReveal').classList.remove('show');
-  if(typeof confettiBurst==='function')confettiBurst(100);
+  if(typeof confettiBurst==='function')confettiBurst(80);
 };
 window.openGrandReveal=function(){if(eeState.found.length>=7)showGrandReveal();};
 
@@ -6557,7 +6402,7 @@ window.openGrandReveal=function(){if(eeState.found.length>=7)showGrandReveal();}
       timer=setTimeout(()=>{foundFragment(5);patience.classList.remove('show');},10000);
     } else if(!atBottom&&timer){clearTimeout(timer);timer=null;patience.classList.remove('show');}
   }
-  window.addEventListener('scroll',check);
+  window.addEventListener('scroll',check,{passive:true});
 })();
 
 // Fragment 6: Press R key while photo section visible, or rotate phone
@@ -6961,7 +6806,7 @@ const origFoundFragment=foundFragment;
       msg.innerHTML='<span class="milestone-toast-emoji">💎</span><span class="milestone-toast-text">Darling detected! Sending infinite love...</span>';
       document.body.appendChild(msg);setTimeout(()=>msg.remove(),4500);
       if(typeof sfx==='function')sfx('tada');
-      if(typeof confettiBurst==='function')confettiBurst(200);
+      if(typeof confettiBurst==='function')confettiBurst(80);
       if(typeof firework==='function'){firework(fW*.3,fH*.25);firework(fW*.7,fH*.25);}
     }
   });
@@ -6980,7 +6825,7 @@ const origFoundFragment=foundFragment;
       const msg=document.createElement('div');msg.className='milestone-toast';
       msg.innerHTML='<span class="milestone-toast-emoji">🎂</span><span class="milestone-toast-text">Secret wish unlocked! Every candle burns for you ✨</span>';
       document.body.appendChild(msg);setTimeout(()=>msg.remove(),4500);
-      if(typeof confettiBurst==='function')confettiBurst(100);
+      if(typeof confettiBurst==='function')confettiBurst(80);
       if(typeof sfx==='function')sfx('tada');
     }
   });
@@ -7324,7 +7169,7 @@ if(!ACHIEVE_DEFS['morse-decoded']){
         msg.innerHTML='<span class="milestone-toast-emoji">🎮</span><span class="milestone-toast-text">Konami Code! You unlocked the Golden Rain! 🏆</span>';
         document.body.appendChild(msg);setTimeout(()=>msg.remove(),4500);
         if(typeof sfx==='function')sfx('tada');
-        if(typeof confettiBurst==='function')confettiBurst(150);
+        if(typeof confettiBurst==='function')confettiBurst(80);
       }
     } else {
       konamiIdx=0;
@@ -7425,7 +7270,7 @@ if(!ACHIEVE_DEFS['morse-decoded']){
         const msg=document.createElement('div');msg.className='milestone-toast';
         msg.innerHTML='<span class="milestone-toast-emoji">🎉</span><span class="milestone-toast-text">Shake detected! Confetti shower! 🎊</span>';
         document.body.appendChild(msg);setTimeout(()=>msg.remove(),4000);
-        if(typeof confettiBurst==='function')confettiBurst(120);
+        if(typeof confettiBurst==='function')confettiBurst(80);
         if(typeof sfx==='function')sfx('tada');
       }
     });
@@ -7460,7 +7305,7 @@ if(!ACHIEVE_DEFS['morse-decoded']){
         const msg=document.createElement('div');msg.className='milestone-toast';
         msg.innerHTML='<span class="milestone-toast-emoji">🔮</span><span class="milestone-toast-text">Secret timeline unlocked! ✨</span>';
         document.body.appendChild(msg);setTimeout(()=>msg.remove(),4500);
-        if(typeof confettiBurst==='function')confettiBurst(100);
+        if(typeof confettiBurst==='function')confettiBurst(80);
         if(typeof sfx==='function')sfx('chime');
       }
     });
@@ -7701,7 +7546,7 @@ if(!ACHIEVE_DEFS['morse-decoded']){
           setTimeout(()=>firework(fW*(0.1+Math.random()*0.8),fH*(0.15+Math.random()*0.35)),i*250);
         }
       }
-      if(typeof confettiBurst==='function')confettiBurst(200);
+      if(typeof confettiBurst==='function')confettiBurst(80);
       const msg=document.createElement('div');msg.className='milestone-toast';
       msg.innerHTML='<span class="milestone-toast-emoji">🎆</span><span class="milestone-toast-text">Happy Birthday Firework Show! 🎇</span>';
       document.body.appendChild(msg);setTimeout(()=>msg.remove(),4500);
@@ -8117,7 +7962,7 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
     wax.classList.add('stamped');
     peekBtn.style.display='inline-block';
     status.textContent='Sealed on '+new Date(now).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-    if(typeof createBurst==='function')createBurst(wax.getBoundingClientRect().left+40,wax.getBoundingClientRect().top+40,['❤️','💌','🔴','✉️','💕'],10);
+    if(typeof createBurst==='function')createBurst({clientX:wax.getBoundingClientRect().left+40,clientY:wax.getBoundingClientRect().top+40},10);
   });
   peekBtn.addEventListener('click',function(){
     const d=JSON.parse(localStorage.getItem(KEY)||'null');
@@ -8152,7 +7997,7 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
     count++;
     counter.textContent='🌱 '+count+' flower'+(count!==1?'s':'')+' planted';
     if(count>=10)msg.classList.add('show');
-    if(typeof createBurst==='function')createBurst(e.clientX,e.clientY,['🌸','✨','🌷','💚'],5);
+    if(typeof createBurst==='function')createBurst({clientX:e.clientX,clientY:e.clientY},5);
   });
   clearBtn.addEventListener('click',function(){
     const fl=area.querySelectorAll('.garden-flower');
@@ -8161,69 +8006,7 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
   });
 })();
 
-/* ── Dream Board ── */
-(function(){
-  const dreams=[
-    {icon:'✈️',label:'Travel',wish:'Explore the world together, one adventure at a time 🌍'},
-    {icon:'🏠',label:'Home',wish:'Build our cozy little forever home filled with love 🏡'},
-    {icon:'🏔️',label:'Adventure',wish:'Conquer mountains and chase waterfalls side by side ⛰️'},
-    {icon:'💃',label:'Dance',wish:'Dance under the stars until the sun comes up 🌙'},
-    {icon:'🌅',label:'Sunset',wish:'Watch a thousand sunsets from a thousand places 🧡'},
-    {icon:'⭐',label:'Stars',wish:'Name a star after us and watch it shine forever ✨'},
-    {icon:'💕',label:'Love',wish:'Love deeper every single day, no matter what 💗'},
-    {icon:'💍',label:'Forever',wish:'Write our love story across every chapter of life 📖'}
-  ];
-  const grid=document.getElementById('dreamGrid');
-  dreams.forEach(d=>{
-    const card=document.createElement('div');
-    card.className='dream-card stagger-item';
-    card.innerHTML='<div class="dream-card-inner"><div class="dream-front"><span class="d-icon">'+d.icon+'</span><span class="d-label">'+d.label+'</span><span class="d-hint">TAP TO REVEAL</span></div><div class="dream-back"><span class="d-wish-icon">'+d.icon+'</span><p class="d-wish">'+d.wish+'</p></div></div>';
-    card.addEventListener('click',function(){card.classList.toggle('flipped')});
-    grid.appendChild(card);
-  });
-})();
 
-/* ── Zodiac Fun ── */
-(function(){
-  const pairs=[
-    {s1:'♈',l1:'Aries',s2:'♋',l2:'Cancer',pct:85,desc:'Fire meets Water! Aries brings the adventure while Cancer brings the heart. A passionate combo that balances perfectly! 🔥💧',traits:['Passionate','Protective','Adventurous','Nurturing','Dynamic']},
-    {s1:'♌',l1:'Leo',s2:'♎',l2:'Libra',pct:92,desc:'A royal match! Leo\'s confidence and Libra\'s charm create an unstoppable duo. The party couple everyone envies! 👑✨',traits:['Glamorous','Harmonious','Creative','Social','Magnetic']},
-    {s1:'♉',l1:'Taurus',s2:'♓',l2:'Pisces',pct:97,desc:'Earth meets Water in a dreamy love story! Taurus grounds Pisces\' imagination while Pisces adds magic to everything! 🌿🌊',traits:['Devoted','Dreamy','Sensual','Intuitive','Loyal']},
-    {s1:'♊',l1:'Gemini',s2:'♒',l2:'Aquarius',pct:88,desc:'Two brilliant minds that never run out of conversations! This intellectual power couple will change the world together! 🧠⚡',traits:['Witty','Independent','Innovative','Fun','Unpredictable']},
-    {s1:'♍',l1:'Virgo',s2:'♑',l2:'Capricorn',pct:95,desc:'The ultimate power couple! Both earth signs building an empire of love brick by brick. Unstoppable together! 🏗️💎',traits:['Ambitious','Reliable','Elegant','Strategic','Soulmates']},
-    {s1:'♏',l1:'Scorpio',s2:'♓',l2:'Pisces',pct:99,desc:'The deepest, most soulful connection in the zodiac! These two understand each other without words! 🌊🔮',traits:['Intense','Psychic','Devoted','Mysterious','Eternal']},
-    {s1:'♐',l1:'Sagittarius',s2:'♈',l2:'Aries',pct:93,desc:'Double fire! These two are an explosion of fun, adventure, and passion. Never a dull moment! 🎆🔥',traits:['Wild','Fearless','Joyful','Spontaneous','Free']}
-  ];
-  let idx=0;
-  const sign1=document.getElementById('zodiacSign1'),lbl1=document.getElementById('zodiacLabel1'),
-        sign2=document.getElementById('zodiacSign2'),lbl2=document.getElementById('zodiacLabel2'),
-        pctEl=document.getElementById('zodiacPct'),bar=document.getElementById('zodiacBar'),
-        desc=document.getElementById('zodiacDesc'),traits=document.getElementById('zodiacTraits'),
-        btn=document.getElementById('zodiacBtn');
-  function showPair(i){
-    const p=pairs[i];
-    sign1.textContent=p.s1;lbl1.textContent=p.l1;
-    sign2.textContent=p.s2;lbl2.textContent=p.l2;
-    desc.textContent=p.desc;
-    bar.style.width='0';
-    pctEl.textContent='0%';
-    traits.innerHTML=p.traits.map(t=>'<span class="zodiac-trait">'+t+'</span>').join('');
-    setTimeout(()=>{
-      bar.style.width=p.pct+'%';
-      let cur=0;const target=p.pct;
-      const iv=setInterval(()=>{cur+=2;if(cur>=target){cur=target;clearInterval(iv)}pctEl.textContent=cur+'%'},30);
-    },300);
-  }
-  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){showPair(idx);obs.unobserve(e.target)}})},{threshold:.3});
-  obs.observe(document.querySelector('.zodiac-section'));
-  btn.addEventListener('click',function(){
-    idx=(idx+1)%pairs.length;showPair(idx);
-    if(typeof createBurst==='function'){
-      const r=btn.getBoundingClientRect();
-      createBurst(r.left+r.width/2,r.top,['🔮','✨','⭐','💫'],6);
-    }
-  });
-})();
 
 /* ── Mood Ring ── */
 (function(){
@@ -8594,7 +8377,7 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
         showMilestoneToast(milestones[m]);
       }
     });
-  });
+  },{passive:true});
 })();
 </script>
 <script>
@@ -8602,51 +8385,7 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
 //  SPRINT 16-17: NEW SECTIONS + UX ENHANCEMENTS
 // ═══════════════════════════════════════
 
-// ── 1. Memory Lane ──
-(function(){
-  const memories=[
-    {icon:'🌅',title:'First Sunrise',desc:'That magical morning we watched the sky paint itself gold together'},
-    {icon:'🎄',title:'December 1st',desc:'The day our story officially began — our forever anniversary'},
-    {icon:'🍳',title:'Cooking Chaos',desc:'Flour on the ceiling, love in the air, and the best burned pancakes ever'},
-    {icon:'🌧️',title:'Rainy Walk',desc:'Sharing one umbrella and not caring that we both got soaked'},
-    {icon:'🎵',title:'Our Song',desc:'That one melody that makes us look at each other and smile'},
-    {icon:'📸',title:'Silly Selfies',desc:'200 photos to get one good one — but every blurry one is precious'},
-    {icon:'🌙',title:'Midnight Talks',desc:'3 AM conversations that felt like 5 minutes'},
-    {icon:'💫',title:'Right Now',desc:'This moment, reading this together — another memory being made'}
-  ];
-  const track=document.getElementById('memoryTrack');
-  if(!track)return;
-  memories.forEach(m=>{
-    const c=document.createElement('div');
-    c.className='memory-card stagger-item';
-    c.innerHTML='<span class="memory-icon">'+m.icon+'</span><div class="memory-title">'+m.title+'</div><div class="memory-desc">'+m.desc+'</div>';
-    track.appendChild(c);
-  });
-  document.getElementById('memPrev')?.addEventListener('click',()=>track.scrollBy({left:-250,behavior:'smooth'}));
-  document.getElementById('memNext')?.addEventListener('click',()=>track.scrollBy({left:250,behavior:'smooth'}));
-})();
 
-// ── 2. Love Letter Generator ──
-(function(){
-  const templates=[
-    'My {adj} {noun}, every moment with you is a universe of joy. You are the reason my heart sings and my soul dances. Forever yours, with all my love. 💕',
-    'Dearest {noun}, your {adj} presence lights up every corner of my world. I fall deeper in love with you each day. You are my everything. 💌',
-    'To my {adj} {noun} — if I had a flower for every time you made me smile, I would walk through an endless garden. All my love, always. 🌹',
-    'My {adj} love, you are the {noun} that guides me home. With you, every day is an adventure and every night is a dream come true. 🌙',
-    'Sweet {noun}, your {adj} heart has captured mine completely. In this life and the next, I choose you, always and forever. ✨'
-  ];
-  const btn=document.getElementById('llGenBtn'),out=document.getElementById('llOutput');
-  if(!btn||!out)return;
-  btn.addEventListener('click',function(){
-    const adj=document.getElementById('llAdj')?.value||'wonderful';
-    const noun=document.getElementById('llNoun')?.value||'darling';
-    const tmpl=templates[Math.floor(Math.random()*templates.length)];
-    out.textContent=tmpl.replace(/\{adj\}/g,adj).replace(/\{noun\}/g,noun);
-    out.classList.add('show');
-    if(typeof createBurst==='function')createBurst({clientX:innerWidth/2,clientY:out.getBoundingClientRect().top},8);
-    if(typeof _thermoInteract==='function')_thermoInteract();
-  });
-})();
 
 // ── 3. Together Stats ──
 (function(){
@@ -8661,35 +8400,6 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
     {icon:'💖',value:days*5,label:'"I Love You"s'},
     {icon:'☕',value:days*2,label:'Coffees/Teas'}
   ];
-  const grid=document.getElementById('statsGrid');
-  if(!grid)return;
-  stats.forEach(s=>{
-    const c=document.createElement('div');
-    c.className='stat-card stagger-item';
-    c.innerHTML='<span class="stat-icon">'+s.icon+'</span><span class="stat-number" data-target="'+s.value+'">0</span><span class="stat-label">'+s.label+'</span>';
-    grid.appendChild(c);
-  });
-  // Animate counters on scroll
-  let counted=false;
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting&&!counted){
-        counted=true;
-        grid.querySelectorAll('.stat-number').forEach(el=>{
-          const target=parseInt(el.dataset.target);
-          let cur=0;
-          const step=Math.max(1,Math.floor(target/60));
-          const iv=setInterval(()=>{
-            cur+=step;
-            if(cur>=target){cur=target;clearInterval(iv);}
-            el.textContent=cur.toLocaleString();
-          },25);
-        });
-      }
-    });
-  },{threshold:.3});
-  io.observe(grid);
-})();
 
 // ── 4. Emoji Story ──
 (function(){
@@ -8842,7 +8552,7 @@ var _thermoInteract;
   window.addEventListener('scroll',function(){
     const now=Date.now();
     if(now-lastScroll>2000){lastScroll=now;_thermoInteract();}
-  });
+  },{passive:true});
 })();
 
 // ── 5. Smart Hints ──
@@ -8853,8 +8563,6 @@ var _thermoInteract;
     {sel:'#songGrid',msg:'🎵 Try playing a song in the Jukebox!'},
     {sel:'#loveName1',msg:'💘 Calculate your love percentage!'},
     {sel:'#bingoGrid',msg:'🎯 Play Relationship Bingo!'},
-    {sel:'#memoryTrack',msg:'🛤️ Scroll through Memory Lane!'},
-    {sel:'#llGenBtn',msg:'💌 Generate a love letter!'},
     {sel:'#comicStrip',msg:'📖 Read our emoji love story!'},
     {sel:'#diaryCard',msg:'🔐 Scroll down to reveal the diary!'}
   ];
@@ -8864,7 +8572,7 @@ var _thermoInteract;
     const el=document.querySelector(item.sel);
     if(el){
       el.addEventListener('click',()=>touched.add(item.sel),{once:true});
-      el.addEventListener('scroll',()=>touched.add(item.sel),{once:true});
+      el.addEventListener('scroll',()=>touched.add(item.sel),{once:true},{passive:true});
     }
   });
   let idleTimer;
@@ -8991,17 +8699,6 @@ var _thermoInteract;
   }});
 })();
 
-// ── 2. Infinity Promise Sparkles ──
-(function(){
-  const container=document.getElementById('infSparkles');
-  if(!container)return;
-  for(let i=0;i<20;i++){
-    const s=document.createElement('div');
-    s.className='inf-sparkle';
-    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${2+Math.random()*3}s;--delay:${Math.random()*3}s;background:${['var(--pk)','var(--gd)','var(--pp)','var(--cy)','#fff'][Math.floor(Math.random()*5)]}`;
-    container.appendChild(s);
-  }
-})();
 
 // ── 3. Final Countdown (future counter) ──
 (function(){
@@ -9092,45 +8789,6 @@ var _thermoInteract;
   setInterval(setTheme,300000);
 })();
 
-// ── 7. Hidden Voice Message (5 taps on infinity heart) ──
-(function(){
-  const heart=document.getElementById('infHeart');
-  if(!heart)return;
-  let tapCount=0,tapTimer;
-  heart.addEventListener('click',function(){
-    tapCount++;
-    clearTimeout(tapTimer);
-    tapTimer=setTimeout(()=>tapCount=0,2000);
-    if(tapCount>=5){
-      tapCount=0;
-      const overlay=document.getElementById('voiceOverlay');
-      if(!overlay)return;
-      overlay.classList.add('show');
-      // Build wave bars
-      const wave=document.getElementById('voiceWave');
-      if(wave&&!wave.children.length){
-        for(let i=0;i<20;i++){
-          const bar=document.createElement('div');
-          bar.className='voice-bar';
-          bar.style.cssText=`--h:${10+Math.random()*35}px;animation-delay:${i*0.06}s`;
-          wave.appendChild(bar);
-        }
-      }
-      // Typewriter transcript
-      const trans=document.getElementById('voiceTranscript');
-      if(trans&&!trans.dataset.done){
-        trans.dataset.done='1';
-        const msg='Hey darling... I just wanted to say, you are the most incredible person I\'ve ever known. Every moment with you feels like a dream I never want to wake up from. Happy birthday, my love. Here\'s to forever. 💕';
-        trans.textContent='';
-        let ci=0;
-        const tw=setInterval(()=>{
-          if(ci>=msg.length){clearInterval(tw);return;}
-          trans.textContent+=msg[ci++];
-        },40);
-      }
-    }
-  });
-})();
 
 // ── 8. Photo Gallery Portal (type 'ourphotos') ──
 (function(){
@@ -9317,7 +8975,6 @@ var _thermoInteract;
       { sel: '.fw-section',        clr: 'radial-gradient(circle,#ffd700,#ff4500)' },
       { sel: '.stars-section',     clr: 'radial-gradient(circle,#6bf5ff,#fff)' },
       { sel: '.poem-section',      clr: 'radial-gradient(circle,#ff9ecd,#c44dff)' },
-      { sel: '.infinity-promise',  clr: 'radial-gradient(circle,#ff6b9d,#ffd700)' },
     ];
     const pairs = SECTION_HUES.map(h => ({ el: document.querySelector(h.sel), clr: h.clr })).filter(p => p.el);
     let active = pairs[0] ? pairs[0].clr : null;
@@ -9452,7 +9109,7 @@ var _thermoInteract;
       requestAnimationFrame(function(){ sky.style.opacity = '1'; });
 
       // 200 background stars
-      for(var i=0;i<200;i++){
+      for(var i=0;i<120;i++){
         var s = document.createElement('div');
         var sz = 1 + Math.random()*2;
         s.style.cssText = 'position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+sz+'px;height:'+sz+'px;background:#fff;border-radius:50%;opacity:'+(0.2+Math.random()*0.8)+';animation:twinkle '+(2+Math.random()*4)+'s ease-in-out infinite '+(Math.random()*3)+'s';
@@ -9846,8 +9503,8 @@ var _thermoInteract;
       card.addEventListener('mouseleave', cancelPress);
       // touch
       card.addEventListener('touchstart', function(e){ startPress(card, e); }, {passive:true});
-      card.addEventListener('touchend', cancelPress);
-      card.addEventListener('touchcancel', cancelPress);
+      card.addEventListener('touchend', cancelPress,{passive:true});
+      card.addEventListener('touchcancel', cancelPress,{passive:true});
     });
   })();
 
@@ -10799,15 +10456,11 @@ var _thermoInteract;
     var ZONES = [
       { sel: '.cake-section',      emoji: '🎂', color: 'var(--gd)' },
       { sel: '.gift-section, .scratch-section, .coupon-section', emoji: '🎁', color: '#ff69b4' },
-      { sel: '.letter-section, .reasons-section, .meter-section, .loveletter-section', emoji: '💖', color: 'var(--pk)' },
       { sel: '.balloon-section, .spinner-section, .jar-section', emoji: '🎈', color: 'var(--cy)' },
-      { sel: '.timeline-section, .photo-section, .memorylane-section', emoji: '⭐', color: 'var(--gd)' },
       { sel: '.quiz-section, .memory-section, .decoder-section, .trivia-section', emoji: '🧩', color: 'var(--pp)' },
       { sel: '.wishes-section, .fortune-section', emoji: '✨', color: '#fff' },
-      { sel: '.poem-section, .song-section, .stars-section, .dream-section', emoji: '🌙', color: '#e0d0ff' },
       { sel: '.celebrate-section, .fw-section', emoji: '🎊', color: 'var(--gd)' },
       { sel: '.garden-section',     emoji: '🌸', color: 'var(--pk)' },
-      { sel: '.zodiac-section',     emoji: '♈', color: 'var(--pp)' },
       { sel: '.playlist-section, .mood-section', emoji: '🎵', color: 'var(--cy)' },
       { sel: '.bingo-section, .lovecalc-section', emoji: '💝', color: 'var(--pk)' },
     ];
@@ -10986,7 +10639,7 @@ var _thermoInteract;
     document.addEventListener('mousemove', function(e) {
       window._lastMX = e.clientX;
       window._lastMY = e.clientY;
-      if (++upgradedTrailTick % 4 !== 0) return;
+      if (++upgradedTrailTick % 6 !== 0) return;
       // Use matchMedia check for reduced motion
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -11155,9 +10808,9 @@ var _thermoInteract;
 
       // Fire confetti bursts
       if (typeof confettiBurst === 'function') {
-        confettiBurst(300);
-        setTimeout(function() { confettiBurst(200); }, 1000);
-        setTimeout(function() { confettiBurst(250); }, 2000);
+        confettiBurst(80);
+        setTimeout(function() { confettiBurst(80); }, 1000);
+        setTimeout(function() { confettiBurst(80); }, 2000);
       }
 
       // Create burst from center
