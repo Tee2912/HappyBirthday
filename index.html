@@ -4330,7 +4330,7 @@ section:not(.hero) {
 <section class="bingo-section">
   <h2 class="s-title reveal">🎯 Relationship Bingo</h2>
   <p class="s-sub reveal">Mark activities you've done together! Get a line to win 🏆</p>
-  <div class="bingo-grid reveal" id="bingoGrid"></div>
+  <div class="bingo-grid" id="bingoGrid"></div>
   <div class="bingo-status" id="bingoStatus">Mark 4 in a row to win!</div>
   <button class="bingo-reset" id="bingoReset">🔄 Reset Board</button>
 </section>
@@ -4361,7 +4361,7 @@ section:not(.hero) {
 <section class="trivia-section">
   <h2 class="s-title reveal">🧠 Love Trivia</h2>
   <p class="s-sub reveal">Tap to reveal fun facts about love 💡</p>
-  <div class="trivia-grid reveal" id="triviaGrid"></div>
+  <div class="trivia-grid" id="triviaGrid"></div>
 </section>
 
 
@@ -4372,7 +4372,7 @@ section:not(.hero) {
 <section class="emojistory-section" id="emojiStorySection">
   <h2 class="s-title reveal">📖 Emoji Story</h2>
   <p class="s-sub reveal">Our love story told entirely in emojis 💕</p>
-  <div class="comic-strip reveal" id="comicStrip"></div>
+  <div class="comic-strip" id="comicStrip"></div>
 </section>
 
 <!-- ═══════ SECRET DIARY ═══════ -->
@@ -8186,10 +8186,12 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
     grid.innerHTML='';
     activities.forEach((a,i)=>{
       const cell=document.createElement('div');
-      cell.className='bingo-cell stagger-item'+(marked[i]?' marked':'');
+      cell.className='bingo-cell'+(marked[i]?' marked':'');
+      cell.style.cssText='opacity:0;transform:scale(0.7);transition:opacity .4s ease '+(i*0.04)+'s,transform .4s cubic-bezier(.17,.67,.21,1.37) '+(i*0.04)+'s';
       cell.innerHTML='<span class="bingo-check">✅</span><span class="bingo-cell-icon">'+a.icon+'</span><span class="bingo-cell-label">'+a.label+'</span>';
       cell.onclick=()=>{marked[i]=!marked[i];cell.classList.toggle('marked');checkBingo();};
       grid.appendChild(cell);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{cell.style.opacity='1';cell.style.transform='scale(1)';}));
     });
   }
   function checkBingo(){
@@ -8210,7 +8212,11 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
     }
   }
   resetBtn.onclick=()=>{marked.fill(false);render();status.textContent='Mark 4 in a row to win!';status.classList.remove('win');};
-  render();
+  // Init on scroll into view
+  const obs=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){render();obs.disconnect();}
+  },{threshold:0.1});
+  obs.observe(document.querySelector('.bingo-section'));
 })();
 
 // ── Together Calendar ──
@@ -8265,13 +8271,22 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
     {icon:'🫀',fact:'When you look at someone you love, your heartbeats synchronize within minutes!'}
   ];
   const grid=document.getElementById('triviaGrid');
-  facts.forEach(f=>{
-    const card=document.createElement('div');
-    card.className='trivia-card stagger-item';
-    card.innerHTML='<div class="trivia-front"><span class="trivia-front-icon">'+f.icon+'</span><span class="trivia-front-label">Tap to Reveal</span></div><div class="trivia-back"><span class="trivia-back-text">'+f.fact+'</span></div>';
-    card.onclick=()=>card.classList.toggle('revealed');
-    grid.appendChild(card);
-  });
+  function initTrivia(){
+    if(grid.children.length) return;
+    facts.forEach((f,i)=>{
+      const card=document.createElement('div');
+      card.className='trivia-card';
+      card.style.cssText='opacity:0;transform:translateY(30px);transition:opacity .5s ease '+(i*0.1)+'s,transform .5s ease '+(i*0.1)+'s';
+      card.innerHTML='<div class="trivia-front"><span class="trivia-front-icon">'+f.icon+'</span><span class="trivia-front-label">Tap to Reveal</span></div><div class="trivia-back"><span class="trivia-back-text">'+f.fact+'</span></div>';
+      card.onclick=()=>card.classList.toggle('revealed');
+      grid.appendChild(card);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{card.style.opacity='1';card.style.transform='translateY(0)';}));
+    });
+  }
+  const obs=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){initTrivia();obs.disconnect();}
+  },{threshold:0.1});
+  obs.observe(document.querySelector('.trivia-section'));
 })();
 
 // ═══════════════════════════════════════
@@ -8399,13 +8414,22 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
   ];
   const strip=document.getElementById('comicStrip');
   if(!strip)return;
-  panels.forEach((p,i)=>{
-    const panel=document.createElement('div');
-    panel.className='comic-panel stagger-item';
-    panel.setAttribute('data-num','#'+(i+1));
-    panel.innerHTML='<span class="comic-emojis">'+p.emojis+'</span><span class="comic-caption">'+p.caption+'</span>';
-    strip.appendChild(panel);
-  });
+  function initStory(){
+    if(strip.children.length) return;
+    panels.forEach((p,i)=>{
+      const panel=document.createElement('div');
+      panel.className='comic-panel';
+      panel.setAttribute('data-num','#'+(i+1));
+      panel.style.cssText='opacity:0;transform:scale(0.85) translateY(20px);transition:opacity .5s ease '+(i*0.08)+'s,transform .5s cubic-bezier(.17,.67,.21,1.37) '+(i*0.08)+'s';
+      panel.innerHTML='<span class="comic-emojis">'+p.emojis+'</span><span class="comic-caption">'+p.caption+'</span>';
+      strip.appendChild(panel);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{panel.style.opacity='1';panel.style.transform='scale(1) translateY(0)';}));
+    });
+  }
+  const obs=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){initStory();obs.disconnect();}
+  },{threshold:0.1});
+  obs.observe(document.querySelector('.emojistory-section'));
 })();
 
 // ── 5. Secret Diary ──
