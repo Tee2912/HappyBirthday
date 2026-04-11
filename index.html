@@ -3653,6 +3653,48 @@ section:not(.hero) {
   transition: transform .5s cubic-bezier(.34,1.56,.64,1) !important;
 }
 
+/* ── Sprint 31: performance + surprise polish ── */
+body.perf-lite .aurora,
+body.perf-lite .blob-container,
+body.perf-lite .title-sparkle,
+body.perf-lite .scroll-particle,
+body.perf-lite .love-note-float,
+body.perf-lite .section-flourish,
+body.perf-lite .heart-vortex-particle {
+  display: none !important;
+}
+body.perf-lite .gradient-bg { animation-duration: 22s !important; opacity: .55; }
+body.perf-lite #fx-canvas { opacity: .65; }
+body.perf-lite .glass { backdrop-filter: blur(10px) !important; -webkit-backdrop-filter: blur(10px) !important; }
+
+.egg-toast {
+  position: fixed; left: 50%; top: 14%; transform: translateX(-50%) translateY(-10px);
+  z-index: 999999; padding: 10px 18px; border-radius: 24px;
+  border: 1px solid rgba(255,215,0,.35); background: rgba(20,8,36,.86);
+  color: #fff; font-size: .85rem; letter-spacing: .3px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 22px rgba(255,215,0,.2);
+  opacity: 0; transition: all .35s ease; pointer-events: none;
+}
+.egg-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.rose-petal {
+  position: fixed; z-index: 99995; pointer-events: none; will-change: transform, opacity;
+  animation: roseFall var(--dur,3.5s) ease-in forwards;
+}
+@keyframes roseFall {
+  0% { opacity: 0; transform: translate3d(0,-20px,0) rotate(0deg) scale(.8); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(var(--dx,20px),105vh,0) rotate(var(--rot,360deg)) scale(1.2); }
+}
+
+.title-pop-char { display: inline-block; animation: titlePop .45s cubic-bezier(.17,.67,.21,1.37) both; }
+@keyframes titlePop {
+  0% { transform: translateY(12px) scale(.6); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+#perfBtn.active { background: linear-gradient(135deg,rgba(107,245,255,.35),rgba(255,215,0,.35)) !important; }
+
 </style>
 </head>
 <body>
@@ -8212,11 +8254,8 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
     }
   }
   resetBtn.onclick=()=>{marked.fill(false);render();status.textContent='Mark 4 in a row to win!';status.classList.remove('win');};
-  // Init on scroll into view
-  const obs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){render();obs.disconnect();}
-  },{threshold:0.1});
-  obs.observe(document.querySelector('.bingo-section'));
+  // Init immediately so section always works even with content-visibility optimizations
+  render();
 })();
 
 // ── Together Calendar ──
@@ -8283,10 +8322,8 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
       requestAnimationFrame(()=>requestAnimationFrame(()=>{card.style.opacity='1';card.style.transform='translateY(0)';}));
     });
   }
-  const obs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){initTrivia();obs.disconnect();}
-  },{threshold:0.1});
-  obs.observe(document.querySelector('.trivia-section'));
+  // Init immediately so cards are always available
+  initTrivia();
 })();
 
 // ═══════════════════════════════════════
@@ -8426,10 +8463,8 @@ console.log('%c🎨 Easter Eggs: konami code, double-tap Darling, type love/pian
       requestAnimationFrame(()=>requestAnimationFrame(()=>{panel.style.opacity='1';panel.style.transform='scale(1) translateY(0)';}));
     });
   }
-  const obs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){initStory();obs.disconnect();}
-  },{threshold:0.1});
-  obs.observe(document.querySelector('.emojistory-section'));
+  // Init immediately so emoji panels always render
+  initStory();
 })();
 
 // ── 5. Secret Diary ──
@@ -10999,6 +11034,133 @@ var _thermoInteract;
   })();
 
   console.log('🎉 Sprint 29-30: Final polish + deploy loaded successfully!');
+})();
+</script>
+<script>
+// ═══════════════════════════════════════
+//  SPRINT 31: FEATURE HEALTH + NEW SURPRISES + PERF GUARD
+// ═══════════════════════════════════════
+(function(){
+  const $=(s)=>document.querySelector(s);
+
+  function toast(msg){
+    let el=document.getElementById('eggToast');
+    if(!el){el=document.createElement('div');el.id='eggToast';el.className='egg-toast';document.body.appendChild(el);}
+    el.textContent=msg;el.classList.add('show');
+    clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),3000);
+  }
+
+  // ── Perf guard (auto + manual toggle) ──
+  const lowEnd=((navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||(navigator.deviceMemory&&navigator.deviceMemory<=4));
+  const saved=localStorage.getItem('hb_perf_lite');
+  const shouldLite=saved===null?lowEnd:saved==='1';
+  if(shouldLite)document.body.classList.add('perf-lite');
+
+  const fabGroup=$('.fab-group');
+  if(fabGroup&&!$('#perfBtn')){
+    const b=document.createElement('button');
+    b.className='fab';b.id='perfBtn';b.title='Toggle Performance Lite Mode';b.textContent='⚡';
+    if(document.body.classList.contains('perf-lite'))b.classList.add('active');
+    b.onclick=()=>{
+      const on=document.body.classList.toggle('perf-lite');
+      b.classList.toggle('active',on);
+      localStorage.setItem('hb_perf_lite',on?'1':'0');
+      toast(on?'⚡ Performance Lite Mode: ON':'✨ Performance Lite Mode: OFF');
+    };
+    fabGroup.appendChild(b);
+  }
+
+  if(!window.__hbPerfPatched){
+    window.__hbPerfPatched=true;
+    if(typeof confettiBurst==='function'){
+      const orig=confettiBurst;
+      window.confettiBurst=function(n=120){
+        const cap=document.body.classList.contains('perf-lite')?30:70;
+        return orig(Math.min(n,cap));
+      };
+    }
+    if(typeof firework==='function'){
+      const origFw=firework;
+      window.firework=function(x,y){
+        if(document.body.classList.contains('perf-lite')&&Math.random()<0.35)return;
+        return origFw(x,y);
+      };
+    }
+  }
+
+  // ── Feature health check (quick smoke check) ──
+  window.runFeatureSmokeCheck=function(){
+    const checks=[
+      ['Love Calculator',()=>!!$('#loveCalcBtn')&&!!$('#loveName1')&&!!$('#loveName2')],
+      ['Relationship Bingo',()=>document.querySelectorAll('#bingoGrid .bingo-cell').length===16],
+      ['Together Calendar',()=>document.querySelectorAll('#calDays .cal-day').length>20],
+      ['Love Trivia',()=>document.querySelectorAll('#triviaGrid .trivia-card').length===6],
+      ['Emoji Story',()=>document.querySelectorAll('#comicStrip .comic-panel').length===8],
+      ['Secret Diary',()=>document.querySelectorAll('#diaryCard .diary-line').length>=6]
+    ];
+    const results=checks.map(([name,fn])=>({name,ok:!!fn()}));
+    const failed=results.filter(r=>!r.ok);
+    return {total:results.length,ok:results.length-failed.length,failed,results};
+  };
+  setTimeout(()=>{window.featureHealth=window.runFeatureSmokeCheck();console.log('Feature health:',window.featureHealth);},1800);
+
+  // ── New Easter Egg #1: type "rose" ──
+  function roseRain(){
+    const em=['🌹','🌺','🌸','💮','🏵️'];
+    for(let i=0;i<36;i++){
+      setTimeout(()=>{
+        const p=document.createElement('span');
+        p.className='rose-petal';p.textContent=em[Math.floor(Math.random()*em.length)];
+        p.style.left=Math.random()*100+'vw';
+        p.style.setProperty('--dx',(Math.random()*160-80)+'px');
+        p.style.setProperty('--rot',(Math.random()*720-360)+'deg');
+        p.style.setProperty('--dur',(2.6+Math.random()*2.4)+'s');
+        p.style.fontSize=(.9+Math.random()*1.1)+'rem';
+        document.body.appendChild(p);setTimeout(()=>p.remove(),5200);
+      },i*70);
+    }
+    toast('🌹 Rose Rain unlocked');
+  }
+
+  // ── New Easter Egg #2: press 0 (surprise roulette) ──
+  function surpriseRoulette(){
+    const acts=[
+      ()=>{if(typeof confettiBurst==='function')confettiBurst(70);toast('🎉 Surprise: confetti storm!');},
+      ()=>{if(typeof firework==='function'){for(let i=0;i<5;i++)setTimeout(()=>firework(innerWidth*(.15+Math.random()*.7),innerHeight*(.15+Math.random()*.35)),i*180);}toast('🎆 Surprise: mini fireworks!');},
+      ()=>{const secs=[...document.querySelectorAll('section')];if(!secs.length)return;secs[Math.floor(Math.random()*secs.length)].scrollIntoView({behavior:'smooth',block:'start'});toast('🎲 Surprise: random section jump!');},
+      ()=>{if(typeof createBurst==='function')createBurst({clientX:innerWidth/2,clientY:innerHeight/2},16);toast('💖 Surprise: heart burst!');},
+      ()=>roseRain()
+    ];
+    acts[Math.floor(Math.random()*acts.length)]();
+  }
+
+  // ── New Easter Egg #3: double-click any section title ──
+  document.addEventListener('dblclick',e=>{
+    const t=e.target.closest('.s-title');
+    if(!t)return;
+    const txt=t.textContent;
+    t.textContent='';
+    [...txt].forEach((ch,i)=>{
+      const s=document.createElement('span');
+      s.className='title-pop-char';s.style.animationDelay=(i*0.03)+'s';
+      s.textContent=ch===' '?'\u00A0':ch;t.appendChild(s);
+    });
+    const r=t.getBoundingClientRect();
+    if(typeof createBurst==='function')createBurst({clientX:r.left+r.width/2,clientY:r.top+r.height/2},8);
+  },{passive:true});
+
+  // Keyboard triggers (ignore while typing in inputs)
+  let keyBuf='';
+  document.addEventListener('keydown',e=>{
+    const tag=(document.activeElement&&document.activeElement.tagName||'').toLowerCase();
+    if(['input','textarea','select'].includes(tag))return;
+    keyBuf=(keyBuf+e.key.toLowerCase()).slice(-20);
+    if(keyBuf.includes('rose')){keyBuf='';roseRain();}
+    if(e.key==='0')surpriseRoulette();
+  });
+
+  // Subtle hint for new surprises
+  setTimeout(()=>toast('💡 New secret: type "rose" or press 0'),45000);
 })();
 </script>
 </body>
